@@ -1,0 +1,23 @@
+{
+  "title": "The Hodge conjecture for Fermat varieties of degree 35",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "creators": [
+    {
+      "name": "Peterson, Trevin"
+    }
+  ],
+  "description": "<p>Let X^n_m ⊂ P^{n+1} be the Fermat variety of dimension n and degree m. We prove the Hodge conjecture for X^n_m for every n when m = 2^a 3^b 5^c 7^d is not divisible by 420. For cd = 0 this is due to Aoki, and the smallest new degree is m = 35. By Aoki's work on the gap group, what is missing is the algebraicity of the Hodge classes attached to one exceptional character of X^6_35. We obtain it from a coniveau statement: the 24-dimensional rational sub-Hodge structure of level one of H^3(X^3_35, Q) attached to the character (1,2,16,21,30) of μ_35^5 is supported on a divisor, as predicted by the generalized Hodge conjecture. The proof uses an explicit one-parameter family of curves on X^3_35, a residue formula for the derivative of the Abel–Jacobi map along the family, and a computer-verified interval-arithmetic certificate at one point of the family. For the ten degrees m = 35k, 1 ≤ k ≤ 10, the reduction to this one class is verified by an exact finite computation which does not use Aoki's structure theorem. As consequences we obtain the Hodge conjecture for products of Fermat varieties of one such degree and for abelian varieties of Fermat type of these degrees, among them the Jacobian of the curve y^2 = x^35 − 1.</p><p>Preprint, not yet peer reviewed. The repository contains the paper (LaTeX source and PDF) and the verification scripts with their expected output.</p>",
+  "license": "cc-by-4.0",
+  "access_right": "open",
+  "keywords": [
+    "Hodge conjecture",
+    "Fermat varieties",
+    "algebraic cycles",
+    "Abel-Jacobi map",
+    "generalized Hodge conjecture",
+    "interval arithmetic"
+  ],
+  "language": "eng",
+  "version": "1.0"
+}
