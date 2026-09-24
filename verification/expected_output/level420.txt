@@ -1,0 +1,40 @@
+Part A. The class of xi_420 (Lemma 8.2, Proposition 8.3)
+PASS  Q(420) = [12, 15, 20, 21, 28, 35, 420]: 420 has the four divisors [3, 4, 5, 7] in P, and |Q(420)| = 2^3 - 1 = 7
+PASS  the 700 generators of S_420 lie in B_420, and the six rho_q^(420) are Hodge characters: rho_12^(420) = (35,210,280,315); rho_15^(420) = (28,168,280,364); rho_20^(420) = (21,84,357,378); rho_21^(420) = (20,80,360,380); rho_28^(420) = (15,135,315,375); rho_35^(420) = (12,24,192,252,360,204,264,372)
+PASS  15 divides 420, gcd(15, 420/15) = 1, and nu_15 vanishes on all 700 generators of S_420 (Lemma 8.2)
+PASS  nu_15 vanishes on the six rho_q^(420); their entries of order 15 are {12: [], 15: [28, 364], 20: [], 21: [], 28: [], 35: []}
+PASS  w_1 = (56,69,176,191,193,199,204,209,210,236,243,253,257,267,296,301) is a Hodge character of level 420 with 16 entries (dimension 14), with exactly one entry of order 15, namely [56]
+PASS  w_2 = (1,17,28,132,141,168,191,199,236,253,257,267,296,371,387,416) is a Hodge character of level 420 with 16 entries (dimension 14), with exactly one entry of order 15, namely [28]
+PASS  B_420 = S_420 + sum_q Z u(rho_q^(420)) + Z u(w_1): the echelon basis of L+ has 371 rows, pivot product 4, full rank modulo 2
+PASS  2 u(w_1) lies in S_420 and u(w_1) does not lie in L''_420 = S_420 + sum_q Z u(rho_q^(420)); so [B_420 : L''_420] = 2 and L''_420 = {x in B_420 : nu_15(x) = 0}
+PASS  FLINT: [K_420 : L] = [256, 4, 2, 1] for L = S_420, L''_420, L''_420 + Z u(w_1), and the latter + Z (210) (expected [256, 4, 2, 1]); Hermite pivot products [1024, 16, 8, 4] agree with the pure-Python echelon bases
+
+Part B. The character relations (Lemma 8.4 and (8.2)-(8.12))
+PASS  Lemma 8.4: for all 48 odd characters chi mod 420 and all 419 elements y != 0 of Z/420, sum_t conj(chi)(t) (2<ty> - 420) = 2*420 B_{1,conj chi} (phi(420)/phi(N)) prod_{p | N, p not dividing f} (1 - conj(chi)(p)) chi(u_y) if f | N, and = 0 otherwise (N the order of y)
+PASS  B_{1,chi} != 0 for all 48 odd characters chi mod 420
+PASS  (8.2): chi = chi_3 is odd of conductor 3; Lemma 8.4 gives 24 times the coefficients {3: 2, 6: 4, 12: 2, 15: 1, 30: 2, 60: 1}; the relation vanishes on all 707 generators of B_420
+PASS  (8.3): chi = chi_3 eps_5 is odd of conductor 15; Lemma 8.4 gives 4 times the coefficients {15: 3, 105: 1}; the relation vanishes on all 707 generators of B_420
+PASS  (8.4): chi = eps_7 is odd of conductor 7; Lemma 8.4 gives 8 times the coefficients {7: 2, 21: 2, 35: 1, 105: 1}; the relation vanishes on all 707 generators of B_420
+PASS  (8.5): chi = eps_5 eps_7 is odd of conductor 35; Lemma 8.4 gives 4 times the coefficients {35: 1, 70: 2, 140: 1}; the relation vanishes on all 707 generators of B_420
+PASS  (8.6): chi = chi_4 is odd of conductor 4; Lemma 8.4 gives 16 times the coefficients {4: 3, 12: 3, 28: 1, 84: 1}; the relation vanishes on all 707 generators of B_420
+PASS  (8.7): chi = chi_4 eps_5 is odd of conductor 20; Lemma 8.4 gives 12 times the coefficients {20: 1}; the relation vanishes on all 707 generators of B_420
+PASS  (8.8): chi = chi_4 chi_3 eps_7 is odd of conductor 84; Lemma 8.4 gives 4 times the coefficients {84: 1}; the relation vanishes on all 707 generators of B_420
+PASS  (8.9): chi = chi_4 chi_3 eps_5 eps_7 is odd of conductor 420; Lemma 8.4 gives 1 times the coefficients {420: 1}; the relation vanishes on all 707 generators of B_420
+PASS  (8.10): chi = lambda is odd of conductor 5; Lemma 8.4 gives 2 times the coefficients {5: 12, 10: 12 + 12i, 15: 6 - 6i, 20: 6 + 6i, 30: 12, 35: 2 + 2i, 60: 6, 70: 4i, 105: 2, 140: 2i, 210: 2 + 2i, 420: 1 + i}; the relation vanishes on all 707 generators of B_420
+PASS  (8.11): chi = chi_4 eps_5 theta is odd of conductor 140; Lemma 8.4 gives 1 times the coefficients {140: 2, 420: 2 + zeta_3}; the relation vanishes on all 707 generators of B_420
+PASS  (8.12): chi = chi_4 chi_3 lambda theta is odd of conductor 420; Lemma 8.4 gives 1 times the coefficients {420: 1}; the relation vanishes on all 707 generators of B_420
+
+Part C. The lemmas of Section 8.3 and the count pattern
+PASS  Lemma 8.5: n_15 + n_60, n_15 + n_105, n_35 + n_105, n_35 + n_140, n_4 + n_12 + n_28 + n_84, n_20, n_84, n_420, n_R + n_15, len are even on all generators of B_420
+PASS  Lemma 8.6: n'_420(x) + n_15(x) is even on all generators of B_420 (n'_420 = number of unit entries = +-2 mod 5)
+PASS  Lemma 8.7: on all generators of B_420, for each A in {{+-1}, {+-2}} mod 5 the three counts n_{A,C}, C in {{+-1}, {+-2}, {+-3}} mod 7, have the same parity
+PASS  (8.11): conj(chi)(3) = conj(zeta_3) for chi = chi_4 eps_5 theta; |1 - conj(zeta_3)|^2 = (3, 0, 0, 0) = 3; the values of chi are sixth roots of unity
+PASS  cross-check: the 7 odd primitive characters of conductor 420; the multisets of 1, 2, 3, 4 units containing 1 with s_420(chi) = 0 for all of them number [0, 4, 0, 808]; n'_420 is even on all of them (multiplication by a unit changes n'_420 by an even number on multisets of even size)
+PASS  the Galois orbits [w_1], [w_2] have 96 and 96 elements and are disjoint (w_1, w_2 are not Galois conjugate)
+PASS  w_1: (n_420, n_15, n_35, n_60, n_105, n_140, n_R) = (6, 1, 1, 1, 3, 3, 1), n_4 + n_12 + n_20 + n_28 + n_84 = 0, n'_420 = 3; this is the pattern (6, 1, 1, 1, 3, 3, 1) of Theorem 8.1, with 6 + 1 + 1 + 1 + 3 + 3 + 1 = 16 entries
+PASS  w_2: (n_420, n_15, n_35, n_60, n_105, n_140, n_R) = (6, 1, 1, 1, 3, 3, 1), n_4 + n_12 + n_20 + n_28 + n_84 = 0, n'_420 = 3; this is the pattern (6, 1, 1, 1, 3, 3, 1) of Theorem 8.1, with 6 + 1 + 1 + 1 + 3 + 3 + 1 = 16 entries
+
+Part D. Cross-check: Hodge characters of level 420 with four entries
+PASS  nu_15 vanishes on the 5235 Hodge characters of level 420 with four entries having an entry dividing 420 (nu_15 is invariant under (Z/420)^x, and every orbit contains such a character)
+
+all 31 checks passed

@@ -42,6 +42,7 @@
 
 \title[Hodge conjecture for Fermat varieties of degree $35$]{The Hodge conjecture for Fermat varieties of degree $35$}
 \author{Trevin Peterson}
+\thanks{Version 1.1. doi:\href{https://doi.org/10.5281/zenodo.22931340}{10.5281/zenodo.22931340}. Version~1.1 adds Theorem~\ref{thm:main}(E) and Section~\ref{sec:420} (the level $420$); the results of version~1.0 are unchanged.}
 \date{}
 \subjclass[2020]{Primary 14C30; Secondary 14C25, 14J70, 14K22, 65G20}
 \keywords{Hodge conjecture, generalized Hodge conjecture, Fermat varieties, abelian varieties of Fermat type, algebraic cycles, Abel--Jacobi map, interval arithmetic}
@@ -49,7 +50,7 @@
 \begin{document}
 
 \begin{abstract}
-Let $X^n_m\subset\PP^{n+1}$ be the Fermat variety of dimension $n$ and degree $m$. We prove the Hodge conjecture for $X^n_m$ for every $n$ when $m=2^a3^b5^c7^d$ is not divisible by $420$. For $cd=0$ this is due to Aoki, and the smallest new degree is $m=35$. By Aoki's work on the gap group, what is missing is the algebraicity of the Hodge classes attached to one exceptional character of $X^6_{35}$. We obtain it from a coniveau statement: the $24$-dimensional rational sub-Hodge structure of level one of $H^3(X^3_{35},\Q)$ attached to the character $(1,2,16,21,30)$ of $\mu_{35}^5$ is supported on a divisor, as predicted by the generalized Hodge conjecture. The proof uses an explicit one-parameter family of curves on $X^3_{35}$, a residue formula for the derivative of the Abel--Jacobi map along the family, and a computer-verified interval-arithmetic certificate at one point of the family. For the ten degrees $m=35k$, $1\le k\le 10$, the reduction to this one class is verified by an exact finite computation which does not use Aoki's structure theorem. As consequences we obtain the Hodge conjecture for products of Fermat varieties of one such degree and for abelian varieties of Fermat type of these degrees, among them the Jacobian of the curve $y^2=x^{35}-1$.
+Let $X^n_m\subset\PP^{n+1}$ be the Fermat variety of dimension $n$ and degree $m$. We prove the Hodge conjecture for $X^n_m$ for every $n$ when $m=2^a3^b5^c7^d$ is not divisible by $420$. For $cd=0$ this is due to Aoki, and the smallest new degree is $m=35$. By Aoki's work on the gap group, what is missing is the algebraicity of the Hodge classes attached to one exceptional character of $X^6_{35}$. We obtain it from a coniveau statement: the $24$-dimensional rational sub-Hodge structure of level one of $H^3(X^3_{35},\Q)$ attached to the character $(1,2,16,21,30)$ of $\mu_{35}^5$ is supported on a divisor, as predicted by the generalized Hodge conjecture. The proof uses an explicit one-parameter family of curves on $X^3_{35}$, a residue formula for the derivative of the Abel--Jacobi map along the family, and a computer-verified interval-arithmetic certificate at one point of the family. For the ten degrees $m=35k$, $1\le k\le 10$, the reduction to this one class is verified by an exact finite computation which does not use Aoki's structure theorem. As consequences we obtain the Hodge conjecture for products of Fermat varieties of one such degree and for abelian varieties of Fermat type of these degrees, among them the Jacobian of the curve $y^2=x^{35}-1$. Finally, for $m=420$ we show that the Hodge characters in the one remaining class of the gap group have dimension at least $14$, a bound which is attained, and deduce the Hodge conjecture for $X^n_{420}$ for $n\le12$.
 \end{abstract}
 
 \maketitle
@@ -73,15 +74,16 @@ Let $\alpha=(1,2,16,21,30)$, a character of $G^3_{35}$.
 \item[(B)] For $m\in\{35,70,105,140,175,210,245,280,315,350\}$ and every $n\ge0$, the Hodge conjecture holds for $X^n_m$.
 \item[(C)] More generally, the Hodge conjecture holds for $X^n_m$ for every $n\ge0$ and every $m=2^a3^b5^c7^d$, $a,b,c,d\ge0$, such that $420\nmid m$.
 \item[(D)] Let $m$ be as in {\rm(C)}. Then the Hodge conjecture holds for every product $X^{r_1}_m\times\dots\times X^{r_k}_m$, and for every abelian variety of Fermat type of degree $m$, i.e.\ every abelian variety isogenous to a factor of a power of the Jacobian of the Fermat curve $X^1_m$. In particular, it holds for every power of the Jacobian of the hyperelliptic curve $y^2=x^{35}-1$.
+\item[(E)] For $m=420$, the Hodge conjecture holds for $X^n_{420}$ for every $n\le12$, and for every product $X^{r_1}_{420}\times\dots\times X^{r_k}_{420}$ with $r_1+\dots+r_k+2(k-1)\le12$.
 \end{itemize}
 \end{theorem}
 
-The step from (A) to (B)--(D) is the algebraicity of the $24$-dimensional space $M_\beta\subset H^6(X^6_{35},\Q)$ of Hodge classes, where $\beta=\alpha*(17,22,31)$ (Theorem~\ref{thm:beta}).
+The step from (A) to (B)--(E) is the algebraicity of the $24$-dimensional space $M_\beta\subset H^6(X^6_{35},\Q)$ of Hodge classes, where $\beta=\alpha*(17,22,31)$ (Theorem~\ref{thm:beta}).
 
 \begin{remark}\label{rem:intro}
 (a) Statement (A) is the case of $M_\alpha$ of Grothendieck's generalized Hodge conjecture \cite{Gro69}: $M_\alpha$ is a sub-Hodge structure of level one of $H^3$, and the conjecture predicts that it lies in $N^1H^3$. If a character $a$ of $G^3_m$ has two entries with $a_i+a_j\equiv 0$, the analogous statement follows from the inductive structure (Theorem~\ref{thm:SK} with $s=1$); no two entries of $\alpha$ have this property.
 
-(b) The proof of (B) uses (A), the classical results recalled in Section~\ref{sec:prelim}, and an exact finite computation at each of the ten levels $m=35k$, $1\le k\le 10$ (Proposition~\ref{prop:tenlevels}). The proof of (C) uses instead Aoki's generation theorem for the gap group \cite[Thm.~2.1]{Ao00}, \cite[Thm.~D]{Ao83} (Theorem~\ref{thm:aokiD}(i)); the other ingredients are proved here, are classical, or are finite computations at the six levels $12$, $15$, $20$, $21$, $28$, $35$ (Lemma~\ref{lem:reps}). Statement (D) follows from (C) by results of Shioda \cite[Thm.~IV]{Sh79} and Aoki \cite[Cor.~3.2]{Ao00}.
+(b) The proof of (B) uses (A), the classical results recalled in Section~\ref{sec:prelim}, and an exact finite computation at each of the ten levels $m=35k$, $1\le k\le 10$ (Proposition~\ref{prop:tenlevels}). The proof of (C) uses instead Aoki's generation theorem for the gap group \cite[Thm.~2.1]{Ao00}, \cite[Thm.~D]{Ao83} (Theorem~\ref{thm:aokiD}(i)); the other ingredients are proved here, are classical, or are finite computations at the six levels $12$, $15$, $20$, $21$, $28$, $35$ (Lemma~\ref{lem:reps}). Statement (D) follows from (C) by results of Shioda \cite[Thm.~IV]{Sh79} and Aoki \cite[Cor.~3.2]{Ao00}. The proof of (E) (Section~\ref{sec:420}) uses (A), the same classical results, and elementary identities for character sums at level $420$; Aoki's generation theorem enters only one of two proofs of Proposition~\ref{prop:index420}, the other being a finite computation.
 
 (c) If $35\nmid m$, statement (C) is due to Aoki; the argument of Section~\ref{subsec:proofBC} is his argument in the proof of \cite[Thm.~0.1]{Ao00}, with the passage from the gap group to characters made explicit (Lemma~\ref{lem:transfer}) and with the representatives of Lemma~\ref{lem:reps}. Let $35\mid m$. Then $\fB^n_m$ contains exceptional characters in the class of $\beta$ in the gap group for every even $n\ge6$, and also for $n=4$ if $m$ is even (Remark~\ref{rem:new}); for these pairs $(m,n)$ we are not aware of a previous proof of the Hodge conjecture for $X^n_m$. For the five odd levels in (B) the class of $\beta$ contains no character of dimension at most $4$, so that the case $n=4$ of (B) does not depend on (A) there: it follows from Proposition~\ref{prop:tenlevels}, Lemma~\ref{lem:transfer} and Remark~\ref{rem:new}. For $m\in\{35,105,175\}$ this case was proved in \cite{dS21,Jum26a}; for $m\in\{245,315\}$ we know no earlier reference. Thus at the ten levels of (B) the cases that depend on (A) are the even $n\ge6$ for odd $m$ and the even $n\ge4$ for even $m$.
 
@@ -91,10 +93,10 @@ The step from (A) to (B)--(D) is the algebraicity of the $24$-dimensional space 
 
 (f) Statement (D) extends \cite[Thm.~0.1(i)]{Ao00} from $cd=0$ to $420\nmid m$. The Hodge conjecture for the Jacobian of $y^2=x^{35}-1$ was left open in \cite[Example~8.6]{Ao02}, where it is shown that every simple factor of this Jacobian is stably nondegenerate.
 
-(g) If $420\mid m$, the gap group has one further basis class, and the Hodge conjecture for $X^n_m$ for all $n$ and all $m=2^a3^b5^c7^d$ reduces to the algebraicity of the Hodge classes attached to a single character of level $420$ (Remark~\ref{rem:420}). We do not treat this case.
+(g) If $420\mid m$, the gap group has one further basis class, and the Hodge conjecture for $X^n_m$ for all $n$ and all $m=2^a3^b5^c7^d$ reduces to the algebraicity of the Hodge classes attached to a single character of level $420$ (Remark~\ref{rem:420}). In Section~\ref{sec:420} we show that the Hodge characters of level $420$ in this class have dimension at least $14$, which gives (E), and that there are such characters of dimension $14$ (Theorem~\ref{thm:420}); the reduction can then be made to an explicit character $w_1$ of dimension $14$ (Remark~\ref{rem:420open}). The Hodge conjecture for $X^n_{420}$ with even $n\ge14$, and for $X^n_m$ with even $n\ge4$ and $m=420k$, $k\ge2$, is not treated here.
 \end{remark}
 
-Statement (A) is the geometric input, and it is the only step which is not classical. In Section~\ref{sec:family} we write down a one-parameter family of curves on $X^3_{35}$, defined by an identity among binary forms, prove a residue formula for the derivative of its Abel--Jacobi map in the direction of $M_\alpha$ (Proposition~\ref{prop:residue}), and deduce (A) from the nonvanishing of an explicit residue sum at a single point of the family (Theorem~\ref{thm:coniveau}); this nonvanishing is established by a computer-verified certificate in Appendix~\ref{app:cert}. In Section~\ref{sec:beta} we deduce the algebraicity of $M_\beta$ from (A) by the Lefschetz $(1,1)$-theorem and the inductive structure. Section~\ref{sec:gap} recalls Aoki's gap group, proves a lemma which passes from generators of the gap group to algebraic cycles in all dimensions, and proves (B) and (C). Section~\ref{sec:products} proves (D), and Section~\ref{sec:examples} treats $\gamma$ and $\delta$. The identities used are listed in Appendix~\ref{app:ident}; the finite computations are carried out by the ancillary files.
+Statement (A) is the geometric input, and it is the only step which is not classical. In Section~\ref{sec:family} we write down a one-parameter family of curves on $X^3_{35}$, defined by an identity among binary forms, prove a residue formula for the derivative of its Abel--Jacobi map in the direction of $M_\alpha$ (Proposition~\ref{prop:residue}), and deduce (A) from the nonvanishing of an explicit residue sum at a single point of the family (Theorem~\ref{thm:coniveau}); this nonvanishing is established by a computer-verified certificate in Appendix~\ref{app:cert}. In Section~\ref{sec:beta} we deduce the algebraicity of $M_\beta$ from (A) by the Lefschetz $(1,1)$-theorem and the inductive structure. Section~\ref{sec:gap} recalls Aoki's gap group, proves a lemma which passes from generators of the gap group to algebraic cycles in all dimensions, and proves (B) and (C). Section~\ref{sec:products} proves (D), Section~\ref{sec:examples} treats $\gamma$ and $\delta$, and Section~\ref{sec:420} treats the level $420$ and proves (E). The identities used are listed in Appendix~\ref{app:ident}; the finite computations are carried out by the ancillary files.
 
 \subsection*{Conventions} Varieties are over $\C$. Cohomology is singular cohomology, and $H^k(Y,\C)=H^k(Y,\Q)\otimes\C$ carries its Hodge decomposition. For a smooth projective variety $Y$ we write $\mathrm{Alg}^p(Y)\subset H^{2p}(Y,\Q)$ for the $\Q$-span of the classes of algebraic cycles of codimension $p$; its elements are called algebraic classes.
 
@@ -671,7 +673,7 @@ By Theorem~\ref{thm:aokiD} (and, for $m=35k$ with $k\le10$, by Proposition~\ref{
 \end{remark}
 
 \begin{remark}\label{rem:420}
-Let $m=2^a3^b5^c7^d$ with $420\mid m$. Then $\cQ(m)=\{12,15,20,21,28,35,420\}$, and by Theorem~\ref{thm:aokiD} and Lemma~\ref{lem:reps}(iii) the subgroup $L''=S_{420}+\sum_{q\in\cQ(420)\sm\{420\}}\Z\,\uu(\rho^{(420)}_q)$ has index $2$ in $B_{420}$. By Lemma~\ref{lem:Blattice} and its proof there are Hodge characters $\rho$ of level $420$ with $\uu(\rho)\notin L''$. The proof of Theorem~\ref{thm:main}(C) shows that if $V(\rho)$ is algebraic for one such $\rho$, then the Hodge conjecture holds for $X^n_m$ for every $n$ and every $m=2^a3^b5^c7^d$. We do not know an algebraic character of this kind.
+Let $m=2^a3^b5^c7^d$ with $420\mid m$. Then $\cQ(m)=\{12,15,20,21,28,35,420\}$, and by Theorem~\ref{thm:aokiD} and Lemma~\ref{lem:reps}(iii) the subgroup $L''=S_{420}+\sum_{q\in\cQ(420)\sm\{420\}}\Z\,\uu(\rho^{(420)}_q)$ has index $2$ in $B_{420}$. By Lemma~\ref{lem:Blattice} and its proof there are Hodge characters $\rho$ of level $420$ with $\uu(\rho)\notin L''$. The proof of Theorem~\ref{thm:main}(C) shows that if $V(\rho)$ is algebraic for one such $\rho$, then the Hodge conjecture holds for $X^n_m$ for every $n$ and every $m=2^a3^b5^c7^d$. We do not know an algebraic character of this kind. By Theorem~\ref{thm:420}, such characters have dimension at least $14$, and there are such characters of dimension $14$.
 \end{remark}
 
 %======================================================================
@@ -771,6 +773,193 @@ The identities above show that $\gamma$ and $\delta$ lie in the class of $\beta$
 
 
 %======================================================================
+\section{\texorpdfstring{The level $420$}{The level 420}}\label{sec:420}
+
+Throughout this section $m=420$. The divisors of $420$ in $\sP$ are $3,4,5,7$, so that $\cQ(420)=\{12,15,20,21,28,35,420\}$, and we put
+\[
+L''_{420}=S_{420}+\sum_{q\in\cQ(420)\sm\{420\}}\Z\,\uu(\rho^{(420)}_q),\qquad \rho^{(420)}_q=(420/q)\rho_q,
+\]
+as in Proposition~\ref{prop:tenlevels} and Remark~\ref{rem:420}. The characters $\rho^{(420)}_q$ are algebraic by Lemma~\ref{lem:reps}(i) and Lemma~\ref{lem:basic}(c) (for $q=35$ this uses Theorem~\ref{thm:beta}). Hence, by Lemma~\ref{lem:transfer} applied with $\mathcal A$ the set of the standard characters and the $\rho^{(420)}_q$, $q\ne420$, every $a\in\fB^n_{420}$ with $\uu(a)\in L''_{420}$ is algebraic.
+
+For $x=\sum_yc_y(y)\in R_{420}$ and a divisor $N>1$ of $420$ let $n_N(x)=\sum_{\mathrm{ord}(y)=N}c_y$, where $\mathrm{ord}(y)$ is the order of $y$ in $\Z/420$; for a character $a$ we write $n_N(a)=n_N(\uu(a))$, the number of entries of $a$ of order $N$. Put $\nu_{15}(x)=n_{15}(x)\bmod 2$,
+\[
+\cR=\{2,3,5,6,7,10,14,21,30,42,70,210\},\qquad n_\cR(x)=\sum_{N\in\cR}n_N(x),
+\]
+and let $n'_{420}(x)=\sum_yc_y$, the sum over the units $y\in(\Z/420)^\times$ with $y\equiv\pm2\pmod5$. Finally let
+\[
+\begin{aligned}
+w_1&=(56,69,176,191,193,199,204,209,210,236,243,253,257,267,296,301),\\
+w_2&=(1,17,28,132,141,168,191,199,236,253,257,267,296,371,387,416).
+\end{aligned}
+\]
+
+\begin{theorem}\label{thm:420}
+\begin{itemize}
+\item[(i)] $L''_{420}$ has index $2$ in $B_{420}$, and $L''_{420}=\{x\in B_{420}:\nu_{15}(x)=0\}$.
+\item[(ii)] Let $a\in\fB^n_{420}$ with $\uu(a)\notin L''_{420}$. Then $n_{420}(a)\ge6$, $n_{105}(a)\ge3$, $n_{140}(a)\ge3$ and $n_{15}(a),n_{35}(a),n_{60}(a),n_\cR(a)\ge1$. In particular $a$ has at least $16$ entries, i.e.\ $n\ge14$.
+\item[(iii)] $w_1,w_2\in\fB^{14}_{420}$, and $\uu(w_1),\uu(w_2)\notin L''_{420}$. Each of them has exactly $6$, $1$, $1$, $1$, $3$, $3$ entries of order $420$, $15$, $35$, $60$, $105$, $140$, respectively, and one entry with order in $\cR$; so equality holds in {\rm(ii)}. The characters $w_1$ and $w_2$ are not Galois conjugate, and $\dim M_{w_1}=\dim M_{w_2}=96$.
+\item[(iv)] $\fC^n_{420}=\fB^n_{420}$ for every even $n\le12$. Hence the Hodge conjecture holds for $X^n_{420}$ for every $n\le12$, and for every product $X^{r_1}_{420}\times\dots\times X^{r_k}_{420}$ with $r_1+\dots+r_k+2(k-1)\le12$.
+\end{itemize}
+\end{theorem}
+
+Part (i) is Proposition~\ref{prop:index420} below, and (ii) is proved in Section~\ref{subsec:proof420} from four lemmas on character sums (Lemmas~\ref{lem:parity420}--\ref{lem:norm420}).
+
+\subsection{\texorpdfstring{The class of $\xi_{420}$}{The class of xi(420)}}
+
+\begin{lemma}\label{lem:nuodd}
+Let $m\ge3$, and let $\ell$ be an odd squarefree divisor of $m$ with $\gcd(\ell,m/\ell)=1$. Let $O_\ell\subset\Z/m$ be the set of elements of order $\ell$ and $\nu_\ell\colon R_m\to\Z/2$ the homomorphism $\sum_yc_y(y)\mapsto\sum_{y\in O_\ell}c_y\bmod2$. Then $\nu_\ell$ vanishes on $S_m$.
+\end{lemma}
+
+\begin{proof}
+As $O_\ell=-O_\ell$, $\nu_\ell$ vanishes on $D_m$. Let $\sigma=\sigma_{p,i}$ be a standard character, $d=m/p$, and let $\Gamma_k\subset\Z/m$ denote the subgroup of order $k$. If $p\nmid\ell$, the argument in the proof of Lemma~\ref{lem:nu} for this case applies without change (it uses only that $p\nmid\ell$ and $\ell\ne2$) and shows that $0$ or $2$ entries of $\sigma$ lie in $O_\ell$. Let $p\mid\ell$. Then $p$ is odd, and $p^2\nmid m$ because $\ell$ is squarefree and $\gcd(\ell,m/\ell)=1$; so $\Z/m=\Gamma_p\oplus\Gamma_{m/p}$, where $p$ does not divide the orders of the elements of $\Gamma_{m/p}$. Write $i=i_p+i'$ accordingly. Then $i'\ne0$, since $i\notin\Gamma_p=d\Z/m\Z$ as $0<i<d$. The first $p$ entries of $\sigma$ are the elements $z+i'$, $z\in\Gamma_p$, of the coset $i+\Gamma_p$, and $z+i'$ has order $\mathrm{ord}(z)\,\mathrm{ord}(i')$; this order is $\ell$ if and only if $z\ne0$ and $\mathrm{ord}(i')=\ell/p$. So either $0$ or $p-1$ of these entries lie in $O_\ell$. The last entry $-pi=-pi'$ lies in $\Gamma_{m/p}$, so its order is prime to $p$ and it does not lie in $O_\ell$. In both cases the number of entries of $\sigma$ in $O_\ell$ is even.
+\end{proof}
+
+\begin{proposition}\label{prop:index420}
+\begin{itemize}
+\item[(a)] $\nu_{15}$ vanishes on $L''_{420}$.
+\item[(b)] $w_1,w_2\in\fB^{14}_{420}$, and each of them has exactly one entry of order $15$, namely $56$, resp.\ $28$; so $\nu_{15}(w_1)=\nu_{15}(w_2)=1$.
+\item[(c)] $[B_{420}:L''_{420}]=2$, and $L''_{420}=\{x\in B_{420}:\nu_{15}(x)=0\}$.
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+(a) Lemma~\ref{lem:nuodd} with $\ell=15$ applies, as $\gcd(15,28)=1$; so $\nu_{15}$ vanishes on $S_{420}$. An entry of $\rho^{(420)}_q=(420/q)\rho_q$ of order $15$ comes from an entry of $\rho_q$ of order $15$ in $\Z/q$. Hence $\rho^{(420)}_q$ has no such entry for $q\in\{12,20,21,28,35\}$, and $\rho^{(420)}_{15}=(28,168,280,364)$ has two, $28$ and $364$.
+
+(b) The membership is a finite computation with Theorem~\ref{thm:shiodaI}(iii) (ancillary file \texttt{level420.py}); the entries of order $15$ are read off.
+
+(c) By Theorem~\ref{thm:aokiD}(i), $B_{420}$ is generated by $S_{420}$ and the elements $t\cdot(420/q)_*\xi_q$, $q\in\cQ(420)$, $t\in(\Z/420)^\times$. For $q\ne420$, $(420/q)_*\xi_q\equiv\uu(\rho^{(420)}_q)\pmod{S_{420}}$ by Lemma~\ref{lem:reps}(iii) and Lemma~\ref{lem:standard}, and $t\cdot x\equiv-x\equiv x\pmod{S_{420}}$ for $x\in B_{420}$ by Theorem~\ref{thm:aokiD}(ii). Hence $B_{420}=L''_{420}+\Z\,\xi_{420}$ with $2\xi_{420}\in S_{420}$, and $[B_{420}:L''_{420}]\le2$. By (a) and (b), $\nu_{15}$ is a surjective homomorphism $B_{420}\to\Z/2$ vanishing on $L''_{420}$; so $[B_{420}:L''_{420}]=2$ and $L''_{420}$ is its kernel.
+
+Independently of Theorem~\ref{thm:aokiD}, \texttt{level420.py} shows $B_{420}=L''_{420}+\Z\,\uu(w_1)$ and $2\uu(w_1)\in S_{420}$, by the computation described in the proof of Proposition~\ref{prop:tenlevels}(a) (the echelon basis of $L''_{420}+\Z\,\uu(w_1)+\Z\,(210)$ has $r_{420}=371$ rows, the product of its pivots is $4$, and it has rank $371$ modulo $2$); together with (a) and (b) this proves (c) as well. The Smith normal forms computed with FLINT give $[K_{420}:S_{420}]=256$ and $[K_{420}:L''_{420}]=4$, in accordance with $B_{420}/S_{420}\cong(\Z/2)^7$ (Theorem~\ref{thm:aokiD}(iii)).
+\end{proof}
+
+\subsection{Character sums}\label{subsec:charsums}
+Let $m\ge3$. For a divisor $N>1$ of $m$, every $y\in\Z/m$ of order $N$ can be written uniquely as $y=(m/N)u_y$ with $u_y\in(\Z/N)^\times$. For a Dirichlet character $\chi$ of conductor $f$ dividing $N$ we write $\chi(u_y)$ for the value of $\chi$ at $u_y\bmod f$, and for $x=\sum_yc_y(y)\in R_m$ we put
+\[
+s_N(\chi;x)=\sum_{\mathrm{ord}(y)=N}c_y\,\chi(u_y).
+\]
+Let $B_{1,\chi}=\frac1f\sum_{a=1}^{f}\chi(a)\,a$ be the first generalized Bernoulli number. If $\chi$ is odd, then $B_{1,\chi}\ne0$ \cite[Chapter~4]{Wa97}; for the characters used below this is also checked directly in \texttt{level420.py}.
+
+\begin{lemma}\label{lem:charsum}
+Let $\chi$ be an odd primitive Dirichlet character whose conductor $f$ divides $m$, and let $x\in K_m$ (for instance $x\in B_m$). Then
+\begin{equation}\label{eq:charsum}
+\sum_{f\mid N\mid m}\frac{\varphi(m)}{\varphi(N)}\prod_{p\mid N,\ p\nmid f}\bigl(1-\bar\chi(p)\bigr)\;s_N(\chi;x)=0,
+\end{equation}
+where $\varphi$ is Euler's function and $p$ runs over the primes dividing $N$ but not $f$.
+\end{lemma}
+
+\begin{proof}
+For $t\in(\Z/m)^\times$ put $g(t)=\sum_yc_y\bigl(2\langle ty\rangle-m\bigr)$; as $x\in K_m$, $g=0$. Hence $\sum_t\bar\chi(t)g(t)=\sum_yc_yG(y)=0$, where $G(y)=\sum_{t\in(\Z/m)^\times}\bar\chi(t)\bigl(2\langle ty\rangle-m\bigr)$ and $\bar\chi$ is regarded as a character modulo $m$. Let $y$ have order $N$. Then $2\langle ty\rangle-m=\frac mN\bigl(2\langle tu_y\rangle_N-N\bigr)$, where $\langle\ \rangle_N$ denotes the representative in $\{1,\dots,N-1\}$, and this depends only on $t\bmod N$. If $f\nmid N$, then $\bar\chi$ is nontrivial on the kernel of $(\Z/m)^\times\to(\Z/N)^\times$, since $f$ is the conductor of $\chi$, and $G(y)=0$. If $f\mid N$, then $\bar\chi(t)$ depends only on $t\bmod N$; the fibres of $(\Z/m)^\times\to(\Z/N)^\times$ have $\varphi(m)/\varphi(N)$ elements, and substituting $s=tu_y$ gives
+\[
+G(y)=\frac mN\,\frac{\varphi(m)}{\varphi(N)}\,\chi(u_y)\sum_{s\in(\Z/N)^\times}\bar\chi(s)\bigl(2\langle s\rangle_N-N\bigr).
+\]
+For every multiple $F$ of $f$ one has $\sum_{a=1}^F\bar\chi(a)a=\frac Ff\sum_{a=1}^f\bar\chi(a)a=F\,B_{1,\bar\chi}$ (write $a=a_0+fk$ with $1\le a_0\le f$ and use $\sum_{a_0}\bar\chi(a_0)=0$), and $\sum_{s\in(\Z/N)^\times}\bar\chi(s)=0$, as $\bar\chi$ is a nontrivial character of $(\Z/N)^\times$. Let $N'$ be the product of the primes dividing $N$ but not $f$. As $\bar\chi(s)=0$ if $\gcd(s,f)>1$, M\"obius inversion over the divisors $e$ of $N'$ gives
+\[
+\sum_{s\in(\Z/N)^\times}\bar\chi(s)\bigl(2\langle s\rangle_N-N\bigr)=2\sum_{e\mid N'}\mu(e)\,\bar\chi(e)\,e\sum_{s'=1}^{N/e}\bar\chi(s')s'=2N\,B_{1,\bar\chi}\prod_{p\mid N'}\bigl(1-\bar\chi(p)\bigr).
+\]
+Hence $0=\sum_yc_yG(y)=2m\,B_{1,\bar\chi}$ times the left side of \eqref{eq:charsum}. Since $\bar\chi$ is odd, $B_{1,\bar\chi}\ne0$, and \eqref{eq:charsum} follows.
+\end{proof}
+
+Now let $m=420$. Let $\chi_4$ and $\chi_3$ be the nontrivial characters modulo $4$ and $3$, $\epsilon_5$ and $\epsilon_7$ the quadratic characters modulo $5$ and $7$, $\lambda$ the character modulo $5$ with $\lambda(2)=i$, and $\theta$ the character modulo $7$ with $\theta(3)=\zeta_3=e^{2\pi i/3}$. The characters $\chi_4$, $\chi_3$, $\epsilon_7$ and $\lambda$ are odd, and $\epsilon_5$ and $\theta$ are even. Their values at the primes $2,3,5,7$ not dividing the conductor are
+\[
+\begin{array}{c|cccc}
+ & 2 & 3 & 5 & 7\\ \hline
+\chi_4 & & -1 & 1 & -1\\
+\chi_3 & -1 & & -1 & 1\\
+\epsilon_5 & -1 & -1 & & -1\\
+\epsilon_7 & 1 & -1 & -1 & \\
+\lambda & i & -i & & i\\
+\theta & \zeta_3^2 & \zeta_3 & \zeta_3^2 &
+\end{array}
+\]
+For each of the following eleven odd primitive characters $\chi$ we apply Lemma~\ref{lem:charsum} and divide by a common factor $\kappa$ of the coefficients. For $x\in B_{420}$, with $s_N=s_N(\chi;x)$, this gives the following relations, each preceded by its character $\chi$:
+\begin{align}
+\chi_3\colon\ \ & 2s_3+4s_6+2s_{12}+s_{15}+2s_{30}+s_{60}=0; \label{eq:r1}\\
+\chi_3\epsilon_5\colon\ \ & 3s_{15}+s_{105}=0; \label{eq:r2}\\
+\epsilon_7\colon\ \ & 2s_7+2s_{21}+s_{35}+s_{105}=0; \label{eq:r3}\\
+\epsilon_5\epsilon_7\colon\ \ & s_{35}+2s_{70}+s_{140}=0; \label{eq:r4}\\
+\chi_4\colon\ \ & 3s_4+3s_{12}+s_{28}+s_{84}=0; \label{eq:r5}\\
+\chi_4\epsilon_5\colon\ \ & s_{20}=0; \label{eq:r6}\\
+\chi_4\chi_3\epsilon_7\colon\ \ & s_{84}=0; \label{eq:r7}\\
+\chi_4\chi_3\epsilon_5\epsilon_7\colon\ \ & s_{420}=0; \label{eq:r8}\\
+\lambda\colon\ \ & 12s_5+12(1+i)s_{10}+6(1-i)s_{15}+6(1+i)s_{20}+12s_{30}+2(1+i)s_{35} \label{eq:r9}\\
+&\quad{}+6s_{60}+4i\,s_{70}+2s_{105}+2i\,s_{140}+2(1+i)s_{210}+(1+i)s_{420}=0; \notag\\
+\chi_4\epsilon_5\theta\colon\ \ & 2s_{140}+(1-\bar\zeta_3)s_{420}=0; \label{eq:r10}\\
+\chi_4\chi_3\lambda\theta\colon\ \ & s_{420}=0. \label{eq:r11}
+\end{align}
+The conductors of these characters are $3,15,7,35,4,20,84,420,5,140,420$, and the factors $\kappa$ are $24,4,8,4,16,12,4,1,2,1,1$, respectively. For instance, for $\chi=\chi_3$ the factor $1-\chi_3(7)$ vanishes, so only $N\in\{3,6,12,15,30,60\}$ contribute, with $\varphi(420)/\varphi(N)=48,48,24,12,12,6$ and Euler factors $1,2,2,2,4,4$ (as $1-\chi_3(2)=1-\chi_3(5)=2$); dividing by $24$ gives \eqref{eq:r1}. For $\chi=\lambda$ the Euler factors are products of $1-\bar\lambda(2)=1+i$, $1-\bar\lambda(3)=1-i$ and $1-\bar\lambda(7)=1+i$; for $\chi=\chi_4\epsilon_5\theta$ only $N=140$ and $N=420$ contribute, with $\varphi(420)/\varphi(140)=2$ and the factor $1-\bar\chi(3)=1-\bar\zeta_3$ for $N=420$, since $\chi(3)=\chi_4(3)\epsilon_5(3)\theta(3)=\zeta_3$. The other cases are the same computation. The ancillary file \texttt{level420.py} checks all coefficients, and also checks each of \eqref{eq:r1}--\eqref{eq:r11} on a set of generators of $B_{420}$.
+
+\subsection{Four lemmas}
+
+\begin{lemma}\label{lem:parity420}
+For $x\in B_{420}$ the integers
+\[
+n_{15}(x),\quad n_{35}(x),\quad n_{60}(x),\quad n_{105}(x),\quad n_{140}(x),\quad n_\cR(x)
+\]
+have the same parity, and $n_{20}(x)$, $n_{84}(x)$, $n_4(x)+n_{12}(x)+n_{28}(x)$ and $n_{420}(x)$ are even.
+\end{lemma}
+
+\begin{proof}
+For a character $\chi$ with values $\pm1$ one has $s_N(\chi;x)\equiv n_N(x)\pmod2$. Reducing \eqref{eq:r1}--\eqref{eq:r8} modulo $2$ gives $n_{15}\equiv n_{60}$, $n_{15}\equiv n_{105}$, $n_{35}\equiv n_{105}$, $n_{35}\equiv n_{140}$, $n_4+n_{12}+n_{28}+n_{84}\equiv0$, $n_{20}\equiv0$, $n_{84}\equiv0$ and $n_{420}\equiv0$. The $23$ divisors $N>1$ of $420$ are the elements of $\cR$, the five numbers $15,35,60,105,140$, and $4,12,28,20,84,420$. Hence $\len(x)=n_\cR+(n_{15}+n_{35}+n_{60}+n_{105}+n_{140})+(n_4+n_{12}+n_{28})+n_{20}+n_{84}+n_{420}$, and since $\len(x)$ is even, $n_\cR\equiv5n_{15}\equiv n_{15}\pmod 2$.
+\end{proof}
+
+\begin{lemma}\label{lem:gap420}
+For $x\in B_{420}$ one has $n'_{420}(x)\equiv n_{15}(x)\pmod2$.
+\end{lemma}
+
+\begin{proof}
+Let $s_N=s_N(\lambda;x)\in\Z[i]$ and $\pi=1+i$, so that $2=-i\pi^2$ and $1-i=-i\pi$. In \eqref{eq:r9} the coefficients of $s_{60}$, $s_{105}$, $s_{140}$ are $6$, $2$, $2i$, the coefficient of $s_{420}$ is $\pi$, and all other coefficients are divisible by $2\pi$. Hence $\pi s_{420}+2(3s_{60}+s_{105}+is_{140})\in2\pi\Z[i]$, and dividing by $\pi$,
+\[
+s_{420}\equiv-(1-i)\,(3s_{60}+s_{105}+is_{140})\pmod{2\Z[i]}.
+\]
+The values of $\lambda$ are congruent to $1$ modulo $\pi$, so $s_N\equiv n_N(x)\pmod\pi$; as $(1-i)\pi=2$, the right side is congruent to $(1-i)(n_{60}+n_{105}+n_{140})$ modulo $2$. On the other hand, $\lambda(y)=\pm1$ for $y\equiv\pm1\pmod5$ and $\lambda(y)=\pm i$ for $y\equiv\pm2\pmod5$. Writing $n'=n'_{420}(x)$ we get $s_{420}\equiv(n_{420}-n')+in'=n_{420}-(1-i)n'\equiv(1-i)n'\pmod2$, as $n_{420}$ is even by Lemma~\ref{lem:parity420}. Therefore $(1-i)(n'-n_{60}-n_{105}-n_{140})\in2\Z[i]$, i.e.\ the integer $n'-n_{60}-n_{105}-n_{140}$ is divisible by $\pi$, hence even. By Lemma~\ref{lem:parity420}, $n_{60}+n_{105}+n_{140}\equiv3n_{15}\equiv n_{15}$.
+\end{proof}
+
+\begin{lemma}\label{lem:six420}
+Let $x=\sum_yc_y(y)\in B_{420}$. For $A\in\{\{\pm1\},\{\pm2\}\}$ and $C\in\{\{\pm1\},\{\pm2\},\{\pm3\}\}$ let $n_{A,C}(x)$ be the sum of the $c_y$ over the units $y\in(\Z/420)^\times$ with $y\bmod5\in A$ and $y\bmod7\in C$. Then for each $A$ the three integers $n_{A,C}(x)$ have the same parity. In particular, if all $c_y\ge0$ and $n'_{420}(x)$ is odd, then $n_{420}(x)\ge6$.
+\end{lemma}
+
+\begin{proof}
+Let $\chi=\chi_4\chi_3\lambda\theta$ and $s_{420}=s_{420}(\chi;x)\in\Z[\zeta_{12}]$, which vanishes by \eqref{eq:r11}. We have $\Z[\zeta_{12}]=\Z[i,\zeta_3]$ (as $\zeta_{12}=-i\zeta_3$), and $1,\zeta_3,i,i\zeta_3$ is a $\Z$-basis of $\Z[\zeta_{12}]$, because $\zeta_3^2=-1-\zeta_3$ and $[\Q(\zeta_{12}):\Q]=4$. For a unit $y$ one has $\chi(y)=\pm\lambda(y)\theta(y)$, where $\lambda(y)\in\{\pm1\}$ if $y\bmod5\in\{\pm1\}$ and $\lambda(y)\in\{\pm i\}$ if $y\bmod5\in\{\pm2\}$, and $\theta(y)=1,\zeta_3^2,\zeta_3$ if $y\bmod7\in\{\pm1\},\{\pm2\},\{\pm3\}$ (note $\theta(-1)=1$, $\theta(2)=\theta(3)^2$). Modulo $2\Z[\zeta_{12}]$ the signs can be ignored, and with $n_{A,C}=n_{A,C}(x)$,
+\[
+\begin{aligned}
+0=s_{420}&\equiv\sum_{r}r\bigl(n_{A_r,\{\pm1\}}+n_{A_r,\{\pm2\}}\zeta_3^2+n_{A_r,\{\pm3\}}\zeta_3\bigr)\\
+&=\sum_rr\bigl((n_{A_r,\{\pm1\}}-n_{A_r,\{\pm2\}})+(n_{A_r,\{\pm3\}}-n_{A_r,\{\pm2\}})\zeta_3\bigr)\pmod{2\Z[\zeta_{12}]},
+\end{aligned}
+\]
+where $r$ runs over $\{1,i\}$, $A_1=\{\pm1\}$ and $A_i=\{\pm2\}$. Comparing coefficients in the basis $1,\zeta_3,i,i\zeta_3$ gives the first assertion. Now let $c_y\ge0$ and $n'_{420}(x)=\sum_Cn_{\{\pm2\},C}$ odd. Then the three $n_{\{\pm2\},C}$ are odd, hence positive. As $n_{420}(x)$ is even (Lemma~\ref{lem:parity420}), $\sum_Cn_{\{\pm1\},C}=n_{420}(x)-n'_{420}(x)$ is odd as well, so the three $n_{\{\pm1\},C}$ are positive, and $n_{420}(x)=\sum_{A,C}n_{A,C}\ge6$.
+\end{proof}
+
+\begin{lemma}\label{lem:norm420}
+Let $x=\sum_yc_y(y)\in B_{420}$ with all $c_y\ge0$.
+\begin{itemize}
+\item[(a)] If $n_{15}(x)$ is odd, then $n_{105}(x)\ge3$.
+\item[(b)] $n_{140}(x)\ne1$.
+\end{itemize}
+\end{lemma}
+
+\begin{proof}
+(a) Let $\chi=\chi_3\epsilon_5$, a character with values $\pm1$. Then $s_{15}(\chi;x)\equiv n_{15}(x)\pmod 2$ is odd, hence nonzero, and \eqref{eq:r2} gives $|s_{105}(\chi;x)|=3|s_{15}(\chi;x)|\ge3$. Since $|s_{105}(\chi;x)|\le n_{105}(x)$, the assertion follows.
+
+(b) Let $\chi=\chi_4\epsilon_5\theta$. Its values are sixth roots of unity, so $s_{140}=s_{140}(\chi;x)$ and $s_{420}=s_{420}(\chi;x)$ lie in $\Z[\zeta_3]$. If $n_{140}(x)=1$, then $s_{140}$ is a root of unity, and \eqref{eq:r10} gives $4=|2s_{140}|^2=|1-\bar\zeta_3|^2\,|s_{420}|^2=3\,|s_{420}|^2$. This is impossible, since $|s_{420}|^2$ is the norm of $s_{420}$ from $\Q(\zeta_3)$ to $\Q$, an integer.
+\end{proof}
+
+\subsection{\texorpdfstring{Proof of Theorem~\ref{thm:420}}{Proof of Theorem 8.1}}\label{subsec:proof420}
+(i) is Proposition~\ref{prop:index420}(c).
+
+(ii) Let $x=\uu(a)$. By (i), $n_{15}(x)$ is odd. By Lemma~\ref{lem:parity420}, $n_{35}(x)$, $n_{60}(x)$, $n_{105}(x)$, $n_{140}(x)$ and $n_\cR(x)$ are odd, hence at least $1$; by Lemma~\ref{lem:norm420}, $n_{105}(x)\ge3$ and $n_{140}(x)\ge3$. By Lemma~\ref{lem:gap420}, $n'_{420}(x)$ is odd, so $n_{420}(x)\ge6$ by Lemma~\ref{lem:six420}. The sets of elements of order $420$, $15$, $35$, $60$, $105$, $140$ and of order in $\cR$ are pairwise disjoint, so $a$ has at least $6+1+1+1+3+3+1=16$ entries.
+
+(iii) The first assertion is Proposition~\ref{prop:index420}(b),(c). The counts of entries by order, the fact that $t w_1$ is not a permutation of $w_2$ for any $t\in(\Z/420)^\times$, and $|[w_1]|=|[w_2]|=96$ are finite computations (\texttt{level420.py}); $\dim M_{w_j}=|[w_j]|$ by Section~\ref{subsec:chars}.
+
+(iv) Let $n\le12$ be even and $a\in\fB^n_{420}$. Then $a$ has $n+2\le14$ entries, so $\uu(a)\in L''_{420}$ by (ii), and $a$ is algebraic, as remarked at the beginning of this section. The Hodge conjecture for $X^n_{420}$ follows as in the proof of Corollary~\ref{cor:transfer}(ii), for odd $n$ because $H^{2k}(X^n_{420},\Q)=\Q h^k$ for all $k$. The assertion on products follows from \cite[Thm.~IV]{Sh79} as in the proof of Corollary~\ref{cor:products}, since only $X^r_{420}$ with even $r\le12$ is needed. \qed
+
+\begin{remark}\label{rem:420open}
+(a) By Proposition~\ref{prop:index420}, $B_{420}=L''_{420}+\Z\,\uu(w_1)$. Hence, if $w_1\in\fC^{14}_{420}$, i.e.\ if the $96$-dimensional space $M_{w_1}\subset H^{14}(X^{14}_{420},\Q)$ of Hodge classes is algebraic, then $\fC^n_{420}=\fB^n_{420}$ for every even $n$ by Corollary~\ref{cor:transfer}(ii). Moreover, in that case the Hodge conjecture holds for $X^n_m$ for every $n$ and every $m=2^a3^b5^c7^d$: if $420\mid m$, then $(m/420)_*\xi_{420}\in(m/420)_*B_{420}\subset S_m+\sum_{q\ne420}\Z\,\uu(\rho^{(m)}_q)+\Z\,\uu((m/420)w_1)$ by Lemma~\ref{lem:standard}, and the argument of the proof of Theorem~\ref{thm:main}(C) applies with the additional algebraic characters $t\,(m/420)w_1$. The same holds with $w_2$ in place of $w_1$.
+
+(b) By Theorem~\ref{thm:420}(iii), for every even $n\ge14$ the set $\fB^n_{420}$ contains characters $a$ with $\uu(a)\notin L''_{420}$ (for instance $w_1*d$ with $d\in\fD^{n-14}_{420}$), and we do not know whether they are algebraic; so the Hodge conjecture for $X^n_{420}$ with even $n\ge14$ remains open. The relations \eqref{eq:r1}--\eqref{eq:r11} are specific to the level $420$, and we do not treat the levels $m=420k$ with $k\ge2$, except for $n=2$ (Theorem~\ref{thm:lef}) and odd $n$.
+\end{remark}
+
+
+%======================================================================
 \appendix
 
 \section{The certificate}\label{app:cert}
@@ -844,7 +1033,7 @@ All computations use the ball arithmetic of Arb \cite{Jo17} (through python-flin
 (I) The residue sum $\cI(y^*,v^*)$ of Definition~\ref{def:I} is evaluated in ball arithmetic: the roots $\rho_{1,2}=(-b^*\pm(b^{*2}-4)^{1/2})/2$ are enclosed, and $\Res_{s=\rho_1}\eta_v$ is the coefficient of $h$ in the Taylor expansion of $(\rho_1+h-\rho_2)^{-2}P\Delta_v/(c_3c_4\,s)$ at $s=\rho_1+h$, computed with truncated power series; similarly for $\rho_2$. The result is the ball of (c). As an independent check, which is not part of the certificate, the script also evaluates $\cI(y^*,v^*)$ in floating point by numerical integration of $\eta_v$ over small circles around $\rho_1$ and $\rho_2$; the two values agree to within $10^{-39}$.
 
 \subsection{Ancillary files}
-The ancillary files of this paper contain \texttt{certify.py}, which performs the computation of Section~\ref{subsec:computation} and compares its results with Table~\ref{tab:point} and Proposition~\ref{prop:certdetail}; \texttt{data/point.json}, which contains $b^*$ and the coordinates of $y^*$ to $38$ decimals; \texttt{identities.py}, which checks the polynomial identities of Section~\ref{sec:family}, the identities of Appendix~\ref{app:ident} and the other finite computations with characters used in Sections~\ref{sec:prelim}--\ref{sec:beta} and~\ref{sec:examples}; \texttt{gap.py}, which carries out the computations of Section~\ref{sec:gap} (Lemma~\ref{lem:reps}, Proposition~\ref{prop:tenlevels} and Remarks~\ref{rem:new} and~\ref{rem:gammadelta}); a \texttt{README.md} describing the checks; and the expected output of the three scripts in \texttt{expected\_output/}. \texttt{certify.py} requires Python~3 with \texttt{sympy}, \texttt{mpmath} and \texttt{python-flint}, and \texttt{identities.py} requires Python~3 with \texttt{sympy}; \texttt{gap.py} uses only the Python standard library, and \texttt{python-flint} only for the independent check of the indices in the proof of Proposition~\ref{prop:tenlevels}. Each script runs in less than a minute.
+The ancillary files of this paper contain \texttt{certify.py}, which performs the computation of Section~\ref{subsec:computation} and compares its results with Table~\ref{tab:point} and Proposition~\ref{prop:certdetail}; \texttt{data/point.json}, which contains $b^*$ and the coordinates of $y^*$ to $38$ decimals; \texttt{identities.py}, which checks the polynomial identities of Section~\ref{sec:family}, the identities of Appendix~\ref{app:ident} and the other finite computations with characters used in Sections~\ref{sec:prelim}--\ref{sec:beta} and~\ref{sec:examples}; \texttt{gap.py}, which carries out the computations of Section~\ref{sec:gap} (Lemma~\ref{lem:reps}, Proposition~\ref{prop:tenlevels} and Remarks~\ref{rem:new} and~\ref{rem:gammadelta}); \texttt{level420.py}, which carries out the computations of Section~\ref{sec:420}; a \texttt{README.md} describing the checks; and the expected output of the four scripts in \texttt{expected\_output/}. \texttt{certify.py} requires Python~3 with \texttt{sympy}, \texttt{mpmath} and \texttt{python-flint}, and \texttt{identities.py} requires Python~3 with \texttt{sympy}; \texttt{gap.py} and \texttt{level420.py} use only the Python standard library, and \texttt{python-flint} only for the independent check of the indices in the proofs of Propositions~\ref{prop:tenlevels} and~\ref{prop:index420}. Each script runs in about a minute or less.
 
 
 %======================================================================
@@ -982,6 +1171,9 @@ T.~Shioda and T.~Katsura, \emph{On Fermat varieties}, T\^ohoku Math.\ J.\ (2) \t
 
 \bibitem{Vo02}
 C.~Voisin, \emph{Hodge Theory and Complex Algebraic Geometry I}, Cambridge Stud.\ Adv.\ Math.\ \textbf{76}, Cambridge University Press, Cambridge, 2002.
+
+\bibitem{Wa97}
+L.~C.~Washington, \emph{Introduction to Cyclotomic Fields}, 2nd ed., Grad.\ Texts in Math.\ \textbf{83}, Springer, New York, 1997.
 
 \bibitem{Ya75}
 K.~Yamamoto, \emph{The gap group of multiplicative relationships of Gaussian sums}, in: Symposia Mathematica, Vol.~XV, Academic Press, London, 1975, 427--440.

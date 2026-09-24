@@ -1,6 +1,6 @@
 # Verification files
 
-These files accompany the paper *The Hodge conjecture for Fermat varieties of degree 35*. They contain the computer-verified part of the proof of Theorem 1.1(A), which is Proposition A.1; exact checks of the identities and memberships used in Sections 3, 4 and 7 and Appendix B; and the exact computations with Aoki's gap group in Section 5 (Lemma 5.7, Proposition 5.8, Remarks 5.9, 5.10 and 7.5).
+These files accompany the paper *The Hodge conjecture for Fermat varieties of degree 35*. They contain the computer-verified part of the proof of Theorem 1.1(A), which is Proposition A.1; exact checks of the identities and memberships used in Sections 3, 4 and 7 and Appendix B; the exact computations with Aoki's gap group in Section 5 (Lemma 5.7, Proposition 5.8, Remarks 5.9, 5.10 and 7.5); and the computations for the level 420 in Section 8 (Theorem 8.1).
 
 ## Requirements
 
@@ -11,7 +11,7 @@ These files accompany the paper *The Hodge conjecture for Fermat varieties of de
 
 Install them with `pip install python-flint sympy mpmath`. Tested with Python 3.9.6, python-flint 0.6.0, sympy 1.14.0 and mpmath 1.3.0. Nothing else is needed; the scripts read only the files in `data/`.
 
-`gap.py` needs only the Python standard library. If `python-flint` is installed, it also computes the lattice indices independently with FLINT.
+`gap.py` and `level420.py` need only the Python standard library. If `python-flint` is installed, it also computes the lattice indices independently with FLINT.
 
 ## Files
 
@@ -20,8 +20,9 @@ Install them with `pip install python-flint sympy mpmath`. Tested with Python 3.
 | `certify.py` | The certificate for Proposition A.1 (Appendix A). |
 | `identities.py` | Exact checks of the identities and memberships in Sections 3, 4 and 7 and Appendix B. |
 | `gap.py` | Exact computations with the gap group `B_m/S_m` (Section 5). |
+| `level420.py` | Exact computations for the level 420 (Section 8); it imports `gap.py`. |
 | `data/point.json` | The exact value `b*` and the other eleven coordinates of `y*`: 38 decimals as starting values, and the 26 decimals printed in Table 1. |
-| `expected_output/*.txt` | The output of the three commands below. |
+| `expected_output/*.txt` | The output of the four commands below. |
 
 ## `python3 certify.py` (a few seconds)
 
@@ -124,6 +125,38 @@ rho_q^(m) = (m/q) rho_q  (entries multiplied by m/q)
 **How Part D is proved.** The homomorphism `phi_35` counts the entries whose order lies in a fixed set, so it is invariant under `(Z/m)^x`. Every orbit of `(Z/m)^x` on Hodge characters contains a character with an entry dividing `m`. All Hodge characters with four, resp. six, entries that have such an entry are listed exactly, by a meet-in-the-middle computation on an exact integer key. `phi_35` vanishes on all of them.
 
 Expected last line: `all 134 checks passed`, exit status 0. See `expected_output/gap.txt`, which is the standard output; a line with the running time is written to standard error.
+
+## `python3 level420.py` (about 1 minute)
+
+This makes 31 exact checks, one printed line each (30 without `python-flint`). Here `m = 420`, `n_N(x)` is the number of entries of order `N`, `nu_15 = n_15 mod 2`, `n'_420(x)` is the number of unit entries `u` with `u = +-2 mod 5`, and
+
+```
+L''_420 = S_420 + sum_{q in {12,15,20,21,28,35}} Z u(rho_q^(420))
+w_1 = (56,69,176,191,193,199,204,209,210,236,243,253,257,267,296,301)
+w_2 = (1,17,28,132,141,168,191,199,236,253,257,267,296,371,387,416)
+R   = {2,3,5,6,7,10,14,21,30,42,70,210}   (orders)
+```
+
+Characters mod 420 are evaluated exactly in `Z[zeta_12]`.
+
+- **Part A (Lemma 8.2, Proposition 8.3).**
+  - `Q(420) = {12,15,20,21,28,35,420}`;
+  - the 700 generators of `S_420` lie in `B_420`, and `nu_15` vanishes on all of them and on the six `rho_q^(420)`;
+  - `w_1`, `w_2` are Hodge characters with 16 entries and exactly one entry of order 15;
+  - `B_420 = L''_420 + Z u(w_1)` (same method as Proposition 5.8(a)), and `2 u(w_1)` lies in `S_420`; so `L''_420` is the kernel of `nu_15` on `B_420` and has index 2;
+  - FLINT cross-check: `[K_420 : S_420] = 256`, `[K_420 : L''_420] = 4`.
+- **Part B (Lemma 8.4 and (8.2)-(8.12)).**
+  - For all 48 odd characters `chi` mod 420 and all `y != 0`, the sum `sum_t conj(chi)(t) (2<ty> - 420)` agrees with the formula in the proof of Lemma 8.4, and `B_{1,chi} != 0`;
+  - each of the eleven relations (8.2)-(8.12) has the coefficients printed in the paper (times the stated factor `kappa`), and vanishes on all 707 generators of `B_420` from Part A. In (8.11) the coefficient `1 - conj(zeta_3)` is printed as `2 + zeta_3`.
+- **Part C (Lemmas 8.5-8.8, Theorem 8.1(iii)).**
+  - The parity relations of Lemma 8.5, the congruence `n'_420 = n_15 mod 2` of Lemma 8.6 and the six-class congruence of Lemma 8.7, each on all generators of `B_420`;
+  - the norm facts used in Lemma 8.8(b);
+  - cross-check of Lemmas 8.6 and 8.7 by enumeration: the multisets of 2 and 4 units containing 1 that satisfy `s_420(chi) = 0` for the seven odd primitive characters of conductor 420 number 4 and 808, and `n'_420` is even on all of them (none of size 1 or 3);
+  - `[w_1]`, `[w_2]` have 96 elements each and are disjoint;
+  - `w_1` and `w_2` have the count pattern `(n_420, n_15, n_35, n_60, n_105, n_140, n_R) = (6, 1, 1, 1, 3, 3, 1)`, so the bound 16 of Theorem 8.1(ii) is attained.
+- **Part D (cross-check).** `nu_15` vanishes on all 5235 Hodge characters of level 420 with four entries having an entry dividing 420.
+
+Expected last line: `all 31 checks passed`, exit status 0. See `expected_output/level420.txt`; running times are written to standard error.
 
 ## Notation
 
