@@ -2,6 +2,8 @@
 
 Trevin Peterson
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22931340.svg)](https://doi.org/10.5281/zenodo.22931340)
+
 **Paper:** [`paper/main.pdf`](paper/main.pdf) (LaTeX source: [`paper/main.tex`](paper/main.tex))
 
 ## Abstract
@@ -36,4 +38,6 @@ The paper (`paper/`) is licensed under [CC BY 4.0](LICENSE-paper). The verificat
 
 ## Citation
 
-See [`CITATION.cff`](CITATION.cff).
+Trevin Peterson, *The Hodge conjecture for Fermat varieties of degree 35*, preprint (2026), doi:[10.5281/zenodo.22931340](https://doi.org/10.5281/zenodo.22931340).
+
+This DOI always resolves to the latest version; version 1.0 is doi:[10.5281/zenodo.22931341](https://doi.org/10.5281/zenodo.22931341). See also [`CITATION.cff`](CITATION.cff).
