@@ -1,0 +1,991 @@
+\documentclass[11pt]{amsart}
+\usepackage{amssymb,amsmath}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{booktabs}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\numberwithin{equation}{section}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\Aff}{\mathbb{A}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\fA}{\mathfrak{A}}
+\newcommand{\fB}{\mathfrak{B}}
+\newcommand{\fC}{\mathfrak{C}}
+\newcommand{\fD}{\mathfrak{D}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\sP}{\mathsf{P}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\len}{\operatorname{len}}
+\newcommand{\Res}{\mathop{\mathrm{Res}}\nolimits}
+\newcommand{\disc}{\mathop{\mathrm{disc}}\nolimits}
+\newcommand{\Ob}{\overline{\partial}}
+\newcommand{\pr}{\mathrm{pr}}
+\newcommand{\sm}{\smallsetminus}
+
+\title[Hodge conjecture for Fermat varieties of degree $35$]{The Hodge conjecture for Fermat varieties of degree $35$}
+\author{Trevin Peterson}
+\date{}
+\subjclass[2020]{Primary 14C30; Secondary 14C25, 14J70, 14K22, 65G20}
+\keywords{Hodge conjecture, generalized Hodge conjecture, Fermat varieties, abelian varieties of Fermat type, algebraic cycles, Abel--Jacobi map, interval arithmetic}
+
+\begin{document}
+
+\begin{abstract}
+Let $X^n_m\subset\PP^{n+1}$ be the Fermat variety of dimension $n$ and degree $m$. We prove the Hodge conjecture for $X^n_m$ for every $n$ when $m=2^a3^b5^c7^d$ is not divisible by $420$. For $cd=0$ this is due to Aoki, and the smallest new degree is $m=35$. By Aoki's work on the gap group, what is missing is the algebraicity of the Hodge classes attached to one exceptional character of $X^6_{35}$. We obtain it from a coniveau statement: the $24$-dimensional rational sub-Hodge structure of level one of $H^3(X^3_{35},\Q)$ attached to the character $(1,2,16,21,30)$ of $\mu_{35}^5$ is supported on a divisor, as predicted by the generalized Hodge conjecture. The proof uses an explicit one-parameter family of curves on $X^3_{35}$, a residue formula for the derivative of the Abel--Jacobi map along the family, and a computer-verified interval-arithmetic certificate at one point of the family. For the ten degrees $m=35k$, $1\le k\le 10$, the reduction to this one class is verified by an exact finite computation which does not use Aoki's structure theorem. As consequences we obtain the Hodge conjecture for products of Fermat varieties of one such degree and for abelian varieties of Fermat type of these degrees, among them the Jacobian of the curve $y^2=x^{35}-1$.
+\end{abstract}
+
+\maketitle
+
+%======================================================================
+\section{Introduction}\label{sec:intro}
+
+Let $X^n_m\subset\PP^{n+1}$ be the Fermat variety $x_0^m+\dots+x_{n+1}^m=0$. The group $G^n_m=\mu_m^{n+2}/\mu_m$ acts on $X^n_m$ by rescaling the coordinates, and Shioda \cite{Sh79} (see also \cite{Ra80,SK79}) described the Hodge classes of $X^n_m$ in terms of its characters: the primitive cohomology $H^n_{\mathrm{prim}}(X^n_m,\C)$ is the direct sum of one-dimensional eigenspaces $V(a)$, indexed by an explicit set $\fA^n_m$ of characters $a$, and for even $n$ the Hodge classes are spanned by the $V(a)$ with $a$ in an explicit subset $\fB^n_m$ (Section~\ref{sec:prelim}). The Hodge conjecture for $X^n_m$ is thus the statement that every $V(a)$ with $a\in\fB^n_m$ is spanned by classes of algebraic cycles. It holds for $n=2$ by the Lefschetz $(1,1)$-theorem; for all $n$ when $m$ is prime or $m=4$ \cite{Ra80,Sh79}, when $m\le 20$ \cite{Sh79}, when $m$ is a prime power \cite[Cor.~2-3]{Ao87}, when $m=2p^e$ with $p$ an odd prime or $m=2^a3^b5^c7^d$ with $cd=0$ (see the proof of \cite[Thm.~0.1]{Ao00}), and when $m\in\{21,27\}$ \cite{dS21}; and for $n=4$ when $m\le 100$ is prime to $6$ \cite{dS21}; a recent computer-assisted preprint treats $n=4$ and all odd $m\le 199$ \cite{Jum26a}. For algebraic cycles on self-products of cyclic covers see \cite{Sch88}.
+
+The known cases rest on three sources of algebraic cycles: linear subspaces of $X^n_m$, which account for the decomposable characters $(d_0,-d_0,\dots,d_r,-d_r)$ \cite{Ra80,Sh79}; the inductive structure of Fermat varieties \cite{SK79,Sh79}, which relates $X^n_m$ to $X^r_m\times X^s_m$ and to $X^{r-1}_m\times X^{s-1}_m$ for $r+s=n$; and Aoki's cycles \cite{Ao87}, which account for his standard characters $\sigma_{p,i}$. Following Aoki \cite{Ao83,Ao87,Ao00} we call $a\in\fB^n_m$ \emph{standard} if, up to the order of the entries, $a*d=\sigma_1*\dots*\sigma_k*d'$ for decomposable $d,d'$ and standard characters $\sigma_j$, where $*$ denotes juxtaposition (Section~\ref{subsec:juxta}); for standard $a$ the space $V(a)$ is spanned by algebraic classes \cite[Lemma~4.1]{Ao00}. We call $a$ \emph{exceptional} if it is not standard. Exceptional characters exist if and only if $m$ is not of the form $p^e$ or $2p^e$ with $p$ prime \cite[Cor.~2.2]{Ao00}, and Aoki showed that they are governed by a finite group, the \emph{gap group} $B_m/S_m$ (Section~\ref{sec:gap}): it is a vector space over $\F_2$ with a basis indexed by the divisors $q>1$ of $m$ which are products of an even number of distinct elements of $\{4\}\cup\{\text{odd primes}\}$ \cite[Thm.~D]{Ao83}, \cite[Thm.~2.1, Rem.~2.4]{Ao00}, \cite{Ya75}. The Hodge conjecture for $X^n_m$ for all $n$ therefore follows once, for each such $q$, one Hodge character in the corresponding class is known to be algebraic. For $m=2^a3^b5^c7^d$ the relevant divisors are among $12$, $15$, $20$, $21$, $28$, $35$ and $420$. Aoki gave algebraic Hodge characters, of dimension two or four, in the classes for $q\in\{12,15,20,21\}$, and for $q=28$ up to a misprint (see the remark after Lemma~\ref{lem:reps}); this yields the case $cd=0$ above. For $q=35$ no algebraic Hodge character in the class was known. At level $35$ the characters in this class occur first in dimension $6$ (Remark~\ref{rem:new}), and one of them is
+\[
+\beta=(1,2,16,21,30,17,22,31)\in\fB^6_{35}.
+\]
+
+For a character $a$ of $G^n_m$ let $M_a\subset H^n(X^n_m,\Q)$ denote the rational Hodge structure spanned by the Galois conjugates of $V(a)$ (Definition~\ref{def:Ma}), and let $N^1H^3(X,\Q)$ denote the space of classes supported on a divisor (Section~\ref{subsec:corr}).
+
+\begin{theorem}\label{thm:main}
+Let $\alpha=(1,2,16,21,30)$, a character of $G^3_{35}$.
+\begin{itemize}
+\item[(A)] $M_\alpha\subset H^3(X^3_{35},\Q)$ is a sub-Hodge structure of dimension $24$ with Hodge numbers $h^{2,1}=h^{1,2}=12$, and $M_\alpha\subset N^1H^3(X^3_{35},\Q)$. More precisely, there are a smooth projective curve $C$ (not necessarily connected) and an algebraic cycle $Z$ of dimension $2$ on $C\times X^3_{35}$ such that $M_\alpha\subset Z_*H^1(C,\Q)$.
+\item[(B)] For $m\in\{35,70,105,140,175,210,245,280,315,350\}$ and every $n\ge0$, the Hodge conjecture holds for $X^n_m$.
+\item[(C)] More generally, the Hodge conjecture holds for $X^n_m$ for every $n\ge0$ and every $m=2^a3^b5^c7^d$, $a,b,c,d\ge0$, such that $420\nmid m$.
+\item[(D)] Let $m$ be as in {\rm(C)}. Then the Hodge conjecture holds for every product $X^{r_1}_m\times\dots\times X^{r_k}_m$, and for every abelian variety of Fermat type of degree $m$, i.e.\ every abelian variety isogenous to a factor of a power of the Jacobian of the Fermat curve $X^1_m$. In particular, it holds for every power of the Jacobian of the hyperelliptic curve $y^2=x^{35}-1$.
+\end{itemize}
+\end{theorem}
+
+The step from (A) to (B)--(D) is the algebraicity of the $24$-dimensional space $M_\beta\subset H^6(X^6_{35},\Q)$ of Hodge classes, where $\beta=\alpha*(17,22,31)$ (Theorem~\ref{thm:beta}).
+
+\begin{remark}\label{rem:intro}
+(a) Statement (A) is the case of $M_\alpha$ of Grothendieck's generalized Hodge conjecture \cite{Gro69}: $M_\alpha$ is a sub-Hodge structure of level one of $H^3$, and the conjecture predicts that it lies in $N^1H^3$. If a character $a$ of $G^3_m$ has two entries with $a_i+a_j\equiv 0$, the analogous statement follows from the inductive structure (Theorem~\ref{thm:SK} with $s=1$); no two entries of $\alpha$ have this property.
+
+(b) The proof of (B) uses (A), the classical results recalled in Section~\ref{sec:prelim}, and an exact finite computation at each of the ten levels $m=35k$, $1\le k\le 10$ (Proposition~\ref{prop:tenlevels}). The proof of (C) uses instead Aoki's generation theorem for the gap group \cite[Thm.~2.1]{Ao00}, \cite[Thm.~D]{Ao83} (Theorem~\ref{thm:aokiD}(i)); the other ingredients are proved here, are classical, or are finite computations at the six levels $12$, $15$, $20$, $21$, $28$, $35$ (Lemma~\ref{lem:reps}). Statement (D) follows from (C) by results of Shioda \cite[Thm.~IV]{Sh79} and Aoki \cite[Cor.~3.2]{Ao00}.
+
+(c) If $35\nmid m$, statement (C) is due to Aoki; the argument of Section~\ref{subsec:proofBC} is his argument in the proof of \cite[Thm.~0.1]{Ao00}, with the passage from the gap group to characters made explicit (Lemma~\ref{lem:transfer}) and with the representatives of Lemma~\ref{lem:reps}. Let $35\mid m$. Then $\fB^n_m$ contains exceptional characters in the class of $\beta$ in the gap group for every even $n\ge6$, and also for $n=4$ if $m$ is even (Remark~\ref{rem:new}); for these pairs $(m,n)$ we are not aware of a previous proof of the Hodge conjecture for $X^n_m$. For the five odd levels in (B) the class of $\beta$ contains no character of dimension at most $4$, so that the case $n=4$ of (B) does not depend on (A) there: it follows from Proposition~\ref{prop:tenlevels}, Lemma~\ref{lem:transfer} and Remark~\ref{rem:new}. For $m\in\{35,105,175\}$ this case was proved in \cite{dS21,Jum26a}; for $m\in\{245,315\}$ we know no earlier reference. Thus at the ten levels of (B) the cases that depend on (A) are the even $n\ge6$ for odd $m$ and the even $n\ge4$ for even $m$.
+
+(d) The characters $\gamma=(1,20,24,42,61,62)\in\fB^4_{70}$ and $\delta=(2,9,129,142,168,180)\in\fB^4_{210}$ are among the classes on Fermat fourfolds of even degree at most $250$ which are left unresolved in \cite[Cor.~6.1]{Jum26b} (see also \cite[Appendix~D]{Jum26a}), and it is shown in \cite[Thm.~4.1, Prop.~4.2]{Jum26b}, by an explicit exchange identity, that $V(\delta)$ is algebraic if and only if $V(3\gamma)$ is. Both $\gamma$ and $\delta$ lie in the class of $\beta$. In Section~\ref{sec:examples} we derive the algebraicity of $M_\gamma$ and $M_\delta$ from that of $M_\beta$ by explicit identities; for $\delta$ this is Jumagulov's exchange identity.
+
+(e) Corollary~3.2 of \cite{dS21} states, as an immediate consequence of \cite{Sh79}, the Hodge conjecture for products $X^4_{m_1}\times\dots\times X^4_{m_k}$ with $m_i\le 100$ prime to $6$. For $m_1=m_2=35$ this statement implies the algebraicity of $M_\beta$: the characters $b_1=(1,1,1,2,31,34)$ and $b_2=(16,17,21,22,30,34)$ lie in $\fA^4_{35}$ and $b_1*b_2$ equals $\beta*(1,34,1,34)$ up to order, so $V(b_1)\otimes V(b_2)$ consists of Hodge classes on $X^4_{35}\times X^4_{35}$, and by \cite[Thm.~II(c2)]{Sh79} and Theorem~\ref{thm:juxta} these classes are algebraic if and only if $\beta\in\fC^6_{35}$. The result of \cite{Sh79} on products, Theorem~IV there, concerns products of Fermat varieties of one degree $m$ and derives the Hodge conjecture for $X^{r_1}_m\times\dots\times X^{r_k}_m$ from the Hodge conjecture for $X^r_m$ for all even $r\le r_1+\dots+r_k+2(k-1)$. For $X^4_{35}\times X^4_{35}$ this requires, besides $r=2$ and $r=4$, the cases $r=6,8,10$, which are not treated in \cite{dS21} (its results concern $X^4_m$, Proposition~3.1, and $X^n_{21}$, $X^n_{27}$, Theorem~3.3). These cases are contained in (B), so that Corollary~\ref{cor:products} gives a proof of the case $m_1=\dots=m_k=35$ of \cite[Cor.~3.2]{dS21}. We do not use \cite[Cor.~3.2]{dS21}.
+
+(f) Statement (D) extends \cite[Thm.~0.1(i)]{Ao00} from $cd=0$ to $420\nmid m$. The Hodge conjecture for the Jacobian of $y^2=x^{35}-1$ was left open in \cite[Example~8.6]{Ao02}, where it is shown that every simple factor of this Jacobian is stably nondegenerate.
+
+(g) If $420\mid m$, the gap group has one further basis class, and the Hodge conjecture for $X^n_m$ for all $n$ and all $m=2^a3^b5^c7^d$ reduces to the algebraicity of the Hodge classes attached to a single character of level $420$ (Remark~\ref{rem:420}). We do not treat this case.
+\end{remark}
+
+Statement (A) is the geometric input, and it is the only step which is not classical. In Section~\ref{sec:family} we write down a one-parameter family of curves on $X^3_{35}$, defined by an identity among binary forms, prove a residue formula for the derivative of its Abel--Jacobi map in the direction of $M_\alpha$ (Proposition~\ref{prop:residue}), and deduce (A) from the nonvanishing of an explicit residue sum at a single point of the family (Theorem~\ref{thm:coniveau}); this nonvanishing is established by a computer-verified certificate in Appendix~\ref{app:cert}. In Section~\ref{sec:beta} we deduce the algebraicity of $M_\beta$ from (A) by the Lefschetz $(1,1)$-theorem and the inductive structure. Section~\ref{sec:gap} recalls Aoki's gap group, proves a lemma which passes from generators of the gap group to algebraic cycles in all dimensions, and proves (B) and (C). Section~\ref{sec:products} proves (D), and Section~\ref{sec:examples} treats $\gamma$ and $\delta$. The identities used are listed in Appendix~\ref{app:ident}; the finite computations are carried out by the ancillary files.
+
+\subsection*{Conventions} Varieties are over $\C$. Cohomology is singular cohomology, and $H^k(Y,\C)=H^k(Y,\Q)\otimes\C$ carries its Hodge decomposition. For a smooth projective variety $Y$ we write $\mathrm{Alg}^p(Y)\subset H^{2p}(Y,\Q)$ for the $\Q$-span of the classes of algebraic cycles of codimension $p$; its elements are called algebraic classes.
+
+
+%======================================================================
+\section{Preliminaries}\label{sec:prelim}
+
+\subsection{Characters and Hodge types}\label{subsec:chars}
+Fix $m\ge 2$ and $n\ge 0$ and put $X=X^n_m$. The group $G^n_m=\mu_m^{n+2}/(\text{diagonal})$ acts on $X$ by $[\zeta_0:\dots:\zeta_{n+1}]\cdot(x_0:\dots:x_{n+1})=(\zeta_0x_0:\dots:\zeta_{n+1}x_{n+1})$. Its characters are identified with
+\[
+\widehat G^n_m=\{a=(a_0,\dots,a_{n+1})\in(\Z/m)^{n+2}:a_0+\dots+a_{n+1}=0\},\qquad a(g)=\textstyle\prod_i\zeta_i^{a_i}.
+\]
+For $a\in\widehat G^n_m$ put $V(a)=\{\eta\in H^n_{\mathrm{prim}}(X,\C):g^*\eta=a(g)\eta\text{ for all }g\in G^n_m\}$, and let $\fA^n_m=\{a\in\widehat G^n_m: a_i\ne0\text{ for all }i\}$. For $a\in\fA^n_m$ let $|a|=\sum_i\langle a_i\rangle/m$, where $\langle a_i\rangle\in\{1,\dots,m-1\}$ represents $a_i$, and for $t\in(\Z/m)^\times$ let $ta=(ta_0,\dots,ta_{n+1})$.
+
+\begin{theorem}[{Shioda \cite[Thm.~I]{Sh79}}]\label{thm:shiodaI}
+\begin{itemize}
+\item[(i)] For $a\in\widehat G^n_m$, $\dim V(a)\le1$, with equality if and only if $a\in\fA^n_m$.
+\item[(ii)] $H^{p,q}_{\mathrm{prim}}(X)=\bigoplus_{|a|=q+1}V(a)$ for $p+q=n$.
+\item[(iii)] If $n=2p$, then $(H^{p,p}\cap H^n_{\mathrm{prim}}(X,\Q))\otimes\C=\bigoplus_{a\in\fB^n_m}V(a)$, where $\fB^n_m=\{a\in\fA^n_m:|ta|=p+1\text{ for all }t\in(\Z/m)^\times\}$.
+\item[(iv)] If $n=2p+1$, then $((H^{p+1,p}\oplus H^{p,p+1})\cap H^n(X,\Q))\otimes\C=\bigoplus_{a\in\fB^n_m}V(a)$, where $\fB^n_m=\{a\in\fA^n_m:p+1\le|ta|\le p+2\text{ for all }t\in(\Z/m)^\times\}$.
+\end{itemize}
+\end{theorem}
+
+\begin{definition}\label{def:Ma}
+For $a\in\fA^n_m$ let $[a]=\{ta:t\in(\Z/m)^\times\}$ and
+\[
+M_a=H^n(X,\Q)\cap\bigoplus_{b\in[a]}V(b).
+\]
+\end{definition}
+
+The idempotent $e_{[a]}=|G^n_m|^{-1}\sum_{b\in[a]}\sum_{g}\overline{b(g)}\,g^*$ has coefficients in $\Q(\zeta_m)$ and is invariant under $\mathrm{Gal}(\Q(\zeta_m)/\Q)$, which permutes $[a]$; hence it is defined over $\Q$, and $M_a\otimes\C=\bigoplus_{b\in[a]}V(b)$. In particular $\dim_\Q M_a$ is the number of elements of $[a]$, and $M_a$ is a sub-Hodge structure. If $n$ is even and $a\in\fB^n_m$, then $M_a$ consists of Hodge classes, since $[a]\subset\fB^n_m$.
+
+For even $n$ let $\fC^n_m$ be the set of $a\in\fB^n_m$ such that $V(a)\subset\mathrm{Alg}^{n/2}(X)\otimes\C$ \cite[p.~177]{Sh79}. The Hodge conjecture for $X^n_m$ is equivalent to $\fC^n_m=\fB^n_m$.
+
+\begin{lemma}\label{lem:basic}
+Let $n$ be even and $a\in\fB^n_m$.
+\begin{itemize}
+\item[(a)] If $t\in(\Z/m)^\times$, then $a\in\fC^n_m$ if and only if $ta\in\fC^n_m$. Moreover $a\in\fC^n_m$ if and only if $M_a\subset\mathrm{Alg}^{n/2}(X)$.
+\item[(b)] If $a'$ is obtained from $a$ by permuting the entries, then $a'\in\fC^n_m$ if and only if $a\in\fC^n_m$.
+\item[(c)] Let $e\ge1$, let $f_e\colon X^n_{em}\to X^n_m$ be the morphism $(x_i)\mapsto(x_i^e)$, and let $ea\in\fA^n_{em}$ have entries $e\langle a_i\rangle\bmod em$. Then $f_e^*V(a)=V(ea)$; if $a\in\fB^n_m$ then $ea\in\fB^n_{em}$, since $|t(ea)|=|\bar t a|$ with $\bar t=t\bmod m$; and if $a\in\fC^n_m$ then $ea\in\fC^n_{em}$.
+\end{itemize}
+\end{lemma}
+
+\begin{proof}
+(a) The maps $g^*$ are defined over $\Q$ and $a(g)\in\Q(\zeta_m)$, so $V(a)$ is spanned by $V(a)_{\Q(\zeta_m)}=V(a)\cap H^n(X,\Q(\zeta_m))$, and the automorphism $\zeta_m\mapsto\zeta_m^t$ of $\Q(\zeta_m)$, acting on coefficients, maps $V(a)_{\Q(\zeta_m)}$ onto $V(ta)_{\Q(\zeta_m)}$ and preserves $\mathrm{Alg}^{n/2}(X)\otimes\Q(\zeta_m)$. This proves the first assertion; the second follows because $M_a$ and $\mathrm{Alg}^{n/2}(X)$ are $\Q$-subspaces and $M_a\otimes\C=\bigoplus_tV(ta)$.
+(b) A permutation of the coordinates is an automorphism of $X$ which maps $V(a)$ onto $V(a')$ and preserves algebraic classes.
+(c) The morphism $f_e$ is equivariant for the homomorphism $G^n_{em}\to G^n_m$, $[\zeta_i]\mapsto[\zeta_i^e]$. Hence $g^*f_e^*\eta=f_e^*(g^e)^*\eta=a(g^e)f_e^*\eta=(ea)(g)f_e^*\eta$ for $\eta\in V(a)$. Since $f_e$ is finite and surjective, $f_{e*}f_e^*$ is multiplication by $\deg f_e$, so $f_e^*$ is injective and $f_e^*V(a)=V(ea)$ by Theorem~\ref{thm:shiodaI}(i). Finally $f_e^*$ maps algebraic classes to algebraic classes \cite{BH61}, \cite[Ch.~19]{Fu98}.
+\end{proof}
+
+\subsection{Juxtaposition}\label{subsec:juxta}
+For $a=(a_0,\dots,a_{r+1})\in\fA^r_m$ and $b=(b_0,\dots,b_{s+1})\in\fA^s_m$ let $a*b=(a_0,\dots,a_{r+1},b_0,\dots,b_{s+1})\in\fA^{r+s+2}_m$. Clearly $|t(a*b)|=|ta|+|tb|$, so $a*b\in\fB^{r+s+2}_m$ if $a\in\fB^r_m$ and $b\in\fB^s_m$ with $r,s$ even. For even $r$ let $\fD^r_m\subset\fB^r_m$ be the set of characters which, up to the order of the entries, have the form $(d_0,-d_0,d_1,-d_1,\dots,d_{r/2},-d_{r/2})$ with $d_i\in\Z/m\sm\{0\}$. For a prime $p$ dividing $m$, $d=m/p$ and an integer $i$ with $0<i<d$, Aoki's \emph{standard characters} are
+\[
+\sigma_{p,i}=(i,\,i+d,\,i+2d,\,\dots,\,i+(p-1)d,\,-pi)\ (p\ge3),\qquad \sigma_{2,i}=(i,\,i+d,\,-2i,\,d)
+\]
+\cite[Section~2]{Ao00} (see also \cite[p.~387]{Ao87}); a character $a\in\fB^n_m$ is \emph{standard} if $a*d\sim\sigma_1*\dots*\sigma_k*d'$ for some $d,d'\in\bigcup_r\fD^r_m$ ($r\ge0$ even) and standard characters $\sigma_j$, where $\sim$ means equality up to the order of the entries. This is the definition of \cite[Section~2]{Ao00}, except that there $d,d'$ are taken in $\fD^r_m$ with $r>0$. In \cite[p.~387]{Ao87} the standard characters are restricted to $d/(i,d)>2$, and decomposable factors enter only in \cite[Thms.~1-2, 1-3]{Ao87}. All these variants give the same sets of standard characters: the excluded characters $\sigma_{p,d/2}$ ($d$ even) are decomposable, and a decomposable factor in $\fD^0_m$ can be enlarged by a pair $(e,-e)$ on both sides.
+
+\begin{theorem}[{Shioda, Ran; see \cite[Thm.~1-4]{Ao87}}]\label{thm:juxta}
+Let $r,s\ge0$ be even, $a\in\fB^r_m$ and $b\in\fB^s_m$.
+\begin{itemize}
+\item[(i)] If $a\in\fC^r_m$ and $b\in\fC^s_m$, then $a*b\in\fC^{r+s+2}_m$.
+\item[(ii)] If $d\in\fD^s_m$ and $a*d\in\fC^{r+s+2}_m$, then $a\in\fC^r_m$.
+\end{itemize}
+\end{theorem}
+
+Part (i) is \cite[Corollary to Thm.~II, (i)]{Sh79}; part (ii) is the case $b\in\fD^s_m$ of \cite[Lemma~3]{Sh79} together with $\fD^s_m\subset\fC^s_m$ \cite[Thm.~1-1]{Ao87}; see also \cite[Lemma~4.1]{Ao00}.
+
+\begin{theorem}[{Aoki \cite[Thm.~2-1]{Ao87}}]\label{thm:aoki}
+Let $p\ge3$ be a prime, $m=pd$, and let $i$ be an integer with $0<i<d$ and $\gcd(i,d)=1$. Then $\sigma_{p,i}\in\fC^{p-1}_m$.
+\end{theorem}
+
+\begin{theorem}[Lefschetz; {\cite[(1.10)]{Sh79}, \cite[p.~163]{GH78}}]\label{thm:lef}
+$\fC^2_m=\fB^2_m$.
+\end{theorem}
+
+\subsection{The inductive structure}\label{subsec:SK}
+
+\begin{theorem}[{Shioda--Katsura \cite[(2.1), Thm.~II, (2.14)]{Sh79}, \cite{SK79}}]\label{thm:SK}
+Let $r,s\ge1$, $n=r+s$ and $Y=X^{r-1}_m\times X^{s-1}_m$. Let $\mathrm{bl}\colon W\to X^r_m\times X^s_m$ be the blowing up along $Y$, embedded by $((x_i),(y_j))\mapsto((x_0:\dots:x_r:0),(y_0:\dots:y_s:0))$, let $j\colon\widetilde Y=\mathrm{bl}^{-1}(Y)\to W$ be the inclusion and $\mathrm{bl}_Y\colon\widetilde Y\to Y$ the restriction of $\mathrm{bl}$. There is a generically finite surjective morphism $\psi\colon W\to X^n_m$ such that the homomorphism
+\[
+f=\psi_*\circ j_*\circ\mathrm{bl}_Y^*\colon H^{n-2}(Y,\Q)\to H^n(X^n_m,\Q)
+\]
+maps $V(a')\otimes V(b')$ onto $V(a'*b')$ for all $a'\in\fA^{r-1}_m$ and $b'\in\fA^{s-1}_m$. In particular, if $n$ is even and $V(a')\otimes V(b')\subset\mathrm{Alg}^{(n-2)/2}(Y)\otimes\C$, then $a'*b'\in\fC^n_m$.
+\end{theorem}
+
+Here $\psi$ is the composition of $\mathrm{bl}$ with Shioda's rational map $((x_i),(y_j))\mapsto(x_0y_{s+1}:\dots:x_ry_{s+1}:\epsilon x_{r+1}y_0:\dots:\epsilon x_{r+1}y_s)$, $\epsilon^m=-1$, and $f$ is the map which Shioda obtains on the second summand of \cite[(2.4)]{Sh79} (see the proof of Theorem~II there). The last assertion holds because pullbacks and pushforwards along morphisms of smooth projective varieties preserve algebraic classes \cite{BH61}, \cite[Ch.~19]{Fu98}.
+
+\subsection{Correspondences and coniveau}\label{subsec:corr}
+Let $C$ be a smooth projective curve (not necessarily connected), $X'$ a smooth projective threefold and $Z$ an algebraic cycle of dimension $2$ on $C\times X'$ with rational coefficients. Put $Z_*(b)=\pr_{X'*}([Z]\cup\pr_C^*b)$ and $Z^*(x)=\pr_{C*}([Z]\cup\pr_{X'}^*x)$. Then $Z_*\colon H^1(C,\Q)\to H^3(X',\Q)$ and $Z^*\colon H^3(X',\Q)\to H^1(C,\Q)$ are morphisms of Hodge structures of bidegree $(1,1)$ and $(-1,-1)$, i.e.\ morphisms $H^1(C,\Q)(-1)\to H^3(X',\Q)$ and $H^3(X',\Q)\to H^1(C,\Q)(-1)$, and
+\begin{equation}\label{eq:adj}
+\int_{X'} Z_*(b)\cup x=\int_{C\times X'}[Z]\cup\pr_C^*b\cup\pr_{X'}^*x=\int_C b\cup Z^*(x)\qquad(b\in H^1(C),\ x\in H^3(X')).
+\end{equation}
+If $Z=(p,q)_*[S]$ for a smooth projective surface $S$ and morphisms $p\colon S\to C$, $q\colon S\to X'$, then $Z_*=q_*p^*$ and $Z^*=p_*q^*$. Compositions of correspondences are induced by algebraic cycles and preserve algebraic classes \cite{BH61}, \cite[Ch.~16, 19]{Fu98}.
+
+Let $N^1H^3(X',\Q)=\sum_D\ker(H^3(X',\Q)\to H^3(X'\sm D,\Q))$, the sum over closed algebraic subsets $D\subset X'$ of codimension at least one.
+
+\begin{lemma}\label{lem:N1}
+In this situation $Z_*H^1(C,\Q)\subset N^1H^3(X',\Q)$.
+\end{lemma}
+
+\begin{proof}
+Let $D$ be the image in $X'$ of the support of $Z$; it has dimension at most $2$. The class $[Z]\cup\pr_C^*b$ comes from cohomology of $C\times X'$ with supports in $C\times D$, so $Z_*(b)$ comes from cohomology of $X'$ with supports in $D$ and restricts to zero on $X'\sm D$.
+\end{proof}
+
+%======================================================================
+\section{\texorpdfstring{A family of curves on $X^3_{35}$ and a piece of coniveau one}{A family of curves on the Fermat threefold of degree 35 and a piece of coniveau one}}\label{sec:family}
+
+\subsection{Notation}\label{subsec:notation3}
+Throughout this section $X=X^3_{35}\subset\PP^4$ with equation $F=x_0^{35}+\dots+x_4^{35}$, $F_i=\partial F/\partial x_i=35x_i^{34}$, $G=G^3_{35}$ (a group of order $35^4$), $U_i=X\cap\{x_i\ne0\}$ (affine and $G$-stable), and $\alpha=(1,2,16,21,30)$. Let
+\[
+\cT=\{1,2,3,4,6,9,11,12,18,19,22,27\}\subset(\Z/35)^\times .
+\]
+
+\begin{lemma}\label{lem:alpha}
+(a) $\alpha\in\fA^3_{35}$, and $|t\alpha|=2$ for $t\in\cT$, $|t\alpha|=3$ for $t\notin\cT$. Hence $\alpha\in\fB^3_{35}$, $V(t\alpha)\subset H^{2,1}(X)$ for $t\in\cT$ and $V(t\alpha)\subset H^{1,2}(X)$ otherwise, and $M_\alpha$ has dimension $24$ with $h^{2,1}=h^{1,2}=12$.
+(b) $[\alpha]$ consists of $24$ distinct characters, and $-\alpha=34\alpha\in[\alpha]$.
+(c) No two entries of $\alpha$ have sum $0$ in $\Z/35$.
+\end{lemma}
+
+\begin{proof}
+Direct computation (Table~\ref{tab:alphakappa}) and Theorem~\ref{thm:shiodaI}.
+\end{proof}
+
+In particular $V(\alpha)$ is the $\alpha$-eigenspace of $H^{2,1}(X)$, and it is one-dimensional. Let
+\[
+\Pi=\{z\in\PP^4:z_0+\dots+z_4=0\},\qquad \Phi\colon X\to\Pi,\quad [x]\mapsto[x_0^{35}:\dots:x_4^{35}].
+\]
+The morphism $\Phi$ is finite and surjective, identifies $\Pi$ with $X/G$, and is \'etale over $\Pi^\circ=\Pi\cap\{z_0z_1z_2z_3z_4\ne0\}$.
+
+\subsection{The family}\label{subsec:family}
+Let $y=(p_0,\dots,p_4,q_0,q_1,b,c_1,\dots,c_4)$ be coordinates on $\Aff^{12}$ and consider the binary forms
+\[
+P=s^5+p_4s^4t+p_3s^3t^2+p_2s^2t^3+p_1st^4+p_0t^5,\qquad Q=s^2+q_1st+q_0t^2,\qquad R=s^2+bst+t^2,
+\]
+and the five binary forms of degree $10$
+\begin{equation}\label{eq:u}
+u_0=t^3PQ,\qquad u_1=c_1\,tPQ^2,\qquad u_2=c_2P^2,\qquad u_3=c_3R^5,\qquad u_4=c_4\,s^7tQ .
+\end{equation}
+Let $\cP\subset\Aff^{12}$ be the closed subscheme on which $u_0+u_1+u_2+u_3+u_4=0$ identically in $(s,t)$. Writing $P(s)=P(s,1)$ and similarly for the other forms, $\cP$ is defined by the vanishing of the eleven coefficients $E_0,\dots,E_{10}$ of
+\begin{equation}\label{eq:E}
+E_y(s)=P(s)Q(s)+c_1P(s)Q(s)^2+c_2P(s)^2+c_3R(s)^5+c_4s^7Q(s),
+\end{equation}
+a polynomial of degree at most $10$ in $s$. We write $J_b(y)$ for the $11\times11$ Jacobian of $(E_0,\dots,E_{10})$ with respect to the eleven coordinates other than $b$, and $T_y\cP\subset\C^{12}$ for the Zariski tangent space.
+
+\begin{definition}\label{def:nondeg}
+A point $y\in\cP$ is \emph{nondegenerate} if $c_1c_2c_3c_4\ne0$, $\disc(R)=b^2-4\ne0$, $\Res(R,P)\ne0$ and $\Res(R,Q)\ne0$.
+\end{definition}
+
+\begin{lemma}\label{lem:nondeg}
+Let $y\in\cP$ be nondegenerate. (a) The forms $u_3$ and $u_4$ have no common zero on $\PP^1$; hence $f_y=[u_0:\dots:u_4]\colon\PP^1\to\Pi$ is a morphism. (b) The zeros of $u_3$ are the two distinct roots $\rho_1,\rho_2\in\C$ of $R(s)$, and $s$, $P(s)$ and $Q(s)$ do not vanish at $\rho_1,\rho_2$.
+\end{lemma}
+
+\begin{proof}
+The zeros of $u_4$ are $s=0$, $t=0$ and the zeros of $Q$, while $u_3$ vanishes exactly at the zeros of $R$; now $R(0,1)=R(1,0)=1$ and $\Res(R,Q)\ne0$. Part (b) follows from $\disc(R)\ne0$, $R(0)=1$ and $\Res(R,P)\Res(R,Q)\ne0$.
+\end{proof}
+
+For nondegenerate $y$ let
+\[
+\cC_y=\PP^1\times_\Pi X=\{((s:t),[x])\in\PP^1\times X:[x_0^{35}:\dots:x_4^{35}]=[u_0(s,t):\dots:u_4(s,t)]\},
+\]
+a curve which is finite over $\PP^1$. For an irreducible component of $\cC_y$ we denote by $\widehat C$ its normalization and by $\pi_1\colon\widehat C\to\PP^1$ and $\nu\colon\widehat C\to X$ the two projections; $\pi_1$ is finite of some degree $\deg\pi_1\ge1$. Let $\widehat C^\circ=\pi_1^{-1}\{(s:1):u_0\cdots u_4(s,1)\ne0\}$. Since $\Phi$ is \'etale over $\Pi^\circ$, near every point of $\widehat C^\circ$ the function $s$ is a local coordinate and $\nu$ is given by $s\mapsto[x(s,y)]$ with
+\begin{equation}\label{eq:lift}
+x(s,y')=\bigl(u_0(s,1;y')^{1/35},\dots,u_4(s,1;y')^{1/35}\bigr)
+\end{equation}
+for suitable holomorphic branches, defined for $y'\in\C^{12}$ near $y$.
+
+In the product $u_0\,u_1^2\,u_2^{16}\,u_3^{21}\,u_4^{30}$ the forms $s,t,R,P,Q$ occur with exponents $210,35,105,35,35$. Hence, with
+\begin{equation}\label{eq:A}
+A=s^6t\,R^3PQ,\qquad \Psi(y)=c_1^2c_2^{16}c_3^{21}c_4^{30},
+\end{equation}
+we have the identity of binary forms
+\begin{equation}\label{eq:uA}
+u_0\,u_1^2\,u_2^{16}\,u_3^{21}\,u_4^{30}=\Psi(y)\,A^{35}.
+\end{equation}
+
+\subsection{The residue functional}\label{subsec:I}
+
+\begin{definition}\label{def:I}
+Let $y\in\cP$ be nondegenerate and $v\in\C^{12}$. Denote by a dot the derivative along $v$ at fixed $s$, so that $\dot P(s)=\sum_kv_{p_k}s^k$, $\dot Q(s)=v_{q_0}+v_{q_1}s$ and $\dot c_k=v_{c_k}$, and by a prime the derivative in $s$. Put
+\[
+\Delta_v(s)=\Bigl(\frac{\dot c_1}{c_1}+\frac{\dot Q}{Q}\Bigr)\Bigl(\frac{P'}{P}-\frac{Q'}{Q}\Bigr)-\Bigl(\frac{\dot c_2}{c_2}+\frac{\dot P}{P}-\frac{\dot Q}{Q}\Bigr)\frac{Q'}{Q},\qquad \eta_v=\frac{P(s)\,\Delta_v(s)}{c_3c_4\,s\,R(s)^2}\,ds,
+\]
+and
+\[
+\cI(y,v)=\Res_{s=\rho_1}\eta_v+\Res_{s=\rho_2}\eta_v ,
+\]
+where $\rho_1,\rho_2$ are the roots of $R(s)$.
+\end{definition}
+
+A direct computation shows that, in the chart $t=1$,
+\begin{equation}\label{eq:Delta}
+\Delta_v=\det\left(\begin{array}{ccc}1&1&1\\ \dot u_0/u_0&\dot u_1/u_1&\dot u_2/u_2\\ u_0'/u_0&u_1'/u_1&u_2'/u_2\end{array}\right),\qquad \eta_v=\frac{A\,\Delta_v}{u_3u_4}\,ds .
+\end{equation}
+By Lemma~\ref{lem:nondeg}(b) the poles of $\eta_v$ at $\rho_1,\rho_2$ have order at most two and come only from the factor $R^{-2}$. The quantity $\cI(y,v)$ is linear in $v$, and it depends holomorphically on $(y,v)$ on the set of nondegenerate $y$ (locally, $\rho_1,\rho_2$ are holomorphic functions of $y$).
+
+\subsection{The Carlson--Griffiths cocycle}\label{subsec:CG}
+Let $\xi=\sum_kx_k\partial/\partial x_k$ be the Euler vector field on $\C^5$, $dV=dx_0\wedge\dots\wedge dx_4$ and $\Omega=\iota_{\xi}dV=\sum_k(-1)^kx_k\,dx_0\wedge\dots\wedge\widehat{dx_k}\wedge\dots\wedge dx_4$. For $i\ne j$ put $\Omega_{ij}=\iota_{\partial_j}\iota_{\partial_i}\Omega$, where $\partial_i=\partial/\partial x_i$, and
+\[
+\varphi_{ij}=\frac{x^{\alpha-1}\,\Omega_{ij}}{F_iF_j},\qquad x^{\alpha-1}=\prod_{k=0}^4x_k^{\alpha_k-1},
+\]
+with $\alpha_k\in\{1,\dots,34\}$ the entries of $\alpha$. Note $\Omega_{ji}=-\Omega_{ij}$ and $\varphi_{ji}=-\varphi_{ij}$.
+
+\begin{lemma}\label{lem:cocycle}
+(a) $\varphi_{ij}$ is the pullback of a rational $2$-form on $\PP^4$ which is regular on $\{x_ix_j\ne0\}$; its restriction to $X$ is a regular $2$-form on $U_i\cap U_j$.
+(b) $\varphi_{jk}-\varphi_{ik}+\varphi_{ij}=0$ on $U_i\cap U_j\cap U_k$.
+(c) $g^*\varphi_{ij}=\alpha(g)\varphi_{ij}$ for $g\in G$.
+Consequently $\varphi=\{\varphi_{ij}\}$ is a \v{C}ech $1$-cocycle of $\Omega^2_X$ for the cover $\{U_i\}$, and its class $[\varphi]\in H^1(X,\Omega^2_X)$ lies in the $\alpha$-eigenspace.
+\end{lemma}
+
+\begin{proof}
+(a) Under $x\mapsto\lambda x$ the forms $x^{\alpha-1}$, $\Omega_{ij}$ and $F_iF_j$ are multiplied by $\lambda^{65}$, $\lambda^3$ and $\lambda^{68}$, since $\sum_k(\alpha_k-1)=65$; so $\varphi_{ij}$ is invariant. Moreover $\iota_{\xi}\Omega_{ij}=\iota_{\xi}\iota_{\partial_j}\iota_{\partial_i}\iota_{\xi}dV=0$, since contractions anticommute and $\iota_{\xi}\iota_{\xi}=0$. Hence $\varphi_{ij}$ is the pullback of a $2$-form on $\PP^4$, regular where $x_ix_j\ne0$.
+
+(b) Since $\xi F=35F$, we have $dF\wedge\Omega=(\iota_{\xi}dF)\,dV-\iota_{\xi}(dF\wedge dV)=35F\,dV$. Contracting with $\partial_i,\partial_j,\partial_k$ and using that $\iota_{\partial}$ is an antiderivation with $\iota_{\partial_l}dF=F_l$, one obtains
+\[
+F_i\Omega_{jk}-F_j\Omega_{ik}+F_k\Omega_{ij}=dF\wedge\Omega_{ijk}+35F\,\iota_{\partial_k}\iota_{\partial_j}\iota_{\partial_i}dV,\qquad \Omega_{ijk}=\iota_{\partial_k}\Omega_{ij}.
+\]
+On the cone over $X$ both $F$ and $dF$ restrict to zero. Multiplying by $x^{\alpha-1}/(F_iF_jF_k)$ gives (b) on the cone, hence on $X$.
+
+(c) For $g=[\zeta_0:\dots:\zeta_4]$ we have $g^*x^{\alpha-1}=\prod\zeta_k^{\alpha_k-1}x^{\alpha-1}$, $g^*F_i=\zeta_i^{-1}F_i$, and every term of $\Omega_{ij}$ is a multiple of $x_k\,dx_l\wedge dx_{l'}$ with $\{k,l,l'\}=\{0,\dots,4\}\sm\{i,j\}$, so $g^*\Omega_{ij}=\prod_{k\ne i,j}\zeta_k\,\Omega_{ij}$. The product of the factors is $\prod_k\zeta_k^{\alpha_k}=\alpha(g)$.
+\end{proof}
+
+The cocycle $\varphi$ is the one attached by Carlson and Griffiths \cite[Section~3(b)]{CG80} to the residue of $x^{\alpha-1}\Omega/F^2$; we shall not need their normalization.
+
+\subsection{First-order deformations and a trace formula}\label{subsec:trace}
+
+\begin{definition}\label{def:defo}
+Let $y\in\cP$ be nondegenerate, $v\in T_y\cP$, and let $\widehat C,\pi_1,\nu$ be as in Section~\ref{subsec:family}. Since $v\in T_y\cP$, the vector $\partial x(s,y)/\partial v\in\C^5$ (derivative of \eqref{eq:lift} along $v$ at fixed $s$) is tangent to the cone over $X$, because $\partial_v\bigl(\sum_ku_k(s,1)\bigr)=\partial_vE_y(s)=0$; hence it defines a tangent vector to $X$ at the point $[x(s,y)]$. A \emph{first-order deformation of $\nu$ along $v$} is a family of holomorphic sections $w_j$ of $\nu^*T_X$ over the members $O_j$ of an open cover of $\widehat C$ such that $w_j-w_{j'}\in d\nu(T_{\widehat C})$ on $O_j\cap O_{j'}$ and $w_j\equiv\partial x/\partial v\pmod{d\nu(T_{\widehat C})}$ on $O_j\cap\widehat C^\circ$.
+\end{definition}
+
+For such $w$ and a smooth form $h$ of type $(2,0)$ or $(2,1)$ on an open subset of $X$, the form $\nu^*(\iota_wh)$, defined locally as $\nu^*(\iota_{w_j}h)$, is independent of the choices: if $\tau$ is tangent to $\widehat C$, then $\nu^*(\iota_{d\nu(\tau)}h)=\iota_\tau\nu^*h=0$, because $\nu^*h$ is a form of type $(2,0)$, or a form of degree $3$, on a curve. Since the $w_j$ are holomorphic, $\Ob\,\nu^*(\iota_wh)=-\nu^*(\iota_w\Ob h)$ for $h$ of type $(2,0)$.
+
+\begin{lemma}\label{lem:trace}
+Let $\widehat C$ be a compact Riemann surface covered by open sets $W_3,W_4$ with $\widehat C\sm W_3$ finite. Let $\Theta$ be a smooth $2$-form on $\widehat C$ and $g_3,g_4$ smooth $(1,0)$-forms on $W_3,W_4$ with $\Ob g_i=\Theta$ on $W_i$, such that $g_4-g_3$ is holomorphic on $W_3\cap W_4$. Then
+\[
+\int_{\widehat C}\Theta=2\pi i\sum_{o\in\widehat C\sm W_3}\Res_o(g_4-g_3).
+\]
+\end{lemma}
+
+\begin{proof}
+Choose small disjoint discs $D_o\subset W_4$ centred at the points $o\in\widehat C\sm W_3$. On a curve $\partial g_i=0$, so $\Theta=dg_i$ on $W_i$. By Stokes' theorem $\int_{\widehat C\sm\bigcup D_o}\Theta=-\sum_o\oint_{\partial D_o}g_3$ and $\int_{D_o}\Theta=\oint_{\partial D_o}g_4$. Adding gives $\sum_o\oint_{\partial D_o}(g_4-g_3)=2\pi i\sum_o\Res_o(g_4-g_3)$.
+\end{proof}
+
+We recall the \v{C}ech description of Dolbeault cohomology. If $\theta$ is a $\Ob$-closed $(2,1)$-form on $X$, there are smooth $(2,0)$-forms $\chi_i$ on the Stein open sets $U_i$ with $\Ob\chi_i=\theta|_{U_i}$; then $h_{ij}=\chi_j-\chi_i$ is a \v{C}ech $1$-cocycle of $\Omega^2_X$, and $\theta\mapsto\{h_{ij}\}$ induces the Dolbeault isomorphism $H^{2,1}_{\Ob}(X)\cong H^1(X,\Omega^2_X)$, which is compatible with the action of $G$ \cite[Chapter~0, Section~3]{GH78}, \cite[Ch.~4]{Vo02}. (The cover $\{U_i\}$ computes $H^1(X,\Omega^2_X)$ because the $U_i$ are affine.)
+
+\begin{lemma}\label{lem:R}
+Let $w$ be a first-order deformation as in Definition~\ref{def:defo} and put $W_i=\nu^{-1}(U_i)$. For a \v{C}ech $1$-cocycle $h$ of $\Omega^2_X$ on $\{U_i\}$ let
+\[
+\cR_w(h)=\sum_{o\in\widehat C\sm W_3}\Res_o\,\nu^*(\iota_wh_{34}).
+\]
+Then $\cR_w(h)$ depends only on the class of $h$ in $H^1(X,\Omega^2_X)$, and for every $\Ob$-closed $(2,1)$-form $\theta$ with associated cocycle $h$,
+\[
+\int_{\widehat C}\nu^*(\iota_w\theta)=-2\pi i\,\cR_w(h).
+\]
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:nondeg}(a), $x_3$ and $x_4$ have no common zero on $\nu(\widehat C)$, so $W_3\cup W_4=\widehat C$, and $\widehat C\sm W_3$ is finite. Put $g_i=\nu^*(\iota_w\chi_i)$ on $W_i$ ($i=3,4$). Then $\Ob g_i=-\nu^*(\iota_w\theta)$ and $g_4-g_3=\nu^*(\iota_wh_{34})$ is holomorphic on $W_3\cap W_4$, so Lemma~\ref{lem:trace} with $\Theta=-\nu^*(\iota_w\theta)$ gives the formula. If $h$ is a coboundary, $h_{ij}=\chi_j-\chi_i$ with $\chi_i$ holomorphic, and the same argument with $\theta=0$ gives $\cR_w(h)=0$.
+\end{proof}
+
+\begin{lemma}\label{lem:contraction}
+On $\widehat C^\circ$, in the local coordinate $s$,
+\[
+\nu^*(\iota_w\varphi_{34})=35^{-4}\cdot\nu^*\!\Bigl(\frac{x^\alpha}{x_3^{35}x_4^{35}}\Bigr)\cdot\Delta_v(s)\,ds,\qquad x^\alpha=\prod_kx_k^{\alpha_k}.
+\]
+\end{lemma}
+
+\begin{proof}
+Work on the cone with the lift \eqref{eq:lift}. The tangent vector and the deformation vector are
+\[
+\frac{\partial x}{\partial s}=\Bigl(\frac{x_ku_k'}{35u_k}\Bigr)_k,\qquad \frac{\partial x}{\partial v}=\Bigl(\frac{x_k\dot u_k}{35u_k}\Bigr)_k .
+\]
+Since $\varphi_{34}$ is basic, its value on the images of these vectors may be computed on the cone, and
+\begin{align*}
+\Omega_{34}\Bigl(\frac{\partial x}{\partial v},\frac{\partial x}{\partial s}\Bigr)&=dV\Bigl(\xi,\partial_3,\partial_4,\frac{\partial x}{\partial v},\frac{\partial x}{\partial s}\Bigr)\\
+&=\det\left(\begin{array}{ccc}x_0&x_1&x_2\\ x_0\dot u_0/35u_0&x_1\dot u_1/35u_1&x_2\dot u_2/35u_2\\ x_0u_0'/35u_0&x_1u_1'/35u_1&x_2u_2'/35u_2\end{array}\right)=\frac{x_0x_1x_2}{35^2}\,\Delta_v,
+\end{align*}
+by expansion along the rows of $\partial_3,\partial_4$ and \eqref{eq:Delta}. Dividing by $F_3F_4=35^2x_3^{34}x_4^{34}$ and multiplying by $x^{\alpha-1}$ gives the claim, since $w\equiv\partial x/\partial v$ modulo tangent vectors of $\widehat C$.
+\end{proof}
+
+\begin{lemma}\label{lem:r}
+There is $r\in\C$ with $r^{35}=\Psi(y)$ such that $\nu^*\bigl(x^\alpha/(x_3^{35}x_4^{35})\bigr)=r\cdot\pi_1^*\bigl(A/(u_3u_4)\bigr)$ on $\widehat C$.
+\end{lemma}
+
+\begin{proof}
+Both sides are rational functions on $\widehat C$ ($x^\alpha/(x_3^{35}x_4^{35})$ has degree $0$ on $\PP^4$ and $A/(u_3u_4)$ has degree $0$ in $(s,t)$). On $\widehat C^\circ$, using \eqref{eq:lift} and \eqref{eq:uA}, the $35$th power of their quotient is $\prod_ku_k^{\alpha_k}/A^{35}=\Psi(y)$. Hence the quotient is constant on the connected curve $\widehat C$, and $\Psi(y)\ne0$.
+\end{proof}
+
+\begin{proposition}[Residue formula]\label{prop:residue}
+Let $\omega$ be the harmonic representative of a nonzero class $\omega_\alpha\in V(\alpha)$; it is a closed form of type $(2,1)$. Let $\lambda\in\C$ be defined by $[\varphi]=\lambda[\omega]$ in $H^1(X,\Omega^2_X)$. Then, for every nondegenerate $y\in\cP$, $v\in T_y\cP$, normalized component $\widehat C$ of $\cC_y$ and first-order deformation $w$ of $\nu$ along $v$,
+\[
+\lambda\int_{\widehat C}\nu^*(\iota_w\omega)=-2\pi i\cdot35^{-4}\cdot r\cdot\deg(\pi_1)\cdot\cI(y,v),
+\]
+with $r$ as in Lemma~\ref{lem:r}. In particular, if $\cI(y,v)\ne0$ for one such datum, then $\lambda\ne0$, and for every datum $\int_{\widehat C}\nu^*(\iota_w\omega)\ne0$ if and only if $\cI(y,v)\ne0$.
+\end{proposition}
+
+\begin{proof}
+The Dolbeault class of $\omega$ is nonzero, and by Theorem~\ref{thm:shiodaI} and Lemma~\ref{lem:alpha} the $\alpha$-eigenspace of $H^1(X,\Omega^2_X)\cong H^{2,1}(X)$ is one-dimensional; by Lemma~\ref{lem:cocycle}(c) it contains $[\varphi]$. So $\lambda$ is well defined. Let $h$ be the cocycle attached to $\omega$. By Lemma~\ref{lem:R}, $\int_{\widehat C}\nu^*(\iota_w\omega)=-2\pi i\,\cR_w(h)$ and $\cR_w(\varphi)=\lambda\,\cR_w(h)$. By Lemmas~\ref{lem:contraction} and~\ref{lem:r} and \eqref{eq:Delta}, the holomorphic $1$-form $\nu^*(\iota_w\varphi_{34})$ on $W_3\cap W_4$ and the meromorphic $1$-form $35^{-4}r\,\pi_1^*\eta_v$ agree on $\widehat C^\circ$, hence on the connected set $W_3\cap W_4$. (Near the points of $\widehat C$ over $\rho_1,\rho_2$, which lie outside $\widehat C^\circ$, the vector $\partial x/\partial v$ need not be holomorphic, and $w$ differs from it by a tangent vector of $\widehat C$; this is why the identity is proved on $\widehat C^\circ$ and then extended to $W_3\cap W_4$, which contains a punctured neighbourhood of each of these points.) The points of $\widehat C\sm W_3$ are the points where $x_3\circ\nu$ vanishes, i.e.\ $\pi_1^{-1}\{\rho_1,\rho_2\}$ (Lemma~\ref{lem:nondeg}(b)). For a meromorphic $1$-form $\eta$ near a point $\rho\in\PP^1$ one has $\sum_{o\in\pi_1^{-1}(\rho)}\Res_o\pi_1^*\eta=\deg(\pi_1)\Res_\rho\eta$, since $\pi_1$ is finite. Therefore
+\[
+\cR_w(\varphi)=35^{-4}\,r\,\deg(\pi_1)\bigl(\Res_{\rho_1}\eta_v+\Res_{\rho_2}\eta_v\bigr)=35^{-4}\,r\,\deg(\pi_1)\,\cI(y,v).
+\]
+Combining the three identities gives the formula. The last assertion follows since $r\ne0$ and $\deg\pi_1\ge1$.
+\end{proof}
+
+\begin{remark}\label{rem:component}
+The formula concerns a single component. If $g\in G$, then $g\circ\nu$ is the normalization of a component of $\cC_y$ (with the same $\pi_1$), $dg(w)$ is a first-order deformation of it, and $r$ is replaced by $\alpha(g)r$, in accordance with $g^*\omega=\alpha(g)\omega$. Since the image of $\cC_y$ in $X$ is $G$-stable and $\alpha$ is a nontrivial character, the contributions of all components of $\cC_y$ add up to zero; for this reason the argument below works with one component at a time.
+\end{remark}
+
+\begin{remark}\label{rem:CG}
+Up to sign, $\int_{\widehat C}\nu^*(\iota_w\omega)$ is the derivative of the Abel--Jacobi map of the family of curves, paired with $\omega$ \cite[(6.41)]{Gr83}; we shall only use the fibre-integration form of this statement (proof of Proposition~\ref{prop:cylinder}). The constant $\lambda$ can be computed from \cite[Section~3(b)]{CG80}; the argument above needs only $\lambda\ne0$, which it proves directly from the nonvanishing of one value of $\cI$.
+\end{remark}
+
+\subsection{\texorpdfstring{The family over a component of $\cP$}{The family over a component of P}}\label{subsec:globalfamily}
+Let $y^*\in\cP$ be nondegenerate with $J_b(y^*)$ invertible. By the Jacobian criterion, $\cP$ is smooth of dimension one at $y^*$; let $\cP_1$ be the unique irreducible component of $\cP$ through $y^*$, a curve on which $b$ is a local coordinate at $y^*$. Let $\cP_1^\circ\subset\cP_1$ be the Zariski-open set of smooth nondegenerate points $y$ with $J_b(y)$ invertible, and for $y\in\cP_1^\circ$ let $v(y)\in T_y\cP_1$ be the tangent vector with $v(y)_b=1$; it depends holomorphically on $y$.
+
+\begin{lemma}\label{lem:family}
+There are a smooth connected projective curve $B$ with a nonconstant morphism $\pi\colon B\to\overline{\cP_1}$ (closure in $\PP^{12}$), a smooth projective surface $S$ with morphisms $p\colon S\to B$ and $q\colon S\to X$, and a nonempty Zariski-open set $B^\circ\subset B$ such that for every $b'\in B^\circ$:
+\begin{itemize}
+\item[(i)] $\pi(b')\in\cP_1^\circ$ and $\pi$ is \'etale at $b'$, and $p$ is smooth over $B^\circ$;
+\item[(ii)] the fibre $S_{b'}=p^{-1}(b')$, together with the restrictions of $q$ and of the projection $S\to\PP^1$, is the normalization of an irreducible component of $\cC_{\pi(b')}$ with its maps $\nu$ and $\pi_1$;
+\item[(iii)] for $v'\in T_{b'}B$, the images under $dq$ of local holomorphic lifts of $v'$ to $S$ form a first-order deformation of $\nu$ along $d\pi(v')$.
+\end{itemize}
+\end{lemma}
+
+\begin{proof}
+Let $\cC=\{(y,(s:t),[x])\in\cP_1^\circ\times\PP^1\times X:f_y(s:t)=\Phi([x])\}$. The morphism $\Phi$ is finite and flat (a finite morphism of smooth varieties of the same dimension), so its base change $\cC\to\cP_1^\circ\times\PP^1$ is finite and flat; hence every irreducible component of $\cC$ is a surface which maps onto $\cP_1^\circ\times\PP^1$. Fix one such component $\cC'$. Let $B$ be the smooth projective curve whose function field is the algebraic closure of $\C(\cP_1)$ in $\C(\cC')$, with the induced morphism $\pi$. The inclusion of function fields defines a rational map from $\cC'$ to $B$; together with the projections to $\PP^1$ and $X$ it maps $\cC'$ birationally onto a dense open subset of an irreducible closed surface $\cC''\subset B\times\PP^1\times X$. As $\C(B)$ is algebraically closed in $\C(\cC'')$, the generic fibre of $\cC''\to B$ is geometrically irreducible. Let $S$ be a projective resolution of singularities of $\cC''$ which is an isomorphism over the smooth locus of $\cC''$, with the induced morphisms $p$, $q$ and $S\to\PP^1$. Then $\C(S)=\C(\cC'')$, so the generic fibre of $p\colon S\to B$ is geometrically irreducible as well, and the exceptional locus of $S\to\cC''$ has only finitely many components which are vertical for $p$. By \cite[9.7.7]{EGA43} and generic smoothness \cite[III.10.7]{Ha77} there is a nonempty open $B^\circ\subset B$ satisfying (i) such that the fibres $S_{b'}$, $b'\in B^\circ$, are smooth, connected and birational to the fibres $\cC''_{b'}$, and each $\cC''_{b'}$ is an irreducible curve. Since $\cC'$ is closed in $\cP_1^\circ\times\PP^1\times X$, the image of $\cC''_{b'}$ in $\PP^1\times X$ is contained in $\cC_{\pi(b')}$; it is finite over $\PP^1$, hence an irreducible component of $\cC_{\pi(b')}$. This gives (ii). Over the open subset of $B\times\PP^1$ where $\pi$ is \'etale and $u_0\cdots u_4\ne0$, the morphism $\cC''\to B\times\PP^1$ is \'etale, so for a local coordinate $z$ on $B$ the pair $(z,s)$ is a system of local coordinates on $S$ there, and $q=[x(s,\pi(z))]$ with $x$ as in \eqref{eq:lift}. Hence the vector field $\tilde v$ which in these coordinates has $s$-component $0$ and constant $z$-component equal to that of $v'$ is a local holomorphic lift of $v'$ with $dq(\tilde v)=\partial x/\partial(d\pi(v'))$. Near the other points of $S_{b'}$ holomorphic lifts exist because $p$ is a submersion there, and two lifts differ by a vertical vector field, whose image under $dq$ is tangent to the fibre. This gives (iii).
+\end{proof}
+
+\begin{proposition}\label{prop:cylinder}
+Let $y^*\in\cP$ be a nondegenerate point such that $J_b(y^*)$ is invertible and $\cI(y^*,v(y^*))$ is nonzero. Let $B,S,p,q$ be as in Lemma~\ref{lem:family} and let $Z=(p,q)_*[S]$, a $2$-dimensional cycle on $B\times X$. Then $Z^*(\omega_\alpha)\ne0$ in $H^1(B,\C)$ for every nonzero $\omega_\alpha\in V(\alpha)$.
+\end{proposition}
+
+\begin{proof}
+Let $\omega$ be the harmonic representative of $\omega_\alpha$; it is a closed form of type $(2,1)$. We normalize fibre integration by $\int_Bp_*\eta\wedge\psi=\int_S\eta\wedge p^*\psi$. Over $B^\circ$ the map $p$ is a proper submersion, so $\vartheta=p_*q^*\omega$ is a smooth closed $1$-form on $B^\circ$; it has type $(1,0)$ because $q^*\omega$ has type $(2,1)$ and the fibres are complex curves, hence it is holomorphic. For $b'\in B^\circ$ and $v'\in T_{b'}B$ one has $\vartheta(v')=\pm\int_{S_{b'}}\iota_{\tilde v}q^*\omega$ for any smooth lift $\tilde v$ of $v'$ along $S_{b'}$. The integrand does not change if $\tilde v$ is changed by a vertical vector field, so $\vartheta(v')=\pm\int_{S_{b'}}\nu^*(\iota_w\omega)$, where $w$ is the first-order deformation of Lemma~\ref{lem:family}(iii).
+
+The form $\vartheta$ extends to a holomorphic $1$-form on $B$. Indeed, let $b_0\in B\sm B^\circ$ and let $z$ be a coordinate centred at $b_0$ on a disc $D$ with $D\cap(B\sm B^\circ)=\{b_0\}$. On $D\sm\{b_0\}$ the $2$-form $\vartheta\wedge d\bar z$ is the fibre integral $p_*\Xi$ of the smooth $4$-form $\Xi=q^*\omega\wedge p^*d\bar z$ on the relatively compact open set $p^{-1}(D)\subset S$, and $|p_*\Xi|\le p_*|\Xi|$ with $\int_{p^{-1}(D)}|\Xi|<\infty$, so the coefficient of $\vartheta$ is integrable on $D$; and $\oint_{|z|=r}\vartheta=\pm\int_{p^{-1}\{|z|=r\}}q^*\omega=\pm\int_{p^{-1}\{|z|\le r\}}q^*d\omega=0$ for small $r>0$. A holomorphic $1$-form on a punctured disc with integrable coefficient has at most a simple pole, and here the residue vanishes, so $\vartheta$ extends holomorphically over $b_0$. Since $p^{-1}(B\sm B^\circ)$ has measure zero, $\int_B\vartheta\wedge\psi=\int_Sq^*\omega\wedge p^*\psi=\int_BZ^*(\omega_\alpha)\cup[\psi]$ for every closed $1$-form $\psi$ on $B$, so $\vartheta$ represents $Z^*(\omega_\alpha)$.
+
+The set $\cP_1^\circ$ is connected, being a nonempty Zariski-open subset of the irreducible curve $\cP_1$, and the function $y\mapsto\cI(y,v(y))$ is holomorphic on it and nonzero at $y^*$; so its zeros form a countable set. As $\pi(B^\circ)$ is uncountable, we can choose $b'\in B^\circ$ with $\cI(\pi(b'),v(\pi(b')))\ne0$, and $v'\in T_{b'}B$ with $v'\ne0$. Since $\pi$ is \'etale at $b'$, $d\pi(v')=\mu\,v(\pi(b'))$ with $\mu\ne0$, so $\cI(\pi(b'),d\pi(v'))\ne0$. By Lemma~\ref{lem:family}(ii),(iii) and Proposition~\ref{prop:residue}, $\lambda\ne0$ and $\vartheta(v')\ne0$. A nonzero holomorphic $1$-form on a compact Riemann surface is not exact, so $Z^*(\omega_\alpha)=[\vartheta]\ne0$.
+\end{proof}
+
+\subsection{From one nonzero value to coniveau one}\label{subsec:coniveau}
+
+\begin{theorem}\label{thm:coniveau}
+Let $B$ be a smooth connected projective curve and $Z$ a $2$-dimensional cycle on $B\times X$ with $Z^*(\omega_\alpha)\ne0$ for some $\omega_\alpha\in V(\alpha)$. Let $B^G=G\times B$ ($|G|$ disjoint copies of $B$) and let $Z^G$ be the cycle on $B^G\times X$ whose restriction to $\{g\}\times B\times X$ is $(\mathrm{id}_B\times g)_*Z$. Then $\Lambda=Z^G_*\circ(Z^G)^*$ is an endomorphism of $H^3(X,\Q)$ induced by an algebraic cycle on $X\times X$ which restricts to an automorphism of $M_\alpha$, and there is a polynomial $\ell$ with rational coefficients such that $\ell(\Lambda)\Lambda$ is the identity on $M_\alpha$. Consequently
+\[
+M_\alpha\subset Z^G_*H^1(B^G,\Q)\subset N^1H^3(X,\Q).
+\]
+\end{theorem}
+
+\begin{proof}
+On the copy indexed by $g$ the correspondence $Z^G$ acts as $g_*Z_*$ and its transpose as $Z^*g^*$, so $\Lambda=\sum_{g\in G}g_*Z_*Z^*g^*$. Since $G$ is abelian and $g_*=(g^{-1})^*$, $\Lambda$ commutes with the action of $G$. It therefore preserves each eigenspace $V(t\alpha)$, which is one-dimensional, and acts on it by a scalar $\Lambda_t$. As $\Lambda$ is defined over $\Q$, the argument of Lemma~\ref{lem:basic}(a) shows that $\Lambda_1\in\Q(\zeta_{35})$ and that $\Lambda_t$ is the image of $\Lambda_1$ under the automorphism $\zeta_{35}\mapsto\zeta_{35}^t$. It suffices to show $\Lambda_1\ne0$: then $\Lambda|_{M_\alpha}$ is invertible, and by the Cayley--Hamilton theorem its inverse is $\ell(\Lambda)|_{M_\alpha}$ for a polynomial $\ell$ with rational coefficients.
+
+Let $\omega_\alpha\in V(\alpha)$ with $\vartheta:=Z^*(\omega_\alpha)\ne0$; $\vartheta$ is a holomorphic $1$-form on $B$ because $Z^*$ has bidegree $(-1,-1)$ and $V(\alpha)\subset H^{2,1}$. Using \eqref{eq:adj}, $\int_Xg_*x\cup x'=\int_Xx\cup g^*x'$, $g^*\omega_\alpha=\alpha(g)\omega_\alpha$, $g^*\overline{\omega_\alpha}=\overline{\alpha(g)}\,\overline{\omega_\alpha}$ and $Z^*(\overline{\omega_\alpha})=\overline{Z^*(\omega_\alpha)}=\overline\vartheta$ (as $Z^*$ is defined over $\Q$), we get
+\[
+\Lambda_1\int_X\omega_\alpha\cup\overline{\omega_\alpha}=\int_X\Lambda(\omega_\alpha)\cup\overline{\omega_\alpha}=\sum_{g\in G}|\alpha(g)|^2\int_X Z_*Z^*\omega_\alpha\cup\overline{\omega_\alpha}=|G|\int_B\vartheta\wedge\overline{\vartheta}\ne0,
+\]
+since $i\int_B\vartheta\wedge\overline\vartheta>0$. Hence $\Lambda_1\ne0$. Finally $M_\alpha=\Lambda(M_\alpha)\subset Z^G_*H^1(B^G,\Q)$, and Lemma~\ref{lem:N1} gives the last inclusion.
+\end{proof}
+
+\begin{proposition}\label{prop:certificate}
+There is a nondegenerate point $y^*\in\cP$ such that $J_b(y^*)$ is invertible and $\cI(y^*,v(y^*))$ is nonzero.
+\end{proposition}
+
+This is proved by a computer-verified certificate in Appendix~\ref{app:cert}.
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}(A)]
+Lemma~\ref{lem:alpha} gives the assertions on $M_\alpha$. By Propositions~\ref{prop:certificate} and~\ref{prop:cylinder} there are $B$ and $Z$ such that $Z^*(\omega_\alpha)$ is nonzero, and Theorem~\ref{thm:coniveau} gives
+\[
+M_\alpha\subset Z^G_*H^1(B^G,\Q)\subset N^1H^3(X,\Q).
+\]
+Take $C=B^G$ and replace $Z$ by $Z^G$.
+\end{proof}
+
+%======================================================================
+\section{\texorpdfstring{The Hodge conjecture for $M_\beta$ on $X^6_{35}$}{The Hodge conjecture for M(beta) on the Fermat sixfold of degree 35}}\label{sec:beta}
+
+Let $X^1=X^1_{35}$ be the Fermat curve of degree $35$ and $\kappa=(17,22,31)\in\fA^1_{35}$, so that $\beta=\alpha*\kappa$.
+
+\begin{lemma}\label{lem:kappa}
+For every $t\in(\Z/35)^\times$ one has $|t\alpha|+|t\kappa|=4$; more precisely $|t\kappa|=2$ for $t\in\cT$ and $|t\kappa|=1$ for $t\notin\cT$. Consequently $\beta\in\fB^6_{35}$, and for every $t$ the line $V(t\alpha)\otimes V(t\kappa)\subset H^4(X\times X^1,\C)$ is of type $(2,2)$.
+\end{lemma}
+
+\begin{proof}
+The first assertion is read off from Table~\ref{tab:alphakappa}. Then $|t\beta|=|t\alpha|+|t\kappa|=4=6/2+1$. By Theorem~\ref{thm:shiodaI}(ii), $V(t\kappa)\subset H^{0,1}(X^1)$ for $t\in\cT$ and $V(t\kappa)\subset H^{1,0}(X^1)$ otherwise, while $V(t\alpha)$ is of type $(2,1)$, resp.\ $(1,2)$, by Lemma~\ref{lem:alpha}; so $V(t\alpha)\otimes V(t\kappa)$ has type $(2,2)$ in both cases.
+\end{proof}
+
+In other words, the CM types of $M_\alpha$ and of $M_\kappa\subset H^1(X^1,\Q)$ match, so that $M_\alpha\otimes M_\kappa$ contains the $24$-dimensional space of Hodge classes $\bigoplus_tV(t\alpha)\otimes V(t\kappa)$.
+
+\begin{proposition}\label{prop:lefschetz}
+Every Hodge class in $M_\alpha\otimes H^1(X^1,\Q)\subset H^4(X\times X^1,\Q)$ is algebraic.
+\end{proposition}
+
+\begin{proof}
+Let $B^G$, $Z^G$, $\Lambda$ and $\ell$ be as in Theorem~\ref{thm:coniveau} (which applies by Proposition~\ref{prop:cylinder} and Proposition~\ref{prop:certificate}). Consider the correspondence $Z'=Z^G\times\Delta_{X^1}$ from $B^G\times X^1$ to $X\times X^1$, where $\Delta_{X^1}$ is the diagonal. On $H^3(X)\otimes H^1(X^1)$ one has $Z'_*Z'^*=\Lambda\otimes\mathrm{id}$, and $\ell(\Lambda)\otimes\mathrm{id}$ is a morphism of Hodge structures preserving $M_\alpha\otimes H^1(X^1,\Q)$. Let $\upsilon$ be a Hodge class in $M_\alpha\otimes H^1(X^1,\Q)$. Then $\upsilon'=Z'^*\bigl((\ell(\Lambda)\otimes\mathrm{id})\upsilon\bigr)$ is a Hodge class in $H^2(B^G\times X^1,\Q)$, hence algebraic by the Lefschetz $(1,1)$-theorem applied to each component of the surface $B^G\times X^1$ \cite[p.~163]{GH78}, and $\upsilon=(\Lambda\ell(\Lambda)\otimes\mathrm{id})\upsilon=Z'_*\upsilon'$ is algebraic.
+\end{proof}
+
+\begin{theorem}\label{thm:beta}
+$\beta\in\fC^6_{35}$. Equivalently, every element of the $24$-dimensional space $M_\beta\subset H^6(X^6_{35},\Q)$ is algebraic.
+\end{theorem}
+
+\begin{proof}
+The set of characters $\{(t\alpha,t\kappa)\}$ of $G\times G^1_{35}$ is stable under $\mathrm{Gal}(\Q(\zeta_{35})/\Q)$, so $L=\bigoplus_tV(t\alpha)\otimes V(t\kappa)$ is defined over $\Q$: $L=L_\Q\otimes\C$ with $L_\Q\subset M_\alpha\otimes H^1(X^1,\Q)$. By Lemma~\ref{lem:kappa}, $L_\Q$ consists of Hodge classes, which are algebraic by Proposition~\ref{prop:lefschetz}. In particular $V(\alpha)\otimes V(\kappa)\subset\mathrm{Alg}^2(X\times X^1)\otimes\C$. Theorem~\ref{thm:SK} with $r-1=3$, $s-1=1$ (so $n=6$) gives $\alpha*\kappa=\beta\in\fC^6_{35}$. By Lemma~\ref{lem:basic}(a), $M_\beta\subset\mathrm{Alg}^3(X^6_{35})$; and $\dim M_\beta=|[\beta]|=24$.
+\end{proof}
+
+%======================================================================
+\section{The gap group and all dimensions}\label{sec:gap}
+
+\subsection{Aoki's groups}\label{subsec:groups}
+Fix $m\ge2$. Let $R_m$ be the free abelian group on the symbols $(y)$, $y\in\Z/m\sm\{0\}$, and for $x=\sum_yc_y(y)\in R_m$ put $\len(x)=\sum_yc_y$. For $a=(a_0,\dots,a_{n+1})\in\fA^n_m$ put $\uu(a)=(a_0)+\dots+(a_{n+1})\in R_m$. Then $\uu(a*b)=\uu(a)+\uu(b)$, and $\uu(a)=\uu(b)$ if and only if $a\sim b$. The group $(\Z/m)^\times$ acts on $R_m$ by $t\cdot(y)=(ty)$, and $\uu(ta)=t\cdot\uu(a)$. For $e\ge1$ let $e_*\colon R_m\to R_{em}$ be the homomorphism $(y)\mapsto(e\langle y\rangle)$, where $\langle y\rangle\in\{1,\dots,m-1\}$ represents $y$; thus $\uu(ea)=e_*\uu(a)$ for the character $ea$ of Lemma~\ref{lem:basic}(c).
+
+Following Aoki \cite[Section~2]{Ao00} let $B_m$, $D_m$ and $S_m$ be the subgroups of $R_m$ generated, respectively, by the $\uu(a)$ with $a\in\fB^n_m$, by the $\uu(d)$ with $d\in\fD^n_m$, and by $D_m$ together with the $\uu(\sigma_{p,i})$ for all standard characters $\sigma_{p,i}$ of level $m$ (Section~\ref{subsec:juxta}); here $n$ runs over the even integers $\ge0$. The group $D_m$ is generated by the elements $(y)+(-y)$. By Lemma~\ref{lem:standard} below, $D_m\subset S_m\subset B_m$. The quotient $B_m/S_m$ is Aoki's \emph{gap group}. In \cite[Section~2]{Ao00} the even integer $n$ runs over $n>0$ only; this gives the same groups, since $(y)+(-y)=\uu\bigl((y,-y,y,-y,y,-y)\bigr)-\uu\bigl((y,-y,y,-y)\bigr)$, and since the sets of standard characters agree (Section~\ref{subsec:juxta}).
+
+\begin{lemma}\label{lem:Blattice}
+An element $x=\sum_yc_y(y)$ of $R_m$ lies in $B_m$ if and only if $\len(x)$ is even and $\sum_yc_y\langle ty\rangle=\frac m2\len(x)$ for all $t\in(\Z/m)^\times$.
+\end{lemma}
+
+\begin{proof}
+Let $B'_m$ be the subgroup of the $x$ satisfying both conditions. If $a\in\fB^n_m$, then $\len(\uu(a))=n+2$ is even and $\sum_i\langle ta_i\rangle=m|ta|=m(\frac n2+1)$ for all $t$ by Theorem~\ref{thm:shiodaI}(iii); hence $B_m\subset B'_m$. Conversely, let $x\in B'_m$, and write $x=x_+-x_-$ with $x_\pm=\sum_yc^\pm_y(y)$ and $c^\pm_y\ge0$. The element $x_-+\sum_yc^-_y(-y)=\sum_yc^-_y\bigl((y)+(-y)\bigr)$ is $0$ or $\uu(d)$ for some $d\in\fD^r_m\subset\fB^r_m$, and $z=x+\sum_yc^-_y\bigl((y)+(-y)\bigr)=x_++\sum_yc^-_y(-y)$ lies in $B'_m$ and has nonnegative coefficients. If $z=0$, then $x\in B_m$. Otherwise $z=\uu(a)$, where $a$ lists the symbols occurring in $z$ with their multiplicities. The character $a$ has an even number $n+2=\len(z)$ of nonzero entries, $\sum_i\langle a_i\rangle=\frac m2(n+2)\equiv0\pmod m$, and $|ta|=\frac n2+1$ for all $t$; so $a\in\fB^n_m$, and $x=z-\uu(d)\in B_m$.
+\end{proof}
+
+\begin{lemma}\label{lem:standard}
+Let $p$ be a prime divisor of $m$ with $m>p$, put $d=m/p$, and let $0<i<d$.
+\begin{itemize}
+\item[(a)] $\sigma_{p,i}\in\fB^{p-1}_m$ if $p$ is odd, and $\sigma_{2,i}\in\fB^2_m$. For $t\in(\Z/m)^\times$ one has $t\sigma_{p,i}\sim\sigma_{p,i'}$, where $0<i'<d$ and $i'\equiv ti\pmod d$; in particular $-\sigma_{p,i}\sim\sigma_{p,d-i}$. For $e\ge1$ the character $e\sigma_{p,i}$ of level $em$ is $\sigma_{p,ei}$.
+\item[(b)] $\sigma_{p,i}$ is algebraic.
+\end{itemize}
+Consequently $D_m\subset S_m\subset B_m$, these groups are stable under $(\Z/m)^\times$, and $e_*$ maps $D_m$, $S_m$ and $B_m$ into $D_{em}$, $S_{em}$ and $B_{em}$.
+\end{lemma}
+
+\begin{proof}
+(a) The first $p$ entries of $\sigma_{p,i}$ (the first two if $p=2$) are the elements of the coset $i+d\Z/m\Z$, and their representatives $i,i+d,\dots,i+(p-1)d$ lie in $\{1,\dots,m-1\}$. Hence $|\sigma_{p,i}|=\bigl(pi+dp(p-1)/2+(m-pi)\bigr)/m=(p+1)/2$ for odd $p$, and $|\sigma_{2,i}|=\bigl(i+(i+d)+(m-2i)+d\bigr)/m=2$. Let $t\in(\Z/m)^\times$. Multiplication by $t$ maps the coset $i+d\Z/m\Z$ onto $ti+d\Z/m\Z=i'+d\Z/m\Z$, where $i'\ne0$ as $t$ is prime to $d$; it maps $-pi$ to $-pti=-pi'$, since $p(ti-i')\in pd\Z=m\Z$; and for $p=2$ it fixes $d=m/2$, since $t$ is odd. Hence $t\sigma_{p,i}\sim\sigma_{p,i'}$ and $|t\sigma_{p,i}|=|\sigma_{p,i'}|=(p+1)/2$, and Theorem~\ref{thm:shiodaI}(iii) gives the first assertion. The assertion on $e\sigma_{p,i}$ follows from the definitions.
+
+(b) For $p=2$ this is Theorem~\ref{thm:lef}. Let $p$ be odd, $g=\gcd(i,d)$, $m'=m/g$, $i'=i/g$ and $d'=d/g=m'/p$. Then $0<i'<d'$, $\gcd(i',d')=1$, and $\sigma_{p,i}=g\sigma_{p,i'}$ by (a). If $d'\ge3$, then $\sigma_{p,i'}\in\fC^{p-1}_{m'}$ by Theorem~\ref{thm:aoki}. If $d'=2$, then $i'=1$ and $\sigma_{p,1}=(1,3,\dots,2p-1,p)$ at level $2p$ is decomposable: $y\mapsto 2p-y$ pairs the entries $1,3,\dots,2p-1$ other than $p$, and $p$ is paired with the last entry; so $\sigma_{p,1}\in\fD^{p-1}_{2p}\subset\fC^{p-1}_{2p}$ \cite[Thm.~1-1]{Ao87}. In both cases $\sigma_{p,i}$ is algebraic by Lemma~\ref{lem:basic}(c).
+
+The last assertions follow from (a), since multiplication by $t$ preserves $\fB^n_m$ and $\fD^n_m$, and $a\mapsto ea$ maps $\fB^n_m$ into $\fB^n_{em}$ (Lemma~\ref{lem:basic}(c)) and $\fD^n_m$ into $\fD^n_{em}$.
+\end{proof}
+
+The following lemma is the step from the gap group to characters in the proof of \cite[Thm.~0.1]{Ao00}; it rests on Theorem~\ref{thm:juxta}, i.e.\ on \cite[Lemma~4.1(i),(ii)]{Ao00}.
+
+\begin{lemma}\label{lem:transfer}
+Let $\mathcal A$ be a set of algebraic characters of level $m$, each of them in $\fB^r_m$ for some even $r\ge0$. Let $n$ be even, and let $a\in\fB^n_m$ with $\uu(a)\in D_m+\sum_{c\in\mathcal A}\Z\,\uu(c)$. Then $a\in\fC^n_m$.
+\end{lemma}
+
+\begin{proof}
+Write $\uu(a)=\sum_{j=1}^J\epsilon_j\uu(c_j)+\sum_yk_y\bigl((y)+(-y)\bigr)$ with $c_j\in\mathcal A$, $\epsilon_j=\pm1$ and $k_y\in\Z$. For each $j$ with $\epsilon_j=-1$ we use
+\[
+-\uu(c_j)=\uu(-c_j)-\textstyle\sum_i\bigl((c_{j,i})+(-c_{j,i})\bigr),
+\]
+where the $c_{j,i}$ are the entries of $c_j$; the character $-c_j$ lies in $\fB$ and is algebraic by Lemma~\ref{lem:basic}(a) with $t=-1$. This gives $\uu(a)=\sum_j\uu(c'_j)+\sum_yk'_y\bigl((y)+(-y)\bigr)$ with algebraic characters $c'_j\in\{c_j,-c_j\}$ of even dimension and integers $k'_y$. Let $d$, resp.\ $d'$, be the decomposable character consisting of $|k'_y|$ copies of the pair $(y,-y)$ for each $y$ with $k'_y<0$, resp.\ $k'_y>0$ (either may be empty). Then
+\[
+\uu(a*d)=\uu(a)+\uu(d)=\uu(c'_1)+\dots+\uu(c'_J)+\uu(d')=\uu(c'_1*\dots*c'_J*d'),
+\]
+so $a*d\sim c'_1*\dots*c'_J*d'$; the right side is not empty, since $\len(\uu(a*d))>0$. It lies in $\fC$ by Theorem~\ref{thm:juxta}(i), since the $c'_j$ are algebraic and $d'\in\fD\subset\fC$. Hence $a*d\in\fC$ by Lemma~\ref{lem:basic}(b), and $a\in\fC^n_m$ by Theorem~\ref{thm:juxta}(ii) (directly, if $d$ is empty).
+\end{proof}
+
+\begin{corollary}\label{cor:transfer}
+\begin{itemize}
+\item[(i)] Let $n$ be even and $a\in\fB^n_m$. Then $a$ is standard if and only if $\uu(a)\in S_m$.
+\item[(ii)] Suppose that $B_m=S_m+\sum_{c\in\mathcal C}\Z\,\uu(c)$ for a set $\mathcal C$ of algebraic characters of level $m$, each in $\fB^r_m$ for some even $r$. Then $\fB^n_m=\fC^n_m$ for every even $n$, and the Hodge conjecture holds for $X^n_m$ for every $n\ge0$.
+\end{itemize}
+\end{corollary}
+
+\begin{proof}
+(i) If $a*d\sim\sigma_1*\dots*\sigma_k*d'$ as in the definition of standard characters, then $\uu(a)=\sum_j\uu(\sigma_j)+\uu(d')-\uu(d)\in S_m$. Conversely, let $\uu(a)\in S_m$. The argument of the proof of Lemma~\ref{lem:transfer}, applied with $\mathcal A$ the set of standard characters, which is stable under $c\mapsto -c$ up to the order of the entries by Lemma~\ref{lem:standard}(a), gives $a*d\sim c'_1*\dots*c'_J*d'$ with standard characters $c'_j$ and decomposable $d,d'$; so $a$ is standard.
+
+(ii) By definition $S_m=D_m+\sum_\sigma\Z\,\uu(\sigma)$, the sum over the standard characters, and these are algebraic by Lemma~\ref{lem:standard}(b). Hence Lemma~\ref{lem:transfer}, applied with $\mathcal A$ the union of $\mathcal C$ and the set of standard characters, gives $\fB^n_m=\fC^n_m$ for every even $n$. Let $h$ be the hyperplane class. For even $n$ the Hodge classes in $H^n(X^n_m,\Q)$ are the sums of a multiple of $h^{n/2}$ and a Hodge class in $H^n_{\mathrm{prim}}$, and the latter span $\bigoplus_{a\in\fB^n_m}V(a)$ over $\C$ by Theorem~\ref{thm:shiodaI}(iii). In the degrees $2k\ne n$ one has $H^{2k}(X^n_m,\Q)=\Q h^k$ by the Lefschetz hyperplane theorem and Poincar\'e duality.
+\end{proof}
+
+\subsection{Aoki's structure theorem}\label{subsec:aokiD}
+Let $\sP=\{4\}\cup\{p:p\text{ an odd prime}\}$. For $q\ge1$ put $\mu'(q)=(-1)^r$ if $q$ is a product of $r$ distinct elements of $\sP$, and $\mu'(q)=0$ otherwise \cite[Section~2]{Ao00}. For $m\ge3$ let $\cQ(m)$ be the set of divisors $q>1$ of $m$ with $\mu'(q)=1$. The elements of $\sP$ are pairwise coprime; hence, if $m$ has exactly $r$ divisors in $\sP$, then $\cQ(m)$ consists of the products of an even number $\ge2$ of them, and $|\cQ(m)|=2^{r-1}-1$.
+
+\begin{theorem}[Aoki, Yamamoto]\label{thm:aokiD}
+Let $m\ge3$.
+\begin{itemize}
+\item[(i)] For each $q\in\cQ(m)$ there is an element $\xi_q\in B_q\sm S_q$ such that $B_m$ is generated by $S_m$ and the elements $t\cdot(m/q)_*\xi_q$ with $q\in\cQ(m)$ and $t\in(\Z/m)^\times$ \cite[Thm.~2.1]{Ao00}; see also \cite[Thm.~D]{Ao83} and the remark below.
+\item[(ii)] For $x\in B_m$ and $t\in(\Z/m)^\times$ one has $2x\in S_m$ \cite[Thm.~2.1]{Ao00}, \cite{Ku79}, \cite[Rem.~5.4]{Ao83}, and $x+t\cdot x\in S_m$ \cite[proof of Cor.~2.3]{Ao00}.
+\item[(iii)] $B_m/S_m\cong(\Z/2)^{2^{r-1}-1}$, where $r$ is the number of divisors of $m$ in $\sP$ \cite[Thm.~4]{Ya75}, \cite[Rem.~2.4]{Ao00}.
+\end{itemize}
+\end{theorem}
+
+By (ii), $B_m/S_m$ is a vector space over $\F_2$ on which $(\Z/m)^\times$ acts trivially; by (i) it is spanned by the classes of the $(m/q)_*\xi_q$, $q\in\cQ(m)$, and by (iii) these classes form a basis. If $q$ is the product of two elements of $\sP$, then $\cQ(q)=\{q\}$, so $B_q=S_q+\Z\xi_q$ and $B_q/S_q\cong\Z/2$; every element of $B_q\sm S_q$ is congruent to $\xi_q$ modulo $S_q$.
+
+In \cite{Ao83} the notation differs: the group called $B_m$ there is the group $K_m\supset B_m$ of the $x\in R_m$ with $\sum_yc_y\langle ty\rangle=\frac m2\len(x)$ for all $t\in(\Z/m)^\times$ (see the proof of Proposition~\ref{prop:tenlevels}), the group called $S_m$ there is generated by the standard characters alone, and the group called $D_m$ there also contains $(m/2)$ if $m$ is even. So \cite[Thm.~D]{Ao83} states that $K_m$ is generated by $S_m$, by $(m/2)$ if $m$ is even, and by the elements $t\cdot(m/q)_*\xi'_q$ for certain $\xi'_q\in K_q$. If $\len(\xi'_q)$ is odd, then $q$ is even (for odd $q$ one has $K_q=B_q$), and we replace $\xi'_q$ by $\xi'_q+(q/2)$, which lies in $B_q$; as $(m/q)_*(q/2)=(m/2)$, the generators change only by multiples of $(m/2)$. Comparing lengths, and using $2(m/2)\in D_m$, one obtains the generation statement of (i) with elements $\xi_q\in B_q$. This is all that the proof of Theorem~\ref{thm:main}(C) below uses: if $\xi_q\in S_q$, the corresponding generators are redundant. Likewise, \cite[Rem.~5.4]{Ao83} reports Kubert's theorem \cite{Ku79} that $2K_m$ lies in the group generated by $S_m$ and, if $m$ is even, $(m/2)$; for $x\in B_m$, comparing lengths gives $2x\in S_m$.
+
+\subsection{Order parities and six representatives}\label{subsec:reps}
+
+\begin{lemma}\label{lem:nu}
+Let $\ell\in\sP$ be a divisor of $m$ with $\gcd(\ell,m/\ell)=1$, and let $O_\ell\subset\Z/m$ be the set of elements of order $\ell$. Let $\nu_\ell\colon R_m\to\Z/2$ be the homomorphism $\sum_yc_y(y)\mapsto\sum_{y\in O_\ell}c_y\bmod 2$, and for a character $a$ write $\nu_\ell(a)=\nu_\ell(\uu(a))$, the parity of the number of entries of $a$ of order $\ell$. Then $\nu_\ell$ vanishes on $S_m$. In particular, every $a\in\fB^n_m$ with $\nu_\ell(a)=1$ is exceptional.
+\end{lemma}
+
+\begin{proof}
+As $O_\ell=-O_\ell$, $\nu_\ell$ vanishes on $D_m$. Let $\sigma=\sigma_{p,i}$ be a standard character, $d=m/p$, and for a divisor $k$ of $m$ let $\Gamma_k\subset\Z/m$ be the subgroup of order $k$. The entries of $\sigma$ are the elements of the coset $i+\Gamma_p$, which does not contain $0$ as $0<i<d$, the element $-pi$, and, if $p=2$, the element $d$, of order $2$. We show that an even number of them lie in $O_\ell$; this proves the first assertion, and the second follows by Corollary~\ref{cor:transfer}(i).
+
+Suppose that $p\nmid\ell$. Then multiplication by $p$ is an automorphism of $\Gamma_\ell$, and $\Gamma_p\cap\Gamma_\ell=0$. Hence $i+\Gamma_p$ contains at most one element of $\Gamma_\ell$, and it contains one, say $z$, if and only if $pi\in\Gamma_\ell$: if $pi=pz$ with $z\in\Gamma_\ell$, then $p(i-z)=0$, i.e.\ $i-z\in\Gamma_p$. In that case $-pi=-pz$ has the same order as $z$. So the number of entries of $\sigma$ in $O_\ell$ is $2$ if $z$ exists and lies in $O_\ell$, and $0$ otherwise (note $\ell\ne2$).
+
+Suppose that $p=\ell$, an odd prime. Then $i\notin\Gamma_\ell$, so $i+\Gamma_\ell$ does not meet $\Gamma_\ell$; and $-\ell i\in\Gamma_\ell$ would mean $\ell^2i=0$, i.e.\ $m/\ell$ divides $\ell i$, hence $i$ as $\gcd(\ell,m/\ell)=1$, which is impossible for $0<i<m/\ell$. So no entry lies in $O_\ell$.
+
+Suppose finally that $p=2$ and $\ell=4$, so that $8\nmid m$. The coset $\{i,i+d\}=i+\Gamma_2$ either equals $O_4=m/4+\Gamma_2$ or is disjoint from it, $d$ has order $2$, and $-2i\in O_4$ would force $i$ to have order $8$. So the number is $0$ or $2$.
+\end{proof}
+
+\begin{lemma}\label{lem:reps}
+Put
+\[
+\begin{aligned}
+&\rho_{12}=(1,6,8,9),&\quad&\rho_{15}=(1,6,10,13),&\quad&\rho_{20}=(1,4,17,18),\\
+&\rho_{21}=(1,4,18,19),&&\rho_{28}=(1,9,21,25),&&\rho_{35}=\beta,
+\end{aligned}
+\]
+and $(\ell_{12},\ell_{15},\ell_{20},\ell_{21},\ell_{28},\ell_{35})=(3,5,5,7,4,5)$. Let $q\in\{12,15,20,21,28,35\}$.
+\begin{itemize}
+\item[(i)] $\rho_q$ is an algebraic character of level $q$; $\rho_q\in\fB^2_q$ for $q\ne35$, and $\rho_{35}\in\fB^6_{35}$.
+\item[(ii)] $\ell_q$ satisfies the hypothesis of Lemma~\ref{lem:nu} for $m=q$, and $\rho_q$ has exactly one entry of order $\ell_q$, namely $8$, $6$, $4$, $18$, $21$, $21$, respectively. Hence $\nu_{\ell_q}(\rho_q)=1$, and $\uu(\rho_q)\notin S_q$.
+\item[(iii)] $B_q=S_q+\Z\,\uu(\rho_q)$, $B_q/S_q\cong\Z/2$, and $\uu(\rho_q)\equiv\xi_q\pmod{S_q}$ for the element $\xi_q$ of Theorem~\ref{thm:aokiD}(i) for $m=q$.
+\end{itemize}
+\end{lemma}
+
+\begin{proof}
+(i) For $q\ne35$ one checks $|t\rho_q|=2$ for all $t\in(\Z/q)^\times$ (a finite computation, see the ancillary file \texttt{gap.py}), so $\rho_q\in\fB^2_q$, and $\rho_q$ is algebraic by Theorem~\ref{thm:lef}. For $q=35$ see Theorem~\ref{thm:beta}. (ii) The numbers $12$, $15$, $20$, $21$, $28$, $35$ are $3\cdot4$, $3\cdot5$, $4\cdot5$, $3\cdot7$, $4\cdot7$, $5\cdot7$, and $\ell_q$ is one of the two factors; the entries of order $\ell_q$ are read off, and Lemma~\ref{lem:nu} applies. (iii) follows from (ii) and the remark after Theorem~\ref{thm:aokiD}, as $q$ is a product of two elements of $\sP$. Independently of Theorem~\ref{thm:aokiD}(ii),(iii), the computation described in the proof of Proposition~\ref{prop:tenlevels}, carried out for $m=q$, shows $B_q=S_q+\Z\,\uu(\rho_q)$ and $2\uu(\rho_q)\in S_q$; together with (ii) this gives $B_q/S_q\cong\Z/2$, and hence $\uu(\rho_q)\equiv\xi_q\pmod{S_q}$ for every $\xi_q\in B_q\sm S_q$.
+\end{proof}
+
+The characters $\rho_{12}$, $\rho_{15}$, $\rho_{20}$ are the elements $\xi_{12}$, $\xi_{15}$, $\xi_{20}$ of \cite[p.~185]{Ao00}. For $q=21$ the element $a=(1,4,16,9,15,18)\in\fB^4_{21}$ given there would serve as well: it has $\nu_7(a)=1$, so $\uu(a)\equiv\uu(\rho_{21})\pmod{S_{21}}$ by Lemmas~\ref{lem:nu} and~\ref{lem:reps}(iii), and it is algebraic. Indeed, $a=a'*b'$ with $a'=(1,4,16)$ and $b'=(9,15,18)$ in $\fA^1_{21}$; for every $t$ one has $|ta'|,|tb'|\in\{1,2\}$ and $|ta'|+|tb'|=|ta|=3$, so by Theorem~\ref{thm:shiodaI}(ii) the lines $V(ta')\otimes V(tb')$ are of type $(1,1)$; their sum is defined over $\Q$, hence consists of algebraic classes on the surface $X^1_{21}\times X^1_{21}$ by the Lefschetz $(1,1)$-theorem, and Theorem~\ref{thm:SK} with $r-1=s-1=1$ gives $a\in\fC^4_{21}$. The element printed there for $q=28$, $(1,9,25,12,20,24)$, is not a character, as its entries add up to $91\not\equiv0\pmod{28}$; we use $\rho_{28}$ instead.
+
+\subsection{Ten levels}\label{subsec:ten}
+
+\begin{proposition}\label{prop:tenlevels}
+Let $m=35k$ with $1\le k\le 10$. Then $\cQ(m)$ is $\{35\}$ for $k\in\{1,2,5,7,10\}$, $\{15,21,35\}$ for $k\in\{3,6,9\}$, and $\{20,28,35\}$ for $k\in\{4,8\}$; in each case it is the set of $q\in\{12,15,20,21,28,35\}$ dividing $m$. For $q\in\cQ(m)$ let $\rho^{(m)}_q$ denote the character $(m/q)\rho_q$ of level $m$ (Lemma~\ref{lem:basic}(c)). Then:
+\begin{itemize}
+\item[(a)] $B_m=S_m+\sum_{q\in\cQ(m)}\Z\,\uu(\rho^{(m)}_q)$;
+\item[(b)] $2\uu(\rho^{(m)}_q)\in S_m$ for every $q\in\cQ(m)$, and $B_m/S_m\cong(\Z/2)^{|\cQ(m)|}$, with basis the classes of the $\uu(\rho^{(m)}_q)$;
+\item[(c)] $\uu(\rho^{(m)}_{35})\notin S_m+\sum_{q\in\cQ(m)\sm\{35\}}\Z\,\uu(\rho^{(m)}_q)$.
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+The description of $\cQ(m)$ is elementary, since the divisors of $m$ in $\sP$ are among $3,4,5,7$. Statements (a)--(c) are proved by an exact computation with integers, carried out in the ancillary file \texttt{gap.py}, as follows.
+
+Let $K_m\subset R_m$ be the subgroup of the $x$ with $\sum_yc_y\langle ty\rangle=\frac m2\len(x)$ for all $t\in(\Z/m)^\times$. The conditions for $t$ and $-t$ coincide, and the remaining $|(\Z/m)^\times|/2$ linear forms are linearly independent, as their rank modulo the prime $2^{61}-1$ shows; so $K_m$ has rank $r_m=m-1-|(\Z/m)^\times|/2$. By Lemma~\ref{lem:Blattice}, $B_m=\{x\in K_m:\len(x)\text{ even}\}$. Hence $B_m=K_m$ if $m$ is odd, and $[K_m:B_m]=2$ if $m$ is even, since then $(m/2)\in K_m\sm B_m$.
+
+(a) Let $L_m$ be the subgroup generated by the elements $(y)+(-y)$, the $\uu(\sigma)$ for the standard characters $\sigma$ of level $m$, and the $\uu(\rho^{(m)}_q)$; each of these generators lies in $B_m$ by Lemmas~\ref{lem:standard}(a) and~\ref{lem:reps}(i), and this is also checked directly with Lemma~\ref{lem:Blattice}. Put $L^+_m=L_m+\Z\,(m/2)$ if $m$ is even, and $L^+_m=L_m$ if $m$ is odd. Unimodular operations on the generators give a basis of $L^+_m$ in echelon form. It has $r_m$ elements, the product of its pivots is $1$ except for $m=315$, where it is $6$, and for $m=315$ the basis has rank $r_m$ modulo $2$ and modulo $3$. Hence the maximal minors of this basis have no common prime factor, i.e.\ $L^+_m$ is a saturated subgroup of $R_m$; as it is contained in $K_m$ and has the same rank, $L^+_m=K_m$. If $m$ is odd, this is (a). If $m$ is even, then $2(m/2)\in L_m$, so $[K_m:L_m]\le2$; since $L_m\subset B_m$ and $[K_m:B_m]=2$, we get $L_m=B_m$.
+
+(b), (c) Reduction with respect to an echelon basis of $S_m$ shows $2\uu(\rho^{(m)}_q)\in S_m$ for $q\in\cQ(m)$. For each $q\in\cQ(m)$ there are a set $W_q\subset\Z/m\sm\{0\}$ and $b_q\in\{0,1\}$, printed explicitly by \texttt{gap.py} (as a union of sets of elements of a given order, or, for $m=280$ and $q=28$, as a list of $52$ residues), such that the homomorphism $\phi_q\colon B_m\to\Z/2$, $\phi_q(x)=\sum_{y\in W_q}c_y+b_q\len(x)/2\bmod 2$, vanishes on all the generators of $S_m$ listed above and satisfies $\phi_q(\uu(\rho^{(m)}_{q'}))=1$ for $q'=q$ and $=0$ for $q'\in\cQ(m)\sm\{q\}$. Together with (a), this proves (b) and (c).
+
+As an independent check, the Hermite and Smith normal forms of the generators, computed with FLINT \cite{FLINT} through python-flint, give
+\begin{gather*}
+[K_m:S_m]=2^{|\cQ(m)|}\,[K_m:B_m],\qquad [K_m:L_m]=[K_m:B_m],\\
+\Bigl[K_m:S_m+\sum_{q\in\cQ(m)\sm\{35\}}\Z\,\uu(\rho^{(m)}_q)\Bigr]=2\,[K_m:B_m].
+\end{gather*}
+\end{proof}
+
+\begin{remark}\label{rem:byhand}
+(a) For $m=35$ no computation is needed. By Theorem~\ref{thm:aokiD}(iii), $B_{35}/S_{35}\cong\Z/2$, and $\uu(\beta)\notin S_{35}$ since $\nu_5(\beta)=1$ (Lemma~\ref{lem:reps}(ii)). Alternatively, let $\varpi(a)\in\Z/2$ be the parity of the number of entries of a character $a$ of level $35$ lying in $\{\pm1,\pm6\}$. Then $\varpi$ is additive under juxtaposition and vanishes on every decomposable character. The standard characters of level $35$ are the $\sigma_{5,i}$ ($1\le i\le6$) and the $\sigma_{7,i}$ ($1\le i\le4$); among them only $\sigma_{5,1}=(1,8,15,22,29,30)$, $\sigma_{5,6}=(6,13,20,27,34,5)$, $\sigma_{7,1}=(1,6,11,16,21,26,31,28)$ and $\sigma_{7,4}=(4,9,14,19,24,29,34,7)$ have entries in $\{\pm1,\pm6\}$, two each. So $\varpi$ vanishes on $S_{35}$, while $\varpi(\beta)=1$. Hence $B_{35}=S_{35}+\Z\,\uu(\beta)$.
+
+(b) Given Theorem~\ref{thm:aokiD}, Proposition~\ref{prop:tenlevels} holds at every level, by the argument in the proof of Theorem~\ref{thm:main}(C) below. The computation above does not use Theorem~\ref{thm:aokiD}, and at the ten levels it confirms Theorem~\ref{thm:aokiD}(i)--(iii); for the assertion $x+t\cdot x\in S_m$ of (ii), \texttt{gap.py} also checks $\uu(\rho^{(m)}_q)+t\cdot\uu(\rho^{(m)}_q)\in S_m$ for all $q\in\cQ(m)$ and $t\in(\Z/m)^\times$, which suffices by (a), since $S_m$ is stable under $(\Z/m)^\times$. For $m\ne280,315$ the order parities $\nu_\ell$ of Lemma~\ref{lem:nu} with $\ell\in\{3,4,5,7\}$ already separate the classes of the $\uu(\rho^{(m)}_q)$, so that there Proposition~\ref{prop:tenlevels} also follows by hand from Theorem~\ref{thm:aokiD}(ii),(iii).
+\end{remark}
+
+\subsection{Proof of Theorem~\ref{thm:main}(B) and (C)}\label{subsec:proofBC}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}(B)]
+Let $m=35k$ with $1\le k\le10$. By Lemma~\ref{lem:reps}(i) and Lemma~\ref{lem:basic}(c), the characters $\rho^{(m)}_q$, $q\in\cQ(m)$, are algebraic and lie in $\fB^r_m$ with $r\in\{2,6\}$. By Proposition~\ref{prop:tenlevels}(a) and Corollary~\ref{cor:transfer}(ii), the Hodge conjecture holds for $X^n_m$ for every $n$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}(C)]
+Let $m=2^a3^b5^c7^d$ with $420\nmid m$. For $m\le2$, $X^n_m$ is a linear subspace or a quadric, whose cohomology is spanned by classes of linear subspaces; so let $m\ge3$. The divisors of $m$ in $\sP$ are among $3,4,5,7$, and not all four of them divide $m$. Hence $\cQ(m)$ is the set of $q\in\{12,15,20,21,28,35\}$ dividing $m$. For $q\in\cQ(m)$, Lemma~\ref{lem:reps}(iii) gives $\xi_q-\uu(\rho_q)\in S_q$ (by its proof, this uses from Theorem~\ref{thm:aokiD} only that $\xi_q\in B_q\sm S_q$), hence $(m/q)_*\xi_q-\uu(\rho^{(m)}_q)\in S_m$ by Lemma~\ref{lem:standard}. Since $S_m$ is stable under $(\Z/m)^\times$, Theorem~\ref{thm:aokiD}(i) gives
+\[
+B_m=S_m+\sum_{q\in\cQ(m)}\ \sum_{t\in(\Z/m)^\times}\Z\,\uu(t\rho^{(m)}_q).
+\]
+The characters $t\rho^{(m)}_q$ are algebraic by Lemma~\ref{lem:reps}(i) and Lemma~\ref{lem:basic}(a),(c), and Corollary~\ref{cor:transfer}(ii) gives the assertion.
+\end{proof}
+
+\begin{remark}\label{rem:new}
+Let $m$ be as in Theorem~\ref{thm:main}(C) with $35\mid m$, and put
+\[
+L'_m=S_m+\sum_{q\in\cQ(m)\sm\{35\}}\Z\,\uu(\rho^{(m)}_q).
+\]
+By Theorem~\ref{thm:aokiD} (and, for $m=35k$ with $k\le10$, by Proposition~\ref{prop:tenlevels}), $L'_m$ has index $2$ in $B_m$ and does not contain $\uu(\rho^{(m)}_{35})$. We say that $a\in\fB^n_m$, $n$ even, lies in the \emph{class of $\beta$} if $\uu(a)\notin L'_m$. Such characters are exceptional. If $\uu(a)\in L'_m$, then $a$ is algebraic by Lemma~\ref{lem:transfer}, applied with $\mathcal A$ the set of the standard characters and the $\rho^{(m)}_q$ with $q\ne35$; this does not use Theorem~\ref{thm:main}(A). For every even $n\ge6$ the character $\rho^{(m)}_{35}*d$ with $d\in\fD^{n-6}_m$ lies in the class of $\beta$, and if $m$ is even, so does $(m/70)\gamma\in\fB^4_m$ (Remark~\ref{rem:gammadelta}). For $m=35k$ with $k\le10$ a finite computation (ancillary file \texttt{gap.py}) shows that no character in $\fB^2_m$ lies in the class of $\beta$, and, if $m$ is odd, that none in $\fB^4_m$ does. For this, the homomorphism $\phi_{35}$ of the proof of Proposition~\ref{prop:tenlevels} can be chosen with $b_{35}=0$ and $W_{35}$ a union of sets $\{y:y\text{ has order }k\}$, so that it is invariant under $(\Z/m)^\times$; it vanishes on all $a\in\fB^2_m$, and for odd $m$ on all $a\in\fB^4_m$, having an entry dividing $m$, and every orbit of $(\Z/m)^\times$ on $\fB^n_m$ contains such a character (if $y$ is an entry of $a$ and $g=\gcd(y,m)$, then $ty=g$ for some $t\in(\Z/m)^\times$). Thus at the ten levels of Theorem~\ref{thm:main}(B), $\fB^n_m$ contains characters in the class of $\beta$ exactly for the even $n\ge6$ if $m$ is odd, and for the even $n\ge4$ if $m$ is even.
+\end{remark}
+
+\begin{remark}\label{rem:420}
+Let $m=2^a3^b5^c7^d$ with $420\mid m$. Then $\cQ(m)=\{12,15,20,21,28,35,420\}$, and by Theorem~\ref{thm:aokiD} and Lemma~\ref{lem:reps}(iii) the subgroup $L''=S_{420}+\sum_{q\in\cQ(420)\sm\{420\}}\Z\,\uu(\rho^{(420)}_q)$ has index $2$ in $B_{420}$. By Lemma~\ref{lem:Blattice} and its proof there are Hodge characters $\rho$ of level $420$ with $\uu(\rho)\notin L''$. The proof of Theorem~\ref{thm:main}(C) shows that if $V(\rho)$ is algebraic for one such $\rho$, then the Hodge conjecture holds for $X^n_m$ for every $n$ and every $m=2^a3^b5^c7^d$. We do not know an algebraic character of this kind.
+\end{remark}
+
+%======================================================================
+\section{Products and abelian varieties}\label{sec:products}
+
+\begin{corollary}\label{cor:products}
+Let $m$ be as in Theorem~\ref{thm:main}(C). For all $k\ge1$ and $r_1,\dots,r_k\ge0$ the Hodge conjecture holds for $X^{r_1}_m\times\dots\times X^{r_k}_m$.
+\end{corollary}
+
+\begin{proof}
+By \cite[Thm.~IV]{Sh79}, the Hodge conjecture for this product follows from the Hodge conjecture for $X^r_m$ for all even $r\le r_1+\dots+r_k+2(k-1)$, which holds by Theorem~\ref{thm:main}(C).
+\end{proof}
+
+Following \cite{Ao00}, an abelian variety is of \emph{Fermat type of degree $m$} if it is isogenous to a factor of a power of the Jacobian $J_m$ of the Fermat curve $X^1_m$.
+
+\begin{corollary}\label{cor:abelian}
+Let $m$ be as in Theorem~\ref{thm:main}(C). Then the Hodge conjecture holds for every abelian variety of Fermat type of degree $m$. In particular, it holds for every power of the Jacobian of the curve $C_{35}\colon y^2=x^{35}-1$.
+\end{corollary}
+
+\begin{proof}
+By \cite[Cor.~3.2]{Ao00}, the Hodge conjecture for $X^n_m$ for all $n$ implies the Hodge conjecture for all abelian varieties of Fermat type of degree $m$; so the first assertion follows from Theorem~\ref{thm:main}(C). The curve $C_{35}$ is a quotient of $X^1_{35}$ \cite[p.~178]{Ao00}: the map $(u,v)\mapsto(x,w)=(u^{35},uv)$ sends the affine curve $u^{35}+v^{35}=1$ onto $w^{35}=x(1-x)$, and $(x,w)\mapsto\bigl(2i(x-\tfrac12),\,4^{1/35}w\bigr)$ maps the latter curve birationally onto $y^2=z^{35}-1$. Hence the Jacobian of $C_{35}$ and all its powers are of Fermat type of degree $35$.
+\end{proof}
+
+The Hodge conjecture for the Jacobian of $C_{35}$ was left open in \cite[Example~8.6]{Ao02}.
+
+%======================================================================
+\section{Two classes on Fermat fourfolds}\label{sec:examples}
+
+By Theorem~\ref{thm:main}(B) the Hodge conjecture holds for $X^4_{70}$ and $X^4_{210}$. In this section we derive the algebraicity of the Hodge structures $M_\gamma\subset H^4(X^4_{70},\Q)$ and $M_\delta\subset H^4(X^4_{210},\Q)$, where
+\[
+\gamma=(1,20,24,42,61,62),\qquad \delta=(2,9,129,142,168,180),
+\]
+directly from Theorem~\ref{thm:beta} by explicit identities, without Proposition~\ref{prop:tenlevels} (see Remark~\ref{rem:intro}(d)).
+
+\subsection{\texorpdfstring{The class $\gamma$}{The class gamma}}\label{subsec:gamma}
+Put
+\[
+\begin{aligned}
+2\beta&=(2,4,32,42,60,34,44,62)\in\fA^6_{70},\qquad \varsigma_1=(1,18,53,68),\qquad \varsigma_2=(17,26,36,61),\\
+\sigma_{5,5}&=(5,12,19,26,33,10)\in\fA^4_{35},\qquad \sigma_3=2\sigma_{5,5}=(10,24,38,52,66,20)\in\fA^4_{70},\\
+\varepsilon&=(2,68,4,66,10,60,17,53,18,52,26,44,32,38,34,36)\in\fA^{14}_{70}.
+\end{aligned}
+\]
+Here $\sigma_{5,5}$ is Aoki's standard character for $m=35$, $p=5$, $d=7$, $i=5$, and $2\beta$, $\sigma_3$ are as in Lemma~\ref{lem:basic}(c) with $e=2$. The characters $\varsigma_1,\varsigma_2$ are the surface classes $(i,\,35+i,\,35+2i,\,70-4i)$ with $i=18$, resp.\ $i=26$, of the shape of \cite[Thm.~C(ii)]{Ao83} for $m=70$ (that theorem is stated for $m>180$); they are standard in the sense of Section~\ref{subsec:juxta}, since $\varsigma_1*(36,34,35,35)\sim\sigma_{2,18}*\sigma_{2,1}$ and $\varsigma_2*(52,18,35,35)\sim\sigma_{2,26}*\sigma_{2,17}$ at level $70$. Similarly $\sigma_3=\sigma_{5,10}$ at level $70$ up to the order of the entries; as $\gcd(10,14)=2$, Theorem~\ref{thm:aoki} does not apply to it directly, and we obtain $\sigma_3\in\fC^4_{70}$ from level $35$.
+
+\begin{proposition}\label{prop:gammaid}
+$\gamma\in\fB^4_{70}$, $\varsigma_1,\varsigma_2\in\fB^2_{70}$, $\varepsilon\in\fD^{14}_{70}$, and, up to the order of the entries,
+\[
+\gamma*\varepsilon\ \sim\ 2\beta*\varsigma_1*\varsigma_2*\sigma_3 .
+\]
+\end{proposition}
+
+\begin{proof}
+The membership statements are finite computations with Theorem~\ref{thm:shiodaI}(iii); $\varepsilon$ consists of the eight pairs $\{2,68\},\{4,66\},\{10,60\},\{17,53\},\{18,52\},\{26,44\},\{32,38\},\{34,36\}$. Both sides of the identity are the multiset listed in \eqref{eq:gammaid} of Appendix~\ref{app:ident}.
+\end{proof}
+
+\begin{proposition}\label{prop:gamma}
+$\gamma\in\fC^4_{70}$. Equivalently, every element of the $24$-dimensional space $M_\gamma\subset H^4(X^4_{70},\Q)$ is algebraic.
+\end{proposition}
+
+\begin{proof}
+By Theorem~\ref{thm:beta} and Lemma~\ref{lem:basic}(c), $2\beta\in\fC^6_{70}$. By Theorem~\ref{thm:lef}, $\varsigma_1,\varsigma_2\in\fC^2_{70}$. By Theorem~\ref{thm:aoki} ($p=5$, $m=35$, $d=7$, $\gcd(5,7)=1$), $\sigma_{5,5}\in\fC^4_{35}$, hence $\sigma_3\in\fC^4_{70}$ by Lemma~\ref{lem:basic}(c). Three applications of Theorem~\ref{thm:juxta}(i) give $2\beta*\varsigma_1\in\fC^{10}_{70}$, $2\beta*\varsigma_1*\varsigma_2\in\fC^{14}_{70}$ and $2\beta*\varsigma_1*\varsigma_2*\sigma_3\in\fC^{20}_{70}$. By Proposition~\ref{prop:gammaid} and Lemma~\ref{lem:basic}(b), $\gamma*\varepsilon\in\fC^{20}_{70}$, and Theorem~\ref{thm:juxta}(ii) with $r=4$, $s=14$ gives $\gamma\in\fC^4_{70}$. Finally Lemma~\ref{lem:basic}(a) applies, and $|[\gamma]|=24$.
+\end{proof}
+
+\subsection{\texorpdfstring{The class $\delta$}{The class delta}}\label{subsec:delta}
+Put
+\[
+\begin{aligned}
+3\gamma&=(3,60,72,126,183,186), &\qquad \tau&=(24,94,138,164),\\
+47\delta&=(94,3,183,164,126,60), &\qquad \varepsilon'&=(24,186,72,138),
+\end{aligned}
+\]
+characters of $G^4_{210}$, $G^2_{210}$, $G^4_{210}$ and $G^2_{210}$; here $3\gamma$ is as in Lemma~\ref{lem:basic}(c) with $e=3$. The following identity is the exchange identity of \cite[Prop.~4.2]{Jum26b} (where $-\tau$ is written $q=(46,72,116,186)$), in the form of \cite[Thm.~4.1]{Jum26b}.
+
+\begin{proposition}[Jumagulov]\label{prop:deltaid}
+$\delta\in\fB^4_{210}$, $\tau\in\fB^2_{210}$, $\varepsilon'\in\fD^2_{210}$, and, up to the order of the entries,
+\[
+3\gamma*\tau\ \sim\ 47\delta*\varepsilon'.
+\]
+\end{proposition}
+
+\begin{proof}
+Both sides are the multiset $\{3,24,60,72,94,126,138,164,183,186\}$; $\varepsilon'$ consists of the pairs $\{24,186\}$ and $\{72,138\}$. The memberships are finite computations with Theorem~\ref{thm:shiodaI}(iii).
+\end{proof}
+
+\begin{proposition}\label{prop:delta}
+$\delta\in\fC^4_{210}$. Equivalently, every element of the $48$-dimensional space $M_\delta\subset H^4(X^4_{210},\Q)$ is algebraic.
+\end{proposition}
+
+\begin{proof}
+By Proposition~\ref{prop:gamma} and Lemma~\ref{lem:basic}(c), $3\gamma\in\fC^4_{210}$; by Theorem~\ref{thm:lef}, $\tau\in\fC^2_{210}$. Theorem~\ref{thm:juxta}(i) gives $3\gamma*\tau\in\fC^8_{210}$, hence $47\delta*\varepsilon'\in\fC^8_{210}$ by Proposition~\ref{prop:deltaid} and Lemma~\ref{lem:basic}(b), and Theorem~\ref{thm:juxta}(ii) with $r=4$, $s=2$ gives $47\delta\in\fC^4_{210}$. Since $\gcd(47,210)=1$, Lemma~\ref{lem:basic}(a) gives $\delta\in\fC^4_{210}$ and $M_\delta\subset\mathrm{Alg}^2(X^4_{210})$. The $48$ characters $t\delta$ are pairwise distinct (the entries $2$ and $9$ force $t\equiv1\bmod 105$ and $\bmod 70$), so $\dim M_\delta=48$.
+\end{proof}
+
+\begin{remark}\label{rem:gammadelta}
+The identities above show that $\gamma$ and $\delta$ lie in the class of $\beta$ in the sense of Remark~\ref{rem:new}. Indeed, $\varsigma_1$, $\varsigma_2$ and $\sigma_3=\sigma_{5,10}$ are standard, so Proposition~\ref{prop:gammaid} gives $\uu(\gamma)-\uu(2\beta)\in S_{70}$. As $\tau=\sigma_{3,24}$ at level $210$, Proposition~\ref{prop:deltaid} gives $\uu(47\delta)-\uu(3\gamma)\in S_{210}$, and $\uu(3\gamma)-\uu(6\beta)=3_*\bigl(\uu(\gamma)-\uu(2\beta)\bigr)\in S_{210}$ by Lemma~\ref{lem:standard}; by Theorem~\ref{thm:aokiD}(ii), $\uu(\delta)\equiv\uu(47\delta)\pmod{S_{210}}$, so that $\uu(\delta)-\uu(6\beta)\in S_{210}$ (this is also checked directly in \texttt{gap.py}). For every even $m$ with $35\mid m$ it follows that $\uu((m/70)\gamma)-\uu((m/35)\beta)\in S_m$. The exceptionality of $\beta$, $\gamma$ and $\delta$ can also be read off from Lemma~\ref{lem:nu}: their entries of order $5$ are $21$, $42$ and $168$, one each, so $\nu_5(\beta)=\nu_5(\gamma)=\nu_5(\delta)=1$.
+\end{remark}
+
+
+%======================================================================
+\appendix
+
+\section{The certificate}\label{app:cert}
+
+\subsection{Statement}
+Let
+\begin{align*}
+b^*&=2^{-55}\,(-18482301002530012+5829919155974245\,i)\\
+&=-0.51298690302653582318015423879842273890972137451171875\\
+&\quad\ +0.1618127619666466510128799427548074163496494293212890625\,i .
+\end{align*}
+
+\begin{proposition}\label{prop:certdetail}
+There is a point $y^*\in\cP$ with $b(y^*)=b^*$ whose other eleven coordinates differ from the entries of Table~\ref{tab:point} by less than $10^{-26}$ in real and imaginary part, such that:
+\begin{itemize}
+\item[(a)] $J_b(y^*)$ is invertible, and $y^*$ is the only point of $\cP\cap\{b=b^*\}$ in a box of half-width $2^{-100}$ containing it;
+\item[(b)] $y^*$ is nondegenerate; more precisely $|c_1|\ge1.974$, $|c_2|=|c_3|\ge0.156$, $|c_4|\ge2.073$, $|\disc R|\ge3.766$, $|\Res(R,P)|\ge2.567$, $|\Res(R,Q)|\ge0.419$ at $y^*$;
+\item[(c)] $\cI(y^*,v(y^*))=29.588332077128010399\ldots-6.7688877382028338180\ldots\,i$, with an error less than $10^{-18}$; in particular $|\cI(y^*,v(y^*))|\ge30.35$.
+\end{itemize}
+\end{proposition}
+
+This implies Proposition~\ref{prop:certificate}.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lrr}
+\toprule
+coordinate & real part & imaginary part\\
+\midrule
+$p_0$ & $0.04254698652900370590236925$ & $0.41959062696659874053932147$ \\
+$p_1$ & $-0.29175162900581561749274186$ & $-0.21152165640381864501207743$ \\
+$p_2$ & $-0.07862929518454702834700365$ & $0.44798979721908385840930498$ \\
+$p_3$ & $-0.32216723198628257586009122$ & $-0.57053846019114427619751128$ \\
+$p_4$ & $0.58751503396883460122333352$ & $0.43478692998204410314107942$ \\
+$q_0$ & $0.41610429362736879506813207$ & $-0.25741447528921419304203880$ \\
+$q_1$ & $-0.49439181483471544169706158$ & $0.03672521494377954466599062$ \\
+$c_1$ & $-0.15591201965849224494420692$ & $-1.96808874336362480139873017$ \\
+$c_2$ & $0.15498354184616354317073508$ & $-0.01894751552276802201975999$ \\
+$c_3$ & $-0.15498354184616354317073508$ & $0.01894751552276802201975999$ \\
+$c_4$ & $-0.42486745291909851785078755$ & $2.02957371846938404761821176$ \\
+\bottomrule
+\end{tabular}
+\caption{The coordinates of $y^*$ other than $b=b^*$, to $26$ decimals. (On $\cP$ one always has $c_3=-c_2$, the coefficient of $s^{10}$ in \eqref{eq:E}.)}
+\label{tab:point}
+\end{table}
+
+\subsection{Krawczyk's test}
+For a complex box $\mathbf X=\prod_{k=1}^{N}\{z\in\C:|\mathrm{Re}(z-\hat z_k)|\le\varrho,\ |\mathrm{Im}(z-\hat z_k)|\le\varrho\}$ with centre $\hat z=(\hat z_k)$, we use the following form of the test of Krawczyk and Moore \cite{Kr69,Mo77}; see also \cite{MKC09}.
+
+\begin{lemma}\label{lem:krawczyk}
+Let $\mathcal F\colon\C^N\to\C^N$ be a polynomial map with Jacobian $D\mathcal F$, let $\mathcal K$ be an $N\times N$ complex array, and let $\mathbf J$ be a set of $N\times N$ arrays, each entry ranging over a complex rectangle, such that $D\mathcal F(z)\in\mathbf J$ for all $z\in\mathbf X$. Suppose that
+\[
+\hat z-\mathcal K\mathcal F(\hat z)+(I-\mathcal KJ)(z-\hat z)\in\mathrm{int}\,\mathbf X\quad\text{for all }J\in\mathbf J,\ z\in\mathbf X,
+\]
+and that $\|I-\mathcal KJ\|_\infty<1$ for all $J\in\mathbf J$ (maximum absolute row sum). Then $\mathcal F$ has exactly one zero $z^*$ in $\mathbf X$, and $D\mathcal F(z^*)$ is invertible.
+\end{lemma}
+
+\begin{proof}
+For $z\in\mathbf X$, $\mathcal F(z)-\mathcal F(\hat z)=\bar J(z-\hat z)$ with $\bar J=\int_0^1D\mathcal F(\hat z+\theta(z-\hat z))\,d\theta$. Each entry of $\bar J$ lies in the closed convex hull of the values of the corresponding entry of $D\mathcal F$ on the segment $[\hat z,z]\subset\mathbf X$, hence in the corresponding rectangle, so $\bar J\in\mathbf J$. The map $g(z)=z-\mathcal K\mathcal F(z)=\hat z-\mathcal K\mathcal F(\hat z)+(I-\mathcal K\bar J)(z-\hat z)$ therefore maps the convex compact set $\mathbf X$ into itself and has a fixed point $z^*$ by Brouwer's theorem. Since $\|I-\mathcal KJ\|_\infty<1$, every $\mathcal KJ$ with $J\in\mathbf J$ is invertible; hence $\mathcal K$ is invertible, $\mathcal F(z^*)=0$, and $D\mathcal F(z^*)\in\mathbf J$ is invertible. If $z,z'\in\mathbf X$ are zeros, then $0=\bar J'(z-z')$ with $\bar J'=\int_0^1D\mathcal F(z'+\theta(z-z'))d\theta\in\mathbf J$ invertible, so $z=z'$.
+\end{proof}
+
+\subsection{The computation}\label{subsec:computation}
+All computations use the ball arithmetic of Arb \cite{Jo17} (through python-flint) at a working precision of $400$ bits; every arithmetic operation returns a ball containing the exact result for all inputs in the input balls. The eleven coefficient polynomials $E_0,\dots,E_{10}$ of \eqref{eq:E} and all their partial derivatives are computed exactly (with integer coefficients) by computer algebra, checked against an independent forward-mode differentiation of $E_y(s)$, and then evaluated in ball arithmetic.
+
+(K) Fix $b=b^*$ and let $\mathcal F=(E_0,\dots,E_{10})$ as a function of the other eleven coordinates. Starting from the approximate coordinates of $y^*$ (Table~\ref{tab:point}, or the $38$-decimal values in the ancillary file), Newton steps (not part of the certificate) produce a centre $\hat z$. With $\varrho=2^{-100}$, $\mathcal K$ the midpoint of a numerical inverse of $D\mathcal F(\hat z)$ and $\mathbf J$ the ball evaluation of $D\mathcal F$ on $\mathbf X$, the hypotheses of Lemma~\ref{lem:krawczyk} are verified: the image box lies in the interior of $\mathbf X$ and $\|I-\mathcal KJ\|_\infty\le4.2\cdot10^{-27}$ on $\mathbf J$. This gives the point $y^*$ and (a); its coordinates are enclosed in balls of radius less than $10^{-29}$, which lie within $10^{-26}$ of Table~\ref{tab:point}.
+
+(N) The seven quantities of Definition~\ref{def:nondeg} are evaluated at the enclosure of $y^*$ (resultants as Sylvester determinants); all these balls exclude $0$, with the lower bounds of (b).
+
+(T) The tangent vector $v^*=v(y^*)$ is the solution of $J_b(y^*)\,w=-\partial\mathcal F/\partial b$, $v^*_b=1$. Solving this linear system in ball arithmetic with coefficients evaluated on the enclosure of $y^*$ gives an enclosure of $v^*$ with radius below $10^{-48}$.
+
+(I) The residue sum $\cI(y^*,v^*)$ of Definition~\ref{def:I} is evaluated in ball arithmetic: the roots $\rho_{1,2}=(-b^*\pm(b^{*2}-4)^{1/2})/2$ are enclosed, and $\Res_{s=\rho_1}\eta_v$ is the coefficient of $h$ in the Taylor expansion of $(\rho_1+h-\rho_2)^{-2}P\Delta_v/(c_3c_4\,s)$ at $s=\rho_1+h$, computed with truncated power series; similarly for $\rho_2$. The result is the ball of (c). As an independent check, which is not part of the certificate, the script also evaluates $\cI(y^*,v^*)$ in floating point by numerical integration of $\eta_v$ over small circles around $\rho_1$ and $\rho_2$; the two values agree to within $10^{-39}$.
+
+\subsection{Ancillary files}
+The ancillary files of this paper contain \texttt{certify.py}, which performs the computation of Section~\ref{subsec:computation} and compares its results with Table~\ref{tab:point} and Proposition~\ref{prop:certdetail}; \texttt{data/point.json}, which contains $b^*$ and the coordinates of $y^*$ to $38$ decimals; \texttt{identities.py}, which checks the polynomial identities of Section~\ref{sec:family}, the identities of Appendix~\ref{app:ident} and the other finite computations with characters used in Sections~\ref{sec:prelim}--\ref{sec:beta} and~\ref{sec:examples}; \texttt{gap.py}, which carries out the computations of Section~\ref{sec:gap} (Lemma~\ref{lem:reps}, Proposition~\ref{prop:tenlevels} and Remarks~\ref{rem:new} and~\ref{rem:gammadelta}); a \texttt{README.md} describing the checks; and the expected output of the three scripts in \texttt{expected\_output/}. \texttt{certify.py} requires Python~3 with \texttt{sympy}, \texttt{mpmath} and \texttt{python-flint}, and \texttt{identities.py} requires Python~3 with \texttt{sympy}; \texttt{gap.py} uses only the Python standard library, and \texttt{python-flint} only for the independent check of the indices in the proof of Proposition~\ref{prop:tenlevels}. Each script runs in less than a minute.
+
+
+%======================================================================
+\section{The identities}\label{app:ident}
+
+\subsection{\texorpdfstring{The characters $\alpha$ and $\kappa$}{The characters alpha and kappa}}
+Table~\ref{tab:alphakappa} lists $t\alpha$ and $t\kappa$ (entries in $\{1,\dots,34\}$) with $|t\alpha|$ and $|t\kappa|$; it proves Lemma~\ref{lem:alpha}(a),(b) and Lemma~\ref{lem:kappa}. Lemma~\ref{lem:alpha}(c) is checked directly: the ten sums of two entries of $\alpha$ are $3,17,22,31,18,23,32,2,11,16\bmod35$.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{rlcc@{\qquad}rlcc}
+\toprule
+$t$ & $t\alpha\ \mid\ t\kappa$ & $|t\alpha|$ & $|t\kappa|$ & $t$ & $t\alpha\ \mid\ t\kappa$ & $|t\alpha|$ & $|t\kappa|$\\
+\midrule
+1 & $(1,2,16,21,30\mid17,22,31)$ & 2 & 2 & 8 & $(8,16,23,28,30\mid31,1,3)$ & 3 & 1\\
+2 & $(2,4,32,7,25\mid34,9,27)$ & 2 & 2 & 13 & $(13,26,33,28,5\mid11,6,18)$ & 3 & 1\\
+3 & $(3,6,13,28,20\mid16,31,23)$ & 2 & 2 & 16 & $(16,32,11,21,25\mid27,2,6)$ & 3 & 1\\
+4 & $(4,8,29,14,15\mid33,18,19)$ & 2 & 2 & 17 & $(17,34,27,7,20\mid9,24,2)$ & 3 & 1\\
+6 & $(6,12,26,21,5\mid32,27,11)$ & 2 & 2 & 23 & $(23,11,18,28,25\mid6,16,13)$ & 3 & 1\\
+9 & $(9,18,4,14,25\mid13,23,34)$ & 2 & 2 & 24 & $(24,13,34,14,20\mid23,3,9)$ & 3 & 1\\
+11 & $(11,22,1,21,15\mid12,32,26)$ & 2 & 2 & 26 & $(26,17,31,21,10\mid22,12,1)$ & 3 & 1\\
+12 & $(12,24,17,7,10\mid29,19,22)$ & 2 & 2 & 29 & $(29,23,9,14,30\mid3,8,24)$ & 3 & 1\\
+18 & $(18,1,8,28,15\mid26,11,33)$ & 2 & 2 & 31 & $(31,27,6,21,20\mid2,17,16)$ & 3 & 1\\
+19 & $(19,3,24,14,10\mid8,33,29)$ & 2 & 2 & 32 & $(32,29,22,7,15\mid19,4,12)$ & 3 & 1\\
+22 & $(22,9,2,7,30\mid24,29,17)$ & 2 & 2 & 33 & $(33,31,3,28,10\mid1,26,8)$ & 3 & 1\\
+27 & $(27,19,12,7,5\mid4,34,32)$ & 2 & 2 & 34 & $(34,33,19,14,5\mid18,13,4)$ & 3 & 1\\
+\bottomrule
+\end{tabular}
+\caption{The conjugates of $\alpha$ and $\kappa$. The left half is $t\in\cT$.}
+\label{tab:alphakappa}
+\end{table}
+
+\subsection{\texorpdfstring{The identity for $\gamma$}{The identity for gamma}}
+Both sides of Proposition~\ref{prop:gammaid} are the multiset of $22$ elements of $\Z/70$
+\begin{equation}\label{eq:gammaid}
+\{1,2,4,10,17,18,20,24,26,32,34,36,38,42,44,52,53,60,61,62,66,68\}.
+\end{equation}
+Indeed
+\begin{align*}
+\gamma\cup\varepsilon&=\{1,20,24,42,61,62\}\cup\{2,4,10,17,18,26,32,34,36,38,44,52,53,60,66,68\},\\
+2\beta\cup\varsigma_1\cup\varsigma_2\cup\sigma_3&=\{2,4,32,34,42,44,60,62\}\cup\{1,18,53,68\}\\
+&\qquad\cup\{17,26,36,61\}\cup\{10,20,24,38,52,66\}.
+\end{align*}
+The conditions $|t\varsigma_1|=|t\varsigma_2|=2$ and $|t\gamma|=3$ for all $t\in(\Z/70)^\times$, and $|t\sigma_{5,5}|=3$ for all $t\in(\Z/35)^\times$ (which also follows from \cite[p.~387]{Ao87}), are verified by \texttt{identities.py}. The memberships $2\beta\in\fB^6_{70}$ and $\sigma_3\in\fB^4_{70}$, needed for Theorem~\ref{thm:juxta}(i), follow from $\beta\in\fB^6_{35}$ and $\sigma_{5,5}\in\fB^4_{35}$ by Lemma~\ref{lem:basic}(c), since $|t(ea)|=|\bar ta|$; the first is also checked directly by \texttt{identities.py}. The identities $\varsigma_1*(36,34,35,35)\sim\sigma_{2,18}*\sigma_{2,1}$ and $\varsigma_2*(52,18,35,35)\sim\sigma_{2,26}*\sigma_{2,17}$ at level $70$, and $\sigma_3\sim\sigma_{5,10}$, are checked there as well.
+
+\subsection{\texorpdfstring{The identity for $\delta$}{The identity for delta}}
+Both sides of Proposition~\ref{prop:deltaid} are the multiset
+\[
+\{3,24,60,72,94,126,138,164,183,186\}\subset\Z/210;
+\]
+one checks $47\cdot(2,9,129,142,168,180)\equiv(94,3,183,164,126,60)\bmod210$, and $|t\delta|=3$, $|t\tau|=2$ for all $t\in(\Z/210)^\times$; moreover $\tau=(24,24+70,24+140,210-3\cdot24)$ is the standard character $\sigma_{3,24}$ up to order.
+
+
+%======================================================================
+\subsection*{Acknowledgements}
+The author used large language model tools (Anthropic Claude, OpenAI Codex, xAI Grok, Google Gemini) extensively throughout this work: for literature retrieval, symbolic and numerical computation, checking of arguments, and drafting. All mathematical claims are the author's responsibility; the computational steps are independently verifiable by the certified computations provided as ancillary files.
+
+%======================================================================
+\begin{thebibliography}{99}
+
+\bibitem{Ao83}
+N.~Aoki, \emph{On some arithmetic problems related to the Hodge cycles on the Fermat varieties}, Math.\ Ann.\ \textbf{266} (1983), no.~1, 23--54; Erratum, Math.\ Ann.\ \textbf{267} (1984), no.~4, 572.
+
+\bibitem{Ao87}
+N.~Aoki, \emph{Some new algebraic cycles on Fermat varieties}, J.\ Math.\ Soc.\ Japan \textbf{39} (1987), no.~3, 385--396.
+
+\bibitem{Ao00}
+N.~Aoki, \emph{Some remarks on the Hodge conjecture for abelian varieties of Fermat type}, Comment.\ Math.\ Univ.\ St.\ Paul.\ \textbf{49} (2000), no.~2, 177--194.
+
+\bibitem{Ao02}
+N.~Aoki, \emph{Hodge cycles on CM abelian varieties of Fermat type}, Comment.\ Math.\ Univ.\ St.\ Paul.\ \textbf{51} (2002), no.~1, 99--130.
+
+\bibitem{BH61}
+A.~Borel and A.~Haefliger, \emph{La classe d'homologie fondamentale d'un espace analytique}, Bull.\ Soc.\ Math.\ France \textbf{89} (1961), 461--513.
+
+\bibitem{CG80}
+J.~Carlson and P.~Griffiths, \emph{Infinitesimal variations of Hodge structure and the global Torelli problem}, in: Journ\'ees de G\'eom\'etrie Alg\'ebrique d'Angers (1979), Sijthoff \& Noordhoff, Alphen aan den Rijn, 1980, 51--76.
+
+\bibitem{dS21}
+G.~da Silva Jr., \emph{Notes on the Hodge conjecture for Fermat varieties}, Exp.\ Results \textbf{2} (2021), e22, 1--15, doi:10.1017/exp.2021.14.
+
+\bibitem{EGA43}
+A.~Grothendieck, \emph{\'El\'ements de g\'eom\'etrie alg\'ebrique IV: \'Etude locale des sch\'emas et des morphismes de sch\'emas, troisi\`eme partie}, Publ.\ Math.\ IH\'ES \textbf{28} (1966).
+
+\bibitem{FLINT}
+The FLINT team, \emph{FLINT: Fast Library for Number Theory}, \url{https://flintlib.org}.
+
+\bibitem{Fu98}
+W.~Fulton, \emph{Intersection Theory}, 2nd ed., Ergeb.\ Math.\ Grenzgeb.\ (3) \textbf{2}, Springer, Berlin, 1998.
+
+\bibitem{GH78}
+P.~Griffiths and J.~Harris, \emph{Principles of Algebraic Geometry}, Wiley, New York, 1978.
+
+\bibitem{Gr83}
+P.~Griffiths, \emph{Infinitesimal variations of Hodge structure (III): determinantal varieties and the infinitesimal invariant of normal functions}, Compositio Math.\ \textbf{50} (1983), 267--324.
+
+\bibitem{Gro69}
+A.~Grothendieck, \emph{Hodge's general conjecture is false for trivial reasons}, Topology \textbf{8} (1969), 299--303.
+
+\bibitem{Ha77}
+R.~Hartshorne, \emph{Algebraic Geometry}, Grad.\ Texts in Math.\ \textbf{52}, Springer, New York, 1977.
+
+\bibitem{Jo17}
+F.~Johansson, \emph{Arb: efficient arbitrary-precision midpoint-radius interval arithmetic}, IEEE Trans.\ Comput.\ \textbf{66} (2017), no.~8, 1281--1292.
+
+\bibitem{Jum26a}
+R.~Jumagulov, \emph{The Hodge conjecture for Fermat fourfolds of odd degree at most $199$}, preprint (2026), arXiv:2608.18134.
+
+\bibitem{Jum26b}
+R.~Jumagulov, \emph{Residual gap classes in the even-degree Fermat-fourfold census through degree $250$: exchange walls and two closures}, unrefereed manuscript (2026), deposited with the data record doi:10.5281/zenodo.21670577; source at \url{https://github.com/rifmj/fermat-fourfolds-boundary}.
+
+\bibitem{Kr69}
+R.~Krawczyk, \emph{Newton-Algorithmen zur Bestimmung von Nullstellen mit Fehlerschranken}, Computing \textbf{4} (1969), 187--201.
+
+\bibitem{Ku79}
+D.~S.~Kubert, \emph{The universal ordinary distribution}, Bull.\ Soc.\ Math.\ France \textbf{107} (1979), 179--202.
+
+\bibitem{Mo77}
+R.~E.~Moore, \emph{A test for existence of solutions to nonlinear systems}, SIAM J.\ Numer.\ Anal.\ \textbf{14} (1977), no.~4, 611--615.
+
+\bibitem{MKC09}
+R.~E.~Moore, R.~B.~Kearfott and M.~J.~Cloud, \emph{Introduction to Interval Analysis}, SIAM, Philadelphia, 2009.
+
+\bibitem{Ra80}
+Z.~Ran, \emph{Cycles on Fermat hypersurfaces}, Compositio Math.\ \textbf{42} (1980/81), no.~1, 121--142.
+
+\bibitem{Sch88}
+C.~Schoen, \emph{Hodge classes on self-products of a variety with an automorphism}, Compositio Math.\ \textbf{65} (1988), no.~1, 3--32.
+
+\bibitem{Sh79}
+T.~Shioda, \emph{The Hodge conjecture for Fermat varieties}, Math.\ Ann.\ \textbf{245} (1979), no.~2, 175--184.
+
+\bibitem{SK79}
+T.~Shioda and T.~Katsura, \emph{On Fermat varieties}, T\^ohoku Math.\ J.\ (2) \textbf{31} (1979), no.~1, 97--115.
+
+\bibitem{Vo02}
+C.~Voisin, \emph{Hodge Theory and Complex Algebraic Geometry I}, Cambridge Stud.\ Adv.\ Math.\ \textbf{76}, Cambridge University Press, Cambridge, 2002.
+
+\bibitem{Ya75}
+K.~Yamamoto, \emph{The gap group of multiplicative relationships of Gaussian sums}, in: Symposia Mathematica, Vol.~XV, Academic Press, London, 1975, 427--440.
+
+\end{thebibliography}
+
+\end{document}

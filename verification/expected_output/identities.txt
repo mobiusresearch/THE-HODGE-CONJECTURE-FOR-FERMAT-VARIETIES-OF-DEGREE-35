@@ -1,0 +1,66 @@
+Part I. Polynomial and determinant identities of Section 3
+PASS  (3.1): u_0, ..., u_4 are binary forms of degree 10
+PASS  (3.2): E_y(s) = (u_0 + ... + u_4)(s, 1) has degree 10 in s, with leading coefficient c2 + c3
+PASS  Lemma 3.3: R(0,1) = R(1,0) = 1
+PASS  (3.5): u_0 u_1^2 u_2^16 u_3^21 u_4^30 = Psi(y) A^35, A = s^6 t R^3 P Q, Psi = c1^2 c2^16 c3^21 c4^30
+PASS  (3.4): A = s^6 t R^3 P Q is a binary form of degree 20 = deg(u3 u4), so A/(u3 u4) has degree 0
+PASS  (3.6): Delta_v = det(1 1 1 / dot u_k/u_k / u_k'/u_k), k = 0, 1, 2
+PASS  (3.6): A Delta_v / (u3 u4) = P Delta_v / (c3 c4 s R^2)  (Definition 3.4)
+PASS  (3.4) and Lemma 3.10: sum_k alpha_k (exponent of c_k in u_k) gives Psi
+PASS  Lemma 3.5(a): sum(alpha_k - 1) = 65 and 65 + 3 - 2*34 = 0
+PASS  Lemma 3.5(b): F_i Om_jk - F_j Om_ik + F_k Om_ij = dF ^ Om_ijk + 35 F i_k i_j i_i dV (all 10 triples)
+PASS  Lemma 3.5(a): Omega_ij(Euler, .) = 0
+PASS  Lemma 3.9: dV(Euler, d_3, d_4, dx/dv, dx/ds) = x0 x1 x2 / 35^2 * det(1 1 1 / a_0 a_1 a_2 / d_0 d_1 d_2)
+PASS  Lemma 3.9: x^(alpha-1) x0 x1 x2 / (35^2 x3^34 x4^34) / 35^2 = 35^-4 x^alpha / (x3^35 x4^35)
+
+Part II. alpha, kappa, beta (Lemmas 3.1, 4.1, Theorem 4.3, Table 2, Remark 1.2(e))
+PASS  alpha in A^3_35 and in B^3_35
+PASS  |t alpha| = 2 for t in T, 3 otherwise; T = {1,2,3,4,6,9,11,12,18,19,22,27}
+PASS  h^{2,1} = h^{1,2} = 12
+PASS  [alpha] has 24 distinct elements (dim M_alpha = 24) and -alpha = 34 alpha
+PASS  Lemma 3.1(c) and Section B.1: the ten pair sums are 3,17,22,31,18,23,32,2,11,16 (none is 0)
+PASS  before (3.4): in u_0 u_1^2 u_2^16 u_3^21 u_4^30 the forms s,t,R,P,Q occur with exponents 210,35,105,35,35
+PASS  the exponents are those of (3.1): u_k = prod g^(e_g[k]) up to c_k
+PASS  kappa in A^1_35
+PASS  Lemma 4.1: |t kappa| = 2 for t in T and 1 otherwise; |t alpha| + |t kappa| = 4
+PASS  Theorem 4.3: beta = alpha*kappa in B^6_35, dim M_beta = 24
+PASS  Table 2: the 24 rows t alpha | t kappa are correct
+PASS  Remark 1.2(e): b1, b2 in A^4_35 and b1*b2 = beta*(1,34,1,34) up to order
+
+Part III. gamma on X^4_70 (Section 7.1, Propositions 7.1, 7.2, (B.1))
+PASS  2beta = (2,4,32,42,60,34,44,62) (Lemma 2.3(c), e = 2)
+PASS  gamma in B^4_70; dim M_gamma = 24
+PASS  |t gamma| = 3 for all t in (Z/70)^x
+PASS  2beta in B^6_70
+PASS  varsigma1, varsigma2 in B^2_70 (|t varsigma_i| = 2 for all t)
+PASS  sigma_{5,5} = (5,12,19,26,33,10) at level 35 (p = 5, d = 7, i = 5), gcd(5,7) = 1
+PASS  sigma_{5,5} in B^4_35 (|t sigma_{5,5}| = 3 for all t)
+PASS  sigma3 = 2 sigma_{5,5} = (10,24,38,52,66,20)
+PASS  epsilon in D^14_70; its pairs are {2,68},{4,66},{10,60},{17,53},{18,52},{26,44},{32,38},{34,36}
+PASS  gamma*epsilon = 2beta*varsigma1*varsigma2*sigma3 up to order
+PASS  (B.1): the common multiset is {1,2,4,10,17,18,20,24,26,32,34,36,38,42,44,52,53,60,61,62,66,68}
+PASS  Proposition 7.2: 2beta*varsigma1 in B^10, 2beta*varsigma1*varsigma2 in B^14, 2beta*varsigma1*varsigma2*sigma3 in B^20 (level 70)
+PASS  Proposition 7.2: r = 4, s = 14 are even (len gamma = 6, len epsilon = 16)
+PASS  Section 7.1: varsigma1*(36,34,35,35) = sigma_{2,18}*sigma_{2,1} and varsigma2*(52,18,35,35) = sigma_{2,26}*sigma_{2,17} up to order (level 70); (36,34,35,35), (52,18,35,35) are decomposable
+PASS  Section 7.1: sigma3 = sigma_{5,10} up to order (level 70), and gcd(10, 14) = 2
+
+Part IV. delta on X^4_210 (Section 7.2, Propositions 7.3, 7.4, Section B.3)
+PASS  3gamma = (3,60,72,126,183,186) (Lemma 2.3(c), e = 3) and 3gamma in B^4_210
+PASS  delta in B^4_210 (|t delta| = 3 for all t)
+PASS  tau in B^2_210 (|t tau| = 2 for all t); -tau = (46,72,116,186) up to order
+PASS  epsilon' in D^2_210, pairs {24,186}, {72,138}
+PASS  47 delta = (94,3,183,164,126,60) mod 210 and gcd(47,210) = 1
+PASS  3gamma*tau = 47delta*epsilon' up to order = {3,24,60,72,94,126,138,164,183,186}
+PASS  3gamma*tau in B^8_210
+PASS  Section B.3: tau = sigma_{3,24} = (24, 94, 164, 138) up to order (level 210)
+PASS  Proposition 7.4: 2t = 2 forces t = 1 mod 105, 9t = 9 forces t = 1 mod 70; the 48 characters t delta are distinct
+
+Part V. Exceptionality of beta, gamma, delta (Remark 5.9(a), Lemma 5.6, Remark 7.5)
+PASS  level 35: the standard characters are sigma_{5,i} (1 <= i <= 6) and sigma_{7,i} (1 <= i <= 4)
+PASS  only sigma_{5,1}, sigma_{5,6}, sigma_{7,1}, sigma_{7,4} have entries in {+-1, +-6}, two each
+PASS  varpi vanishes on decomposable characters (the support is symmetric) and varpi(beta) = 1
+PASS  level 35: gcd(5, 35/5) = 1; nu_5 (parity of the number of entries of order 5) vanishes on all 10 standard characters and on all pairs (y, -y); the only entry of order 5 of beta is 21, so nu_5(beta) = 1
+PASS  level 70: gcd(5, 70/5) = 1; nu_5 (parity of the number of entries of order 5) vanishes on all 56 standard characters and on all pairs (y, -y); the only entry of order 5 of gamma is 42, so nu_5(gamma) = 1
+PASS  level 210: gcd(5, 210/5) = 1; nu_5 (parity of the number of entries of order 5) vanishes on all 243 standard characters and on all pairs (y, -y); the only entry of order 5 of delta is 168, so nu_5(delta) = 1
+
+all 55 checks passed

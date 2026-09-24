@@ -1,0 +1,153 @@
+Part A. The six representatives (Lemmas 5.6 and 5.7)
+PASS  rho_12 = (1,6,8,9) is a Hodge character of level 12 and dimension 2
+PASS  q = 12 is the product of the two elements [3, 4] of P, and {d | q : d > 1, mu'(d) = 1} = {12}
+PASS  q = 12, l = 3: gcd(l, q/l) = 1, nu_3 vanishes on the 14 generators of S_12, and rho_12 has exactly one entry of order 3, namely [8]
+PASS  q = 12: B_12 = S_12 + Z u(rho_12) (rank 9), 2 u(rho_12) lies in S_12 and u(rho_12) does not, so B_12/S_12 = Z/2
+PASS  rho_15 = (1,6,10,13) is a Hodge character of level 15 and dimension 2
+PASS  q = 15 is the product of the two elements [3, 5] of P, and {d | q : d > 1, mu'(d) = 1} = {15}
+PASS  q = 15, l = 5: gcd(l, q/l) = 1, nu_5 vanishes on the 13 generators of S_15, and rho_15 has exactly one entry of order 5, namely [6]
+PASS  q = 15: B_15 = S_15 + Z u(rho_15) (rank 10), 2 u(rho_15) lies in S_15 and u(rho_15) does not, so B_15/S_15 = Z/2
+PASS  rho_20 = (1,4,17,18) is a Hodge character of level 20 and dimension 2
+PASS  q = 20 is the product of the two elements [4, 5] of P, and {d | q : d > 1, mu'(d) = 1} = {20}
+PASS  q = 20, l = 5: gcd(l, q/l) = 1, nu_5 vanishes on the 22 generators of S_20, and rho_20 has exactly one entry of order 5, namely [4]
+PASS  q = 20: B_20 = S_20 + Z u(rho_20) (rank 15), 2 u(rho_20) lies in S_20 and u(rho_20) does not, so B_20/S_20 = Z/2
+PASS  rho_21 = (1,4,18,19) is a Hodge character of level 21 and dimension 2
+PASS  q = 21 is the product of the two elements [3, 7] of P, and {d | q : d > 1, mu'(d) = 1} = {21}
+PASS  q = 21, l = 7: gcd(l, q/l) = 1, nu_7 vanishes on the 18 generators of S_21, and rho_21 has exactly one entry of order 7, namely [18]
+PASS  q = 21: B_21 = S_21 + Z u(rho_21) (rank 14), 2 u(rho_21) lies in S_21 and u(rho_21) does not, so B_21/S_21 = Z/2
+PASS  rho_28 = (1,9,21,25) is a Hodge character of level 28 and dimension 2
+PASS  q = 28 is the product of the two elements [4, 7] of P, and {d | q : d > 1, mu'(d) = 1} = {28}
+PASS  q = 28, l = 4: gcd(l, q/l) = 1, nu_4 vanishes on the 30 generators of S_28, and rho_28 has exactly one entry of order 4, namely [21]
+PASS  q = 28: B_28 = S_28 + Z u(rho_28) (rank 21), 2 u(rho_28) lies in S_28 and u(rho_28) does not, so B_28/S_28 = Z/2
+PASS  rho_35 = (1,2,16,21,30,17,22,31) is a Hodge character of level 35 and dimension 6
+PASS  q = 35 is the product of the two elements [5, 7] of P, and {d | q : d > 1, mu'(d) = 1} = {35}
+PASS  q = 35, l = 5: gcd(l, q/l) = 1, nu_5 vanishes on the 27 generators of S_35, and rho_35 has exactly one entry of order 5, namely [21]
+PASS  q = 35: B_35 = S_35 + Z u(rho_35) (rank 22), 2 u(rho_35) lies in S_35 and u(rho_35) does not, so B_35/S_35 = Z/2
+PASS  the element (1,4,16,9,15,18) of level 21 is a Hodge character of dimension 4 with nu_7 = 1
+PASS  the entries of (1,9,25,12,20,24) add up to 91, which is not divisible by 28
+
+Part B. The ten levels m = 35k, 1 <= k <= 10 (Proposition 5.8, Remark 5.9)
+m = 35: Q(m) = {35}, rank r_m = 22
+PASS  m = 35: Q(m) = {d | m : d > 1, mu'(d) = 1}; m has 2 divisors in P and |Q(m)| = 2^1 - 1 = 1
+PASS  m = 35: the 27 generators of S_m lie in B_m, and the rho_q^(m) are Hodge characters: rho_35^(m) = (1,2,16,21,30,17,22,31)
+PASS  m = 35: (a) B_m = S_m + sum_q Z u(rho_q^(m)): the echelon basis of L+_m has 22 rows, pivot product 1
+PASS  m = 35: (b) 2 u(rho_q^(m)) lies in S_m for q in Q(m)
+PASS  m = 35: (b) parity homomorphisms vanishing on S_m with phi_q(rho_q'^(m)) = [q = q'] (phi_35: entries of order 7); so B_m/S_m = (Z/2)^1
+PASS  m = 35: (b) u(rho_q^(m)) + t u(rho_q^(m)) lies in S_m for q in Q(m) and all 24 units t; with (a) and the stability of S_m under units this gives x + t x in S_m for all x in B_m
+PASS  m = 35: (c) [B_m : S_m + sum_{q != 35} Z u(rho_q^(m))] = 2
+PASS  m = 35: Lemma 5.6 for l in [5, 7]: nu_l vanishes on all generators of S_m; (nu_l(rho_q^(m)))_q = {5: (1,), 7: (1,)}; these separate the classes of the rho_q^(m)
+PASS  m = 35: FLINT: [K_m : L] = [2, 2, 1, 1] for L = S_m, L'_m, L_m, L+_m (expected [2, 2, 1, 1]); Hermite pivot products [2, 2, 1, 1] agree with the pure-Python echelon bases
+m = 70: Q(m) = {35}, rank r_m = 57
+PASS  m = 70: Q(m) = {d | m : d > 1, mu'(d) = 1}; m has 2 divisors in P and |Q(m)| = 2^1 - 1 = 1
+PASS  m = 70: the 91 generators of S_m lie in B_m, and the rho_q^(m) are Hodge characters: rho_35^(m) = (2,4,32,42,60,34,44,62)
+PASS  m = 70: (a) B_m = S_m + sum_q Z u(rho_q^(m)): the echelon basis of L+_m has 57 rows, pivot product 1
+PASS  m = 70: (b) 2 u(rho_q^(m)) lies in S_m for q in Q(m)
+PASS  m = 70: (b) parity homomorphisms vanishing on S_m with phi_q(rho_q'^(m)) = [q = q'] (phi_35: entries of order 7); so B_m/S_m = (Z/2)^1
+PASS  m = 70: (b) u(rho_q^(m)) + t u(rho_q^(m)) lies in S_m for q in Q(m) and all 24 units t; with (a) and the stability of S_m under units this gives x + t x in S_m for all x in B_m
+PASS  m = 70: (c) [B_m : S_m + sum_{q != 35} Z u(rho_q^(m))] = 2
+PASS  m = 70: Lemma 5.6 for l in [5, 7]: nu_l vanishes on all generators of S_m; (nu_l(rho_q^(m)))_q = {5: (1,), 7: (1,)}; these separate the classes of the rho_q^(m)
+PASS  m = 70: FLINT: [K_m : L] = [4, 4, 2, 1] for L = S_m, L'_m, L_m, L+_m (expected [4, 4, 2, 1]); Hermite pivot products [4, 4, 2, 1] agree with the pure-Python echelon bases
+m = 105: Q(m) = {15, 21, 35}, rank r_m = 80
+PASS  m = 105: Q(m) = {d | m : d > 1, mu'(d) = 1}; m has 3 divisors in P and |Q(m)| = 2^2 - 1 = 3
+PASS  m = 105: the 120 generators of S_m lie in B_m, and the rho_q^(m) are Hodge characters: rho_15^(m) = (7,42,70,91), rho_21^(m) = (5,20,90,95), rho_35^(m) = (3,6,48,63,90,51,66,93)
+PASS  m = 105: (a) B_m = S_m + sum_q Z u(rho_q^(m)): the echelon basis of L+_m has 80 rows, pivot product 1
+PASS  m = 105: (b) 2 u(rho_q^(m)) lies in S_m for q in Q(m)
+PASS  m = 105: (b) parity homomorphisms vanishing on S_m with phi_q(rho_q'^(m)) = [q = q'] (phi_15: entries of order 5, 7, 21; phi_21: entries of order 21; phi_35: entries of order 7, 21); so B_m/S_m = (Z/2)^3
+PASS  m = 105: (b) u(rho_q^(m)) + t u(rho_q^(m)) lies in S_m for q in Q(m) and all 48 units t; with (a) and the stability of S_m under units this gives x + t x in S_m for all x in B_m
+PASS  m = 105: (c) [B_m : S_m + sum_{q != 35} Z u(rho_q^(m))] = 2
+PASS  m = 105: Lemma 5.6 for l in [3, 5, 7]: nu_l vanishes on all generators of S_m; (nu_l(rho_q^(m)))_q = {3: (1, 0, 0), 5: (1, 0, 1), 7: (0, 1, 1)}; these separate the classes of the rho_q^(m)
+PASS  m = 105: FLINT: [K_m : L] = [8, 2, 1, 1] for L = S_m, L'_m, L_m, L+_m (expected [8, 2, 1, 1]); Hermite pivot products [8, 2, 1, 1] agree with the pure-Python echelon bases
+m = 140: Q(m) = {20, 28, 35}, rank r_m = 115
+PASS  m = 140: Q(m) = {d | m : d > 1, mu'(d) = 1}; m has 3 divisors in P and |Q(m)| = 2^2 - 1 = 3
+PASS  m = 140: the 185 generators of S_m lie in B_m, and the rho_q^(m) are Hodge characters: rho_20^(m) = (7,28,119,126), rho_28^(m) = (5,45,105,125), rho_35^(m) = (4,8,64,84,120,68,88,124)
+PASS  m = 140: (a) B_m = S_m + sum_q Z u(rho_q^(m)): the echelon basis of L+_m has 115 rows, pivot product 1
+PASS  m = 140: (b) 2 u(rho_q^(m)) lies in S_m for q in Q(m)
+PASS  m = 140: (b) parity homomorphisms vanishing on S_m with phi_q(rho_q'^(m)) = [q = q'] (phi_20: entries of order 5, 7; phi_28: entries of order 28; phi_35: entries of order 7); so B_m/S_m = (Z/2)^3
+PASS  m = 140: (b) u(rho_q^(m)) + t u(rho_q^(m)) lies in S_m for q in Q(m) and all 48 units t; with (a) and the stability of S_m under units this gives x + t x in S_m for all x in B_m
+PASS  m = 140: (c) [B_m : S_m + sum_{q != 35} Z u(rho_q^(m))] = 2
+PASS  m = 140: Lemma 5.6 for l in [4, 5, 7]: nu_l vanishes on all generators of S_m; (nu_l(rho_q^(m)))_q = {4: (0, 1, 0), 5: (1, 0, 1), 7: (0, 0, 1)}; these separate the classes of the rho_q^(m)
+PASS  m = 140: FLINT: [K_m : L] = [16, 4, 2, 1] for L = S_m, L'_m, L_m, L+_m (expected [16, 4, 2, 1]); Hermite pivot products [16, 4, 2, 1] agree with the pure-Python echelon bases
+m = 175: Q(m) = {35}, rank r_m = 114
+PASS  m = 175: Q(m) = {d | m : d > 1, mu'(d) = 1}; m has 2 divisors in P and |Q(m)| = 2^1 - 1 = 1
+PASS  m = 175: the 145 generators of S_m lie in B_m, and the rho_q^(m) are Hodge characters: rho_35^(m) = (5,10,80,105,150,85,110,155)
+PASS  m = 175: (a) B_m = S_m + sum_q Z u(rho_q^(m)): the echelon basis of L+_m has 114 rows, pivot product 1
+PASS  m = 175: (b) 2 u(rho_q^(m)) lies in S_m for q in Q(m)
+PASS  m = 175: (b) parity homomorphisms vanishing on S_m with phi_q(rho_q'^(m)) = [q = q'] (phi_35: entries of order 7); so B_m/S_m = (Z/2)^1
+PASS  m = 175: (b) u(rho_q^(m)) + t u(rho_q^(m)) lies in S_m for q in Q(m) and all 120 units t; with (a) and the stability of S_m under units this gives x + t x in S_m for all x in B_m
+PASS  m = 175: (c) [B_m : S_m + sum_{q != 35} Z u(rho_q^(m))] = 2
+PASS  m = 175: Lemma 5.6 for l in [7]: nu_l vanishes on all generators of S_m; (nu_l(rho_q^(m)))_q = {7: (1,)}; these separate the classes of the rho_q^(m)
+PASS  m = 175: FLINT: [K_m : L] = [2, 2, 1, 1] for L = S_m, L'_m, L_m, L+_m (expected [2, 2, 1, 1]); Hermite pivot products [2, 2, 1, 1] agree with the pure-Python echelon bases
+m = 210: Q(m) = {15, 21, 35}, rank r_m = 185
+PASS  m = 210: Q(m) = {d | m : d > 1, mu'(d) = 1}; m has 3 divisors in P and |Q(m)| = 2^2 - 1 = 3
+PASS  m = 210: the 348 generators of S_m lie in B_m, and the rho_q^(m) are Hodge characters: rho_15^(m) = (14,84,140,182), rho_21^(m) = (10,40,180,190), rho_35^(m) = (6,12,96,126,180,102,132,186)
+PASS  m = 210: (a) B_m = S_m + sum_q Z u(rho_q^(m)): the echelon basis of L+_m has 185 rows, pivot product 1
+PASS  m = 210: (b) 2 u(rho_q^(m)) lies in S_m for q in Q(m)
+PASS  m = 210: (b) parity homomorphisms vanishing on S_m with phi_q(rho_q'^(m)) = [q = q'] (phi_15: entries of order 5, 7, 21; phi_21: entries of order 21; phi_35: entries of order 7, 21); so B_m/S_m = (Z/2)^3
+PASS  m = 210: (b) u(rho_q^(m)) + t u(rho_q^(m)) lies in S_m for q in Q(m) and all 48 units t; with (a) and the stability of S_m under units this gives x + t x in S_m for all x in B_m
+PASS  m = 210: (c) [B_m : S_m + sum_{q != 35} Z u(rho_q^(m))] = 2
+PASS  m = 210: Lemma 5.6 for l in [3, 5, 7]: nu_l vanishes on all generators of S_m; (nu_l(rho_q^(m)))_q = {3: (1, 0, 0), 5: (1, 0, 1), 7: (0, 1, 1)}; these separate the classes of the rho_q^(m)
+PASS  m = 210: FLINT: [K_m : L] = [16, 4, 2, 1] for L = S_m, L'_m, L_m, L+_m (expected [16, 4, 2, 1]); Hermite pivot products [16, 4, 2, 1] agree with the pure-Python echelon bases
+m = 245: Q(m) = {35}, rank r_m = 160
+PASS  m = 245: Q(m) = {d | m : d > 1, mu'(d) = 1}; m has 2 divisors in P and |Q(m)| = 2^1 - 1 = 1
+PASS  m = 245: the 204 generators of S_m lie in B_m, and the rho_q^(m) are Hodge characters: rho_35^(m) = (7,14,112,147,210,119,154,217)
+PASS  m = 245: (a) B_m = S_m + sum_q Z u(rho_q^(m)): the echelon basis of L+_m has 160 rows, pivot product 1
+PASS  m = 245: (b) 2 u(rho_q^(m)) lies in S_m for q in Q(m)
+PASS  m = 245: (b) parity homomorphisms vanishing on S_m with phi_q(rho_q'^(m)) = [q = q'] (phi_35: entries of order 7, 49); so B_m/S_m = (Z/2)^1
+PASS  m = 245: (b) u(rho_q^(m)) + t u(rho_q^(m)) lies in S_m for q in Q(m) and all 168 units t; with (a) and the stability of S_m under units this gives x + t x in S_m for all x in B_m
+PASS  m = 245: (c) [B_m : S_m + sum_{q != 35} Z u(rho_q^(m))] = 2
+PASS  m = 245: Lemma 5.6 for l in [5]: nu_l vanishes on all generators of S_m; (nu_l(rho_q^(m)))_q = {5: (1,)}; these separate the classes of the rho_q^(m)
+PASS  m = 245: FLINT: [K_m : L] = [2, 2, 1, 1] for L = S_m, L'_m, L_m, L+_m (expected [2, 2, 1, 1]); Hermite pivot products [2, 2, 1, 1] agree with the pure-Python echelon bases
+m = 280: Q(m) = {20, 28, 35}, rank r_m = 231
+PASS  m = 280: Q(m) = {d | m : d > 1, mu'(d) = 1}; m has 3 divisors in P and |Q(m)| = 2^2 - 1 = 3
+PASS  m = 280: the 373 generators of S_m lie in B_m, and the rho_q^(m) are Hodge characters: rho_20^(m) = (14,56,238,252), rho_28^(m) = (10,90,210,250), rho_35^(m) = (8,16,128,168,240,136,176,248)
+PASS  m = 280: (a) B_m = S_m + sum_q Z u(rho_q^(m)): the echelon basis of L+_m has 231 rows, pivot product 1
+PASS  m = 280: (b) 2 u(rho_q^(m)) lies in S_m for q in Q(m)
+PASS  m = 280: (b) parity homomorphisms vanishing on S_m with phi_q(rho_q'^(m)) = [q = q'] (phi_20: entries of order 5, 7; phi_28: W = the 52 residues {50,51,54,58,62,65,66,67,73,74,75,78,82,86,89,90,95,97,99,101,103,107,109,111,113,115,165,167,169,171,173,177,179,181,183,185,190,191,194,198,202,205,206,207,213,214,215,218,222,226,229,230}; phi_35: entries of order 7); so B_m/S_m = (Z/2)^3
+PASS  m = 280: (b) u(rho_q^(m)) + t u(rho_q^(m)) lies in S_m for q in Q(m) and all 96 units t; with (a) and the stability of S_m under units this gives x + t x in S_m for all x in B_m
+PASS  m = 280: (c) [B_m : S_m + sum_{q != 35} Z u(rho_q^(m))] = 2
+PASS  m = 280: Lemma 5.6 for l in [5, 7]: nu_l vanishes on all generators of S_m; (nu_l(rho_q^(m)))_q = {5: (1, 0, 1), 7: (0, 0, 1)}; these do not separate the classes of the rho_q^(m)
+PASS  m = 280: FLINT: [K_m : L] = [16, 4, 2, 1] for L = S_m, L'_m, L_m, L+_m (expected [16, 4, 2, 1]); Hermite pivot products [16, 4, 2, 1] agree with the pure-Python echelon bases
+m = 315: Q(m) = {15, 21, 35}, rank r_m = 242
+PASS  m = 315: Q(m) = {d | m : d > 1, mu'(d) = 1}; m has 3 divisors in P and |Q(m)| = 2^2 - 1 = 3
+PASS  m = 315: the 367 generators of S_m lie in B_m, and the rho_q^(m) are Hodge characters: rho_15^(m) = (21,126,210,273), rho_21^(m) = (15,60,270,285), rho_35^(m) = (9,18,144,189,270,153,198,279)
+PASS  m = 315: (a) B_m = S_m + sum_q Z u(rho_q^(m)): the echelon basis of L+_m has 242 rows, pivot product 6, full rank modulo 2 and 3
+PASS  m = 315: (b) 2 u(rho_q^(m)) lies in S_m for q in Q(m)
+PASS  m = 315: (b) parity homomorphisms vanishing on S_m with phi_q(rho_q'^(m)) = [q = q'] (phi_15: entries of order 5, 7, 21, 63; phi_21: entries of order 21, 63; phi_35: entries of order 7, 21, 63); so B_m/S_m = (Z/2)^3
+PASS  m = 315: (b) u(rho_q^(m)) + t u(rho_q^(m)) lies in S_m for q in Q(m) and all 144 units t; with (a) and the stability of S_m under units this gives x + t x in S_m for all x in B_m
+PASS  m = 315: (c) [B_m : S_m + sum_{q != 35} Z u(rho_q^(m))] = 2
+PASS  m = 315: Lemma 5.6 for l in [5, 7]: nu_l vanishes on all generators of S_m; (nu_l(rho_q^(m)))_q = {5: (1, 0, 1), 7: (0, 1, 1)}; these do not separate the classes of the rho_q^(m)
+PASS  m = 315: FLINT: [K_m : L] = [8, 2, 1, 1] for L = S_m, L'_m, L_m, L+_m (expected [8, 2, 1, 1]); Hermite pivot products [48, 12, 6, 6] agree with the pure-Python echelon bases
+m = 350: Q(m) = {35}, rank r_m = 289
+PASS  m = 350: Q(m) = {d | m : d > 1, mu'(d) = 1}; m has 2 divisors in P and |Q(m)| = 2^1 - 1 = 1
+PASS  m = 350: the 467 generators of S_m lie in B_m, and the rho_q^(m) are Hodge characters: rho_35^(m) = (10,20,160,210,300,170,220,310)
+PASS  m = 350: (a) B_m = S_m + sum_q Z u(rho_q^(m)): the echelon basis of L+_m has 289 rows, pivot product 1
+PASS  m = 350: (b) 2 u(rho_q^(m)) lies in S_m for q in Q(m)
+PASS  m = 350: (b) parity homomorphisms vanishing on S_m with phi_q(rho_q'^(m)) = [q = q'] (phi_35: entries of order 7); so B_m/S_m = (Z/2)^1
+PASS  m = 350: (b) u(rho_q^(m)) + t u(rho_q^(m)) lies in S_m for q in Q(m) and all 120 units t; with (a) and the stability of S_m under units this gives x + t x in S_m for all x in B_m
+PASS  m = 350: (c) [B_m : S_m + sum_{q != 35} Z u(rho_q^(m))] = 2
+PASS  m = 350: Lemma 5.6 for l in [7]: nu_l vanishes on all generators of S_m; (nu_l(rho_q^(m)))_q = {7: (1,)}; these separate the classes of the rho_q^(m)
+PASS  m = 350: FLINT: [K_m : L] = [4, 4, 2, 1] for L = S_m, L'_m, L_m, L+_m (expected [4, 4, 2, 1]); Hermite pivot products [4, 4, 2, 1] agree with the pure-Python echelon bases
+
+Part C. gamma and delta (Remark 7.5)
+PASS  u(gamma) - u(2 beta) lies in S_70; gamma = (1,20,24,42,61,62), 2 beta = (2,4,32,42,60,34,44,62)
+PASS  u(delta) - u(6 beta) lies in S_210; delta = (2,9,129,142,168,180), 6 beta = (6,12,96,126,180,102,132,186)
+PASS  the entries of order 5 of beta, gamma, delta are [[21], [42], [168]], one each; 5 satisfies Lemma 5.6 at 35, 70, 210
+
+Part D. Hodge characters with four and six entries in the class of beta (Remark 5.10)
+PASS  m = 35: phi_35 (entries of order 7) is invariant under (Z/m)^x and vanishes on the 48 (resp. 412) Hodge characters with four (resp. six) entries having an entry dividing m; so no character in B^2_m or B^4_m lies in the class of beta
+PASS  m = 70: phi_35 (entries of order 7) is invariant under (Z/m)^x and vanishes on the 271 Hodge characters with four entries having an entry dividing m; so no character in B^2_m lies in the class of beta
+PASS  m = 70: (m/70) gamma = (1,20,24,42,61,62) lies in B^4_m and in the class of beta (u((m/70) gamma) - u(rho_35^(m)) lies in S_m)
+PASS  m = 105: phi_35 (entries of order 7, 21) is invariant under (Z/m)^x and vanishes on the 364 (resp. 9941) Hodge characters with four (resp. six) entries having an entry dividing m; so no character in B^2_m or B^4_m lies in the class of beta
+PASS  m = 140: phi_35 (entries of order 7) is invariant under (Z/m)^x and vanishes on the 831 Hodge characters with four entries having an entry dividing m; so no character in B^2_m lies in the class of beta
+PASS  m = 140: (m/70) gamma = (2,40,48,84,122,124) lies in B^4_m and in the class of beta (u((m/70) gamma) - u(rho_35^(m)) lies in S_m)
+PASS  m = 175: phi_35 (entries of order 7) is invariant under (Z/m)^x and vanishes on the 425 (resp. 18287) Hodge characters with four (resp. six) entries having an entry dividing m; so no character in B^2_m or B^4_m lies in the class of beta
+PASS  m = 210: phi_35 (entries of order 7, 21) is invariant under (Z/m)^x and vanishes on the 1800 Hodge characters with four entries having an entry dividing m; so no character in B^2_m lies in the class of beta
+PASS  m = 210: (m/70) gamma = (3,60,72,126,183,186) lies in B^4_m and in the class of beta (u((m/70) gamma) - u(rho_35^(m)) lies in S_m)
+PASS  m = 245: phi_35 (entries of order 7, 49) is invariant under (Z/m)^x and vanishes on the 600 (resp. 36311) Hodge characters with four (resp. six) entries having an entry dividing m; so no character in B^2_m or B^4_m lies in the class of beta
+PASS  m = 280: phi_35 (entries of order 7) is invariant under (Z/m)^x and vanishes on the 2201 Hodge characters with four entries having an entry dividing m; so no character in B^2_m lies in the class of beta
+PASS  m = 280: (m/70) gamma = (4,80,96,168,244,248) lies in B^4_m and in the class of beta (u((m/70) gamma) - u(rho_35^(m)) lies in S_m)
+PASS  m = 315: phi_35 (entries of order 7, 21, 63) is invariant under (Z/m)^x and vanishes on the 1701 (resp. 133655) Hodge characters with four (resp. six) entries having an entry dividing m; so no character in B^2_m or B^4_m lies in the class of beta
+PASS  m = 350: phi_35 (entries of order 7) is invariant under (Z/m)^x and vanishes on the 2065 Hodge characters with four entries having an entry dividing m; so no character in B^2_m lies in the class of beta
+PASS  m = 350: (m/70) gamma = (5,100,120,210,305,310) lies in B^4_m and in the class of beta (u((m/70) gamma) - u(rho_35^(m)) lies in S_m)
+
+all 134 checks passed

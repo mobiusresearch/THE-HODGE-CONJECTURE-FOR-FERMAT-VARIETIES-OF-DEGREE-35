@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "The Hodge conjecture for Fermat varieties of degree 35"
+type: article
+authors:
+  - family-names: Peterson
+    given-names: Trevin
+date-released: 2026-09-24
+version: "1.0"
+license: CC-BY-4.0
